@@ -1,0 +1,9 @@
+Concept and Code by Christopher Spooner
+
+School and Activity Icons by Madison Neal
+
+Weather Code by gregoiresage
+https://github.com/gregoiresage/fitbit-weather
+
+Weather Icons by kickstandapps
+https://github.com/kickstandapps/WeatherIcons

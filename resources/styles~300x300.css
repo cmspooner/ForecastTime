@@ -1,0 +1,746 @@
+.background {
+  viewport-fill: black;
+}
+
+#clickbg {
+  width: 100%;
+  height: 100%;
+  fill: black;
+  opacity: 0
+}
+
+/* Clock View Labels */
+#dateLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-length: 50;
+  text-anchor: start;
+  x: 15;
+  y: 30;
+  fill: white;
+}
+
+#batteryLevelLabel {
+  font-size: 14;
+  font-family: Colfax-Medium;
+  text-length: 4;
+  text-anchor: end;
+  x: 92%;
+  y: 9%;
+  fill: white;
+}
+
+
+#seperatorLine {
+  stroke-width: 6;
+  fill: deepskyblue;
+}
+
+#seperatorEndLeft{
+  r:3;
+  fill: deepskyblue;
+}
+#seperatorEndRight{
+  r:3;
+  fill: deepskyblue;
+}
+
+#clockLabel {
+  font-size: 70;
+  font-family: Colfax-Medium;
+  text-length: 32;
+  text-anchor: middle;
+  x: 50%;
+  y: 33%;
+  fill: white;
+}
+
+#hrLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 32;
+  x: 30%;
+  y: 46%;
+  fill: white;
+}
+
+#stepsLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 32;
+  x: 30%;
+  y: 57%;
+  fill: white;
+}
+
+#calsLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 32;
+  x: 30%;
+  y: 68%;
+  fill: white;
+}
+
+/* Period and Remaining Time */
+#periodLabel {
+  font-size: 30;
+  font-family: Colfax-Bold;
+  text-length: 50;
+  text-anchor: start;
+  x: 15;
+  y: 83%;
+  fill: silver;
+}
+
+#timeRemainingLabel {
+  font-size: 30;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 15;
+  y: 95%;
+  fill: silver;
+}
+
+/* Weather */
+#tempAndConditionLabel {
+  font-size: 28;
+  font-family: Colfax-Bold;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 83%;
+  fill: silver;
+}
+
+#weatherLocationLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 95%;
+  fill: silver;
+}
+
+
+/* Stats View Labels */
+#stepStatsLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 25;
+  y: 13%;
+  fill: white;
+}
+#stepValueLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 120;
+  y: 10%;
+  fill: white;
+}
+#stepGoalLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 160;
+  y: 18%;
+  fill: white;
+}
+
+#distStatsLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 25;
+  y: 32%;
+  fill: white;
+}
+#distValueLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 165;
+  y: 29%;
+  fill: white;
+}
+#distGoalLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 195;
+  y: 37%;
+  fill: white;
+}
+
+#floorsStatsLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 25;
+  y: 51%;
+  fill: white;
+}
+#floorsValueLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 125;
+  y: 48%;
+  fill: white;
+}
+#floorsGoalLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 150;
+  y: 56%;
+  fill: white;
+}
+
+#activeStatsLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 25;
+  y: 70%;
+  fill: white;
+}
+#activeValueLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 127;
+  y: 67%;
+  fill: white;
+}
+#activeGoalLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 152;
+  y: 75%;
+  fill: white;
+}
+
+#calsStatsLabel {
+  font-size: 30;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 25;
+  y: 89%;
+  fill: white;
+}
+#calsValueLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 155;
+  y: 86%;
+  fill: white;
+}
+#calsGoalLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-anchor: start;
+  text-length: 32;
+  x: 185;
+  y: 94%;
+  fill: white;
+}
+
+/* Schedule Labels */
+#period0StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 8%;
+  fill: white;
+}
+
+#period0NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 8%;
+  fill: white;
+}
+
+#period0EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 8%;
+  fill: white;
+}
+
+#period1StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 18%;
+  fill: white;
+}
+
+#period1NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 18%;
+  fill: white;
+}
+
+#period1EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 18%;
+  fill: white;
+}
+
+#period2StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 28%;
+  fill: white;
+}
+
+#period2NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 28%;
+  fill: white;
+}
+
+#period2EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 28%;
+  fill: white;
+}
+
+#period3StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 38%;
+  fill: white;
+}
+
+#period3NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 38%;
+  fill: white;
+}
+
+#period3EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 38%;
+  fill: white;
+}
+
+#period4StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 48%;
+  fill: white;
+}
+
+#period4NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 48%;
+  fill: white;
+}
+
+#period4EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 48%;
+  fill: white;
+}
+
+#period5StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 58%;
+  fill: white;
+}
+
+#period5NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 58%;
+  fill: white;
+}
+
+#period5EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 58%;
+  fill: white;
+}
+
+#period6StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 68%;
+  fill: white;
+}
+
+#period6NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 68%;
+  fill: white;
+}
+
+#period6EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 68%;
+  fill: white;
+}
+
+#period7StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 78%;
+  fill: white;
+}
+
+#period7NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 78%;
+  fill: white;
+}
+
+#period7EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 78%;
+  fill: white;
+}
+
+#period8StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 88%;
+  fill: white;
+}
+
+#period8NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 88%;
+  fill: white;
+}
+
+#period8EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 88%;
+  fill: white;
+}
+
+#period9StartLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: start;
+  text-length: 8;
+  x: 2%;
+  y: 98%;
+  fill: white;
+}
+
+#period9NameLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: middle;
+  text-length: 8;
+  x: 50%;
+  y: 98%;
+  fill: white;
+}
+
+#period9EndLabel {
+  font-size: 25;
+  font-family: Colfax-Regular;
+  text-anchor: end;
+  text-length: 8;
+  x: 98%;
+  y: 98%;
+  fill: white;
+}
+
+/* Forcast Labels */
+#todayDateLabel {
+  font-size: 28;
+  font-family: Colfax-Bold;
+  text-length: 50;
+  text-anchor: start;
+  x: 1%;
+  y: 8%;
+  fill: white;
+}
+
+#todayDescriptionLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 19%;
+  fill: white;
+}
+
+#todayHighLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 29%;
+  fill: white;
+}
+#todayHighValLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 135;
+  y: 29%;
+  fill: red;
+}
+
+#todayLowLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 183;
+  y: 29%;
+  fill: white;
+}
+#todayLowValLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 246;
+  y: 29%;
+  fill: cornflowerblue;
+}
+
+#tomorrowDateLabel {
+  font-size: 28;
+  font-family: Colfax-Bold;
+  text-length: 50;
+  text-anchor: start;
+  x: 1%;
+  y: 43%;
+  fill: white;
+}
+
+#tomorrowDescriptionLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 53%;
+  fill: white;
+}
+
+#tomorrowHighLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 63%;
+  fill: white;
+}
+#tomorrowHighValLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 135;
+  y: 63%;
+  fill: red;
+}
+
+#tomorrowLowLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 183;
+  y: 63%;
+  fill: white;
+}
+#tomorrowLowValLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 246;
+  y: 63%;
+  fill: cornflowerblue;
+}
+
+#day3DateLabel {
+  font-size: 28;
+  font-family: Colfax-Bold;
+  text-length: 50;
+  text-anchor: start;
+  x: 1%;
+  y: 77%;
+  fill: white;
+}
+
+#day3DescriptionLabel {
+  font-size: 26;
+  font-family: Colfax-Medium;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 88%;
+  fill: white;
+}
+
+#day3HighLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  y: 98%;
+  fill: white;
+}
+#day3HighValLabel {
+  font-size: 24;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 135;
+  y: 98%;
+  fill: red;
+}
+
+#day3LowLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 183;
+  y: 98%;
+  fill: white;
+}
+#day3LowValLabel {
+  font-size: 28;
+  font-family: Colfax-Regular;
+  text-length: 50;
+  text-anchor: start;
+  x: 246;
+  y: 98%;
+  fill: cornflowerblue;
+}

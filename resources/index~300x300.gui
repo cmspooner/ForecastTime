@@ -1,0 +1,106 @@
+<svg class="background">
+  <svg id="clock" display="inline">
+    <text id="dateLabel" />
+    <image x="79%" y="4%" width="50" height="20" href="icons/battery/battery.png" load="sync"/>
+    <text id="batteryLevelLabel" />
+    <circle id = "seperatorEndLeft"cx="5%" cy="13%" />
+    <line id = "seperatorLine" x1="5%" y1="13%" x2="95%" y2="13%"/>
+    <circle id = "seperatorEndRight"cx="95%" cy="13%" />
+    <text id="clockLabel" />
+    <image x="20%" y="40%" width="18" height="18" href="icons/18/heart.png" load="sync"/>
+    <text id="hrLabel" />
+    <image x="20%" y="51%" width="18" height="18" href="icons/18/steps.png" load="sync"/>
+    <text id="stepsLabel" />
+    <image x="20%" y="62%" width="18" height="18" href="icons/18/calories.png" load="sync"/>
+    <text id="calsLabel" />
+  </svg>
+  <svg id="period" display="none">
+    <text id="periodLabel" />
+    <text id="timeRemainingLabel" />
+  </svg>
+  <svg id="weather" display="inline">
+    <image id="weatherImage" x="10" y="74%" width="60" height="60" href="" load="sync"/>
+    <text id="tempAndConditionLabel" />
+    <text id="weatherLocationLabel" />
+  </svg>
+  <svg id="stats" display="none">
+    <image x="0" y="5%" width="21" height="21" href="icons/21/steps.png" load="sync"/>
+    <text id="stepStatsLabel" />
+    <text id="stepValueLabel" />
+    <text id="stepGoalLabel" />
+    <image x="0" y="25%" width="21" height="21" href="icons/21/distance.png" load="sync"/>
+    <text id="distStatsLabel" />
+    <text id="distValueLabel" />
+    <text id="distGoalLabel" />
+    <image x="0" y="44%" width="21" height="21" href="icons/21/stairs.png" load="sync"/>
+    <text id="floorsStatsLabel" />
+    <text id="floorsValueLabel" />
+    <text id="floorsGoalLabel" />
+    <image x="0" y="63%" width="21" height="21" href="icons/21/watch.png" load="sync"/>
+    <text id="activeStatsLabel" />
+    <text id="activeValueLabel" />
+    <text id="activeGoalLabel" />
+    <image x="0" y="82%" width="21" height="21" href="icons/21/calories.png" load="sync"/>
+    <text id="calsStatsLabel" />
+    <text id="calsValueLabel" />
+    <text id="calsGoalLabel" />
+  </svg>
+  <svg id="schedule" display="none">
+    <text id="period0StartLabel" />
+    <text id="period0NameLabel" />
+    <text id="period0EndLabel" />
+    <text id="period1StartLabel" />
+    <text id="period1NameLabel" />
+    <text id="period1EndLabel" />
+    <text id="period2StartLabel" />
+    <text id="period2NameLabel" />
+    <text id="period2EndLabel" />
+    <text id="period3StartLabel" />
+    <text id="period3NameLabel" />
+    <text id="period3EndLabel" />
+    <text id="period4StartLabel" />
+    <text id="period4NameLabel" />
+    <text id="period4EndLabel" />
+    <text id="period5StartLabel" />
+    <text id="period5NameLabel" />
+    <text id="period5EndLabel" />
+    <text id="period6StartLabel" />
+    <text id="period6NameLabel" />
+    <text id="period6EndLabel" />
+    <text id="period7StartLabel" />
+    <text id="period7NameLabel" />
+    <text id="period7EndLabel" />
+    <text id="period8StartLabel" />
+    <text id="period8NameLabel" />
+    <text id="period8EndLabel" />
+    <text id="period9StartLabel" />
+    <text id="period9NameLabel" />
+    <text id="period9EndLabel" />
+  </svg>
+  <svg id="forecast" display="none">
+    <text id="todayDateLabel" />
+    <image id="todayWeatherImage" x="10" y="8%" width="60" height="60" href="" load="sync"/>
+    <text id="todayDescriptionLabel" />
+    <text id="todayHighLabel" />
+    <text id="todayHighValLabel" />
+    <text id="todayLowLabel" />
+    <text id="todayLowValLabel" />
+    
+    <text id="tomorrowDateLabel" />
+    <image id="tomorrowWeatherImage" x="10" y="43%" width="60" height="60" href="" load="sync"/>
+    <text id="tomorrowDescriptionLabel" />
+    <text id="tomorrowHighLabel" />
+    <text id="tomorrowHighValLabel" />
+    <text id="tomorrowLowLabel" />
+    <text id="tomorrowLowValLabel" />
+    
+    <text id="day3DateLabel" />
+    <image id="day3WeatherImage" x="10" y="78%" width="60" height="60" href="" load="sync"/>
+    <text id="day3DescriptionLabel" />
+    <text id="day3HighLabel" />
+    <text id="day3HighValLabel" />
+    <text id="day3LowLabel" />
+    <text id="day3LowValLabel" />
+  </svg>
+  <rect id="clickbg" pointer-events="visible"/>
+</svg>
