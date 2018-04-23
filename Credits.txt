@@ -7,3 +7,15 @@ https://github.com/gregoiresage/fitbit-weather
 
 Weather Icons by kickstandapps
 https://github.com/kickstandapps/WeatherIcons
+
+Paypal Icon
+https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fa%2Fa4%2FPaypal_2014_logo.png&imgrefurl=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3APaypal_2014_logo.png&docid=eP7LkUt09K8NtM&tbnid=BGNhCxpxbSUTPM%3A&vet=10ahUKEwj2vPqLiL_aAhVCON8KHbvzDtAQMwi9ASgEMAQ..i&w=593&h=585&safe=strict&bih=659&biw=1121&q=paypal&ved=0ahUKEwj2vPqLiL_aAhVCON8KHbvzDtAQMwi9ASgEMAQ&iact=mrc&uact=8
+
+Email Icon
+https://commons.wikimedia.org/wiki/File:Envelope_font_awesome.svg
+
+Github Icon
+https://pixabay.com/en/logo-icon-github-2582757/
+
+email.html
+https://kencaron.github.io/fitbit-os-settings-assets/

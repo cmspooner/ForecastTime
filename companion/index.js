@@ -28,8 +28,10 @@ settingsStorage.onchange = evt => {
 
 // Restore any previously saved settings and send to the device
 function restoreSettings() {
+  console.log("Restoring Settings! ", settingsStorage.length + " settings to restore");
   for (let index = 0; index < settingsStorage.length; index++) {
     let key = settingsStorage.key(index);
+    //console.log("restoring: " + data.key);
     if (key) {
       let data = {
         key: key,
@@ -45,4 +47,12 @@ function sendVal(data) {
   if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
     messaging.peerSocket.send(data);
   }
+}
+
+weather.onsuccess = (data) => {
+  console.log("Weather on phone " + JSON.stringify(data));
+}
+
+weather.onerror = (error) => {
+  console.log("Weather error " + error);
 }

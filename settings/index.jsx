@@ -3,20 +3,38 @@ function mySettings(props) {
     <Page>
       <Section
         title={<Text bold align="center">Weather</Text>}>
+        <Toggle
+           settingsKey="unitToggle"
+           label="Tempterature in °F or °C"
+         />
         <Select
-          label={`Update Interval`}
+          label={`Weather Update Interval`}
           settingsKey="updateInterval"
           options={[
+            {name:"5 minutes"},
             {name:"15 minutes"},
             {name:"30 minutes"},
             {name:"1 hour"},
             {name:"2 hours"},
           ]}
          />
-         <Toggle
-           settingsKey="unitToggle"
-           label="Tempterature in °F or °C"
+        <Text align="left">
+          Decreasing this will use more WATCH battery. 
+        </Text>
+        <Select
+          label={`Location Update Interval`}
+          settingsKey="locationUpdateInterval"
+          options={[
+            {name:"5 minutes"},
+            {name:"15 minutes"},
+            {name:"30 minutes"},
+            {name:"1 hour"},
+            {name:"2 hours"},
+          ]}
          />
+         <Text align="left">
+           Decreasing this will use more PHONE battery.
+         </Text>
          <Toggle
            settingsKey="dataAgeToggle"
            label="Show time of last weather update"
@@ -29,6 +47,9 @@ function mySettings(props) {
            settingsKey="failCountToggle"
            label="Show number of weather attempts"
          />
+        <Text align="left">
+          These are mostly for informataion for nerds and depugging.
+         </Text>
       </Section>
       <Section
         title={<Text bold align="center">Seperator Bar Color</Text>}>

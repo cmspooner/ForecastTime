@@ -1,7 +1,9 @@
 import { peerSocket } from "messaging";
 import { geolocation } from "geolocation";
+import { outbox } from "file-transfer";
+import * as cbor from "cbor";
 
-import { WEATHER_MESSAGE_KEY, Conditions } from './common.js';
+import { WEATHER_MESSAGE_KEY, WEATHER_DATA_FILE, WEATHER_ERROR_FILE, Conditions } from './common.js';
 
 export default class Weather {
   
@@ -11,6 +13,7 @@ export default class Weather {
     this._feelsLike = true;
     this._weather = undefined;
     this._maximumAge = 0;
+    this._maximumLocationAge = 30;
     this._unit = 'c'
 
     this.onerror = undefined;
@@ -20,7 +23,7 @@ export default class Weather {
       // We are receiving a request from the app
       if (evt.data !== undefined && evt.data[WEATHER_MESSAGE_KEY] !== undefined) {
         let message = evt.data[WEATHER_MESSAGE_KEY];
-        prv_fetchRemote(message.provider, message.apiKey, message.unit, message.feelsLike);
+        prv_fetchRemote(message.provider, message.apiKey, message.feelsLike, message.unit, message.maximumLocationAge);
       }
     });
   }
@@ -48,9 +51,13 @@ export default class Weather {
     this._maximumAge = maximumAge;
   }
   
+  setMaximumLocationAge(maximumAge){
+    this._maximumLocationAge = maximumAge;
+  }
+  
   fetch() {
     let now = new Date().getTime();
-    if(this._weather !== undefined && this._weather.timestamp !== undefined && (now - this._weather.timestamp < this._maximumAge)) {
+    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((now - this._weather.timestamp)/10000) < Math.round(this._maximumAge/10000))) {
       // return previous weather if the maximu age is not reached
       if(this.onsuccess) this.onsuccess(this._weather);
       return;
@@ -59,8 +66,9 @@ export default class Weather {
     geolocation.getCurrentPosition(
       (position) => {
         console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
-        prv_fetch(this._provider, this._apiKey, this._unit, this._feelsLike, position.coords.latitude, position.coords.longitude, 
+        prv_fetch(this._provider, this._apiKey, this._feelsLike, this_.unit, position.coords.latitude, position.coords.longitude, 
               (data) => {
+                data.provider = this._provider;
                 this._weather = data;
                 if(this.onsuccess) this.onsuccess(data);
               }, 
@@ -69,7 +77,7 @@ export default class Weather {
       (error) => {
         if(this.onerror) this.onerror(error);
       }, 
-      {"enableHighAccuracy" : false, "maximumAge" : 1000 * 1800});
+      {"enableHighAccuracy" : false, "maximumAge" : this._maximumLocationAge});
   }
 };
 
@@ -77,54 +85,45 @@ export default class Weather {
 /*********** PRIVATE FUNCTIONS  ************/
 /*******************************************/
 
-function prv_fetchRemote(provider, apiKey,  unit, feelsLike) {
+function prv_fetchRemote(provider, apiKey, feelsLike, unit, maximumLocationAge) {
   geolocation.getCurrentPosition(
     (position) => {
-      prv_fetch(provider, apiKey, unit, feelsLike, position.coords.latitude, position.coords.longitude,
+      console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+      prv_fetch(provider, apiKey, feelsLike, unit, position.coords.latitude, position.coords.longitude,
           (data) => {
-            if (peerSocket.readyState === peerSocket.OPEN) {
-              let answer = {};
-              answer[WEATHER_MESSAGE_KEY] = data;
-              peerSocket.send( answer );
-            } else {
-              console.log("Error: Connection is not open with the device");
-            }
+            data.provider = provider;
+            outbox
+              .enqueue(WEATHER_DATA_FILE, cbor.encode(data))
+              .catch(error => console.log("Failed to send weather: " + error));
           },
           (error) => { 
-            if (peerSocket.readyState === peerSocket.OPEN) {
-              let answer = {};
-              answer[WEATHER_MESSAGE_KEY] = { error : error };  
-              peerSocket.send( answer );
-            }
-            else {
-              console.log("Error : " + JSON.stringify(error) + " " + error); 
-            }
+            outbox
+              .enqueue(WEATHER_ERROR_FILE, cbor.encode({ error : error }))
+              .catch(error => console.log("Failed to send weather error: " + error));
           }
       );
     }, 
     (error) => {
-      if (peerSocket.readyState === peerSocket.OPEN) {
-        let answer = {};
-        answer[WEATHER_MESSAGE_KEY] = { error : error };  
-        peerSocket.send( answer );
-      }
-      else {
-        console.log("Location Error : " + error.message); 
-      }
+      outbox
+        .enqueue(WEATHER_ERROR_FILE, cbor.encode({ error : error }))
+        .catch(error => console.log("Failed to send weather error: " + error));
     }, 
-    {"enableHighAccuracy" : false, "maximumAge" : 1000 * 1800});
+    {"enableHighAccuracy" : false, "maximumAge" : maximumLocationAge});
 }
 
-function prv_fetch(provider, apiKey, unit, feelsLike, latitude, longitude, success, error) {
+function prv_fetch(provider, apiKey, feelsLike, unit, latitude, longitude, success, error) {
   // console.log("Latitude: " + latitude + " Longitude: " + longitude);
   if( provider === "owm" ) {
-    prv_queryOWMWeather(apiKey, latitude, longitude, success, error);
+    prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error);
   }
   else if( provider === "wunderground" ) {
-    prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, success, error);
+    prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, unit, success, error);
   }
   else if( provider === "darksky" ) {
-    prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, success, error);
+    prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, unit, success, error);
+  }
+  else if( provider === "weatherbit" ) {
+    prv_queryWeatherbit(apiKey, latitude, longitude, unit, success, error);
   }
   else 
   {
@@ -132,9 +131,15 @@ function prv_fetch(provider, apiKey, unit, feelsLike, latitude, longitude, succe
   }
 }
 
-function prv_queryOWMWeather(apiKey, latitude, longitude, success, error) {
-  var url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;
-
+function prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error) {
+  if (unit == 'f')
+    unit = 'imperial'
+  else
+    unit = 'metric'
+  
+  var url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude + '&units=' + unit;
+  console.log("Open Weather Map: " + url)
+  
   fetch(url)
   .then((response) => {return response.json()})
   .then((data) => { 
@@ -159,12 +164,14 @@ function prv_queryOWMWeather(apiKey, latitude, longitude, success, error) {
       }
       let weather = {
         //temperatureK : data.main.temp.toFixed(1),
+        temperature : data.main.temp,
         temperatureC : data.main.temp - 273.15,
         temperatureF : (data.main.temp - 273.15)*9/5 + 32,
         location : data.name,
         description : data.weather[0].description,
         isDay : (data.dt > data.sys.sunrise && data.dt < data.sys.sunset),
         conditionCode : condition,
+        realConditionCode : data.weather[0].id,
         sunrise : data.sys.sunrise * 1000,
         sunset : data.sys.sunset * 1000,
         timestamp : new Date().getTime()
@@ -175,15 +182,16 @@ function prv_queryOWMWeather(apiKey, latitude, longitude, success, error) {
   .catch((err) => { if(error) error(err); });
 };
 
-function prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, success, error) {
+function prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, unit, success, error) {
   var url = 'https://api.wunderground.com/api/' + apiKey + '/conditions/q/' + latitude + ',' + longitude + '.json';
-
+  console.log("Weather Underground: " + url)
+  
   fetch(url)
   .then((response) => {return response.json()})
   .then((data) => { 
       
       if(data.current_observation === undefined){
-        if(error) error(data);
+        if(error) error(data.response.error.description);
         return;
       }
 
@@ -215,17 +223,22 @@ function prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, success, err
       else {
         condition = Conditions.Unknown;
       }
-
-      var temp = feelsLike ? parseFloat(data.current_observation.feelslike_c) : data.current_observation.temp_c;
+ 
+      if (unit  == 'f')
+        var temp = feelsLike ? parseFloat(data.current_observation.feelslike_f) : data.current_observation.temp_f;
+      else
+        var temp = feelsLike ? parseFloat(data.current_observation.feelslike_c) : data.current_observation.temp_c;
 
       let weather = {
         //temperatureK : (temp + 273.15).toFixed(1),
+        temperature : temp,
         temperatureC : temp,
         temperatureF : (temp*9/5 + 32),
         location : data.current_observation.display_location.city,
         description : data.current_observation.weather,
         isDay : data.current_observation.icon_url.indexOf("nt_") == -1,
-        conditionCode :condition,
+        conditionCode : condition,
+        realConditionCode : data.current_observation.icon,
         sunrise : 0,
         sunset : 0,
         timestamp : new Date().getTime()
@@ -236,12 +249,17 @@ function prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, success, err
   .catch((err) => { if(error) error(err); });
 };
 
-function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, success, error) {
-  let url = 'https://api.darksky.net/forecast/' + apiKey + '/' + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si';
-
+function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, unit, success, error) {
+  if (unit == 'f')
+    unit = 'us'
+  else
+    unit = 'si'
+  let url = 'https://api.darksky.net/forecast/' + apiKey + '/' + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=' + unit;
+  console.log("Darksky: " + url)
+  
   fetch(url)
   .then((response) => {return response.json()})
-  .then((data) => {        
+  .then((data) => {       
     
       if(data.currently === undefined){
         if(error) error(data);
@@ -278,12 +296,14 @@ function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, success
 
       let weather = {
         //temperatureK : (temp + 273.15).toFixed(1),
+        temperature : temp,
         temperatureC : temp,
         temperatureF : (temp*9/5 + 32),
         location : "",
         description : data.currently.summary,
         isDay : data.currently.icon.indexOf("-day") > 0,
-        conditionCode :condition,
+        conditionCode : condition,
+        realConditionCode : data.currently.icon,
         sunrise : data.daily.data[0].sunriseTime * 1000,
         sunset : data.daily.data[0].sunsetTime * 1000,
         timestamp : new Date().getTime()
@@ -312,10 +332,12 @@ function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, success
 };
 
 function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
+  //latitude = "Concord";
+  //longitude = "NH";
   //var url = 'https://query.yahooapis.com/v1/public/yql?q=select astronomy, location.city, item.condition from weather.forecast where woeid in '+ '(select woeid from geo.places(1) where text=\'(' + latitude+','+longitude+')\') and u=\'c\'&format=json';
   var url = 'https://query.yahooapis.com/v1/public/yql?q=select astronomy, location.city, item from weather.forecast where woeid in ' + '(select woeid from geo.places(1) where text=\'(' + latitude+','+longitude+')\') and u=\''+ unit +'\'&format=json';
   
-  console.log(url);
+  console.log("Yahoo: " + url)
   fetch(encodeURI(url))
   .then((response) => {
     response.json()

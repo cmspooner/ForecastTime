@@ -1,16 +1,16 @@
 {
   "fitbit": {
-    "appUUID": "",
+    "appUUID": "a562a4b1-1ea1-4748-8987-41f94f0dd1fd",
     "appType": "clockface",
     "appDisplayName": "ForecastTime",
     "iconFile": "resources/icon.png",
-    "wipeColor": "#607d8b",
+    "wipeColor": "",
     "requestedPermissions": [
       "access_activity",
       "access_user_profile",
       "access_heart_rate",
-      "access_internet",
-      "access_location"
+      "access_location",
+      "access_internet"
     ],
     "buildTargets": [
       "higgs",
