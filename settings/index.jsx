@@ -18,7 +18,7 @@ function mySettings(props) {
             {name:"2 hours"},
           ]}
          />
-        <Text align="left">
+        <Text align="center">
           Decreasing this will use more WATCH battery. 
         </Text>
         <Select
@@ -32,7 +32,7 @@ function mySettings(props) {
             {name:"2 hours"},
           ]}
          />
-         <Text align="left">
+         <Text align="center">
            Decreasing this will use more PHONE battery.
          </Text>
          <Toggle
@@ -138,6 +138,12 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">Build Version and Notes</Text>}>
+        <Text>
+          Beta 0.2.1: Running.
+        </Text>
+	      <Text>
+          Beta 0.2: Updates from KearsargeTime.
+        </Text>
         <Text>
           Beta 0.1: Ported from KearsargeTime.
         </Text>

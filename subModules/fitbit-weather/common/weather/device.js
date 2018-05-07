@@ -44,14 +44,12 @@ const getCustomFile = function() {
 
 
 export default class Weather {
+  
   constructor() {
     this._apiKey = '';
     this._provider = 'yahoo';
     this._feelsLike = true;
-    //this._weather = undefined;
     this._maximumAge = 0;
-    this._maximumLocationAge = 30;
-    this._unit = 'c'
     
     try {
       this._weather = fs.readFileSync(WEATHER_DATA_FILE, "cbor");
@@ -79,13 +77,6 @@ export default class Weather {
     this._apiKey = apiKey;
   }
   
-  setUnit(unit){
-    if (unit == "f")
-      this._unit = 'f';
-    else
-      this._unit = 'c';
-  }
-  
   setProvider(provider) {
     this._provider = provider;
   }
@@ -98,24 +89,14 @@ export default class Weather {
     this._maximumAge = maximumAge;
   }
   
-  setMaximumLocationAge(maximumAge){
-    this._maximumLocationAge = maximumAge;
-  }
-  
   getData() {
     return this._weather;
   }
   
   fetch() {
-    console.log("I'm a fetch'n some weather!");
     let now = new Date().getTime();
-    if(this._weather !== undefined && this._weather.timestamp !== undefined){
-      console.log("Now: " + now + ", Time Stamp: " + this._weather.timestamp);
-      console.log("Time Diff: " + Math.round((now - this._weather.timestamp)/100000) + ", "  + Math.round(this._maximumAge/100000));
-    }
-    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((now - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000))) {
+    if(this._weather !== undefined && this._weather.timestamp !== undefined && (now - this._weather.timestamp < this._maximumAge)) {
       // return previous weather if the maximum age is not reached
-      console.log("Nevermind...I already have it");
       if(this.onsuccess) this.onsuccess(this._weather);
       return this._weather;
     }
@@ -123,7 +104,7 @@ export default class Weather {
     if (peerSocket.readyState === peerSocket.OPEN) {
       // Send a command to the companion
       let message = {};
-      let params = { apiKey : this._apiKey, provider : this._provider, feelsLike : this._feelsLike, unit : this._unit, maximumLocationAge : this._maximumLocationAge};
+      let params = { apiKey : this._apiKey, provider : this._provider, feelsLike : this._feelsLike };
       message[WEATHER_MESSAGE_KEY] = params;
       peerSocket.send(message);
     }

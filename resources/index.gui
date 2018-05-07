@@ -37,7 +37,7 @@
     <text id="todayLowValLabel" />
     
     <text id="tomorrowDateLabel" />
-    <image id="tomorrowWeatherImage" x="10" y="43%" width="60" height="60" href="" load="sync"/>
+    <image id="tomorrowWeatherImage" x="10" y="42%" width="60" height="60" href="" load="sync"/>
     <text id="tomorrowDescriptionLabel" />
     <text id="tomorrowHighLabel" />
     <text id="tomorrowHighValLabel" />
@@ -45,7 +45,7 @@
     <text id="tomorrowLowValLabel" />
     
     <text id="day3DateLabel" />
-    <image id="day3WeatherImage" x="10" y="78%" width="60" height="60" href="" load="sync"/>
+    <image id="day3WeatherImage" x="10" y="77%" width="60" height="60" href="" load="sync"/>
     <text id="day3DescriptionLabel" />
     <text id="day3HighLabel" />
     <text id="day3HighValLabel" />

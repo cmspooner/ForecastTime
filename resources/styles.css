@@ -78,8 +78,9 @@
 #tempAndConditionLabel {
   font-size: 28;
   font-family: Colfax-Bold;
-  text-length: 50;
+  text-length: 20;
   text-anchor: start;
+  text-overflow: ellipsis;
   x: 75;
   y: 83%;
   fill: silver;
@@ -88,8 +89,9 @@
 #weatherLocationLabel {
   font-size: 28;
   font-family: Colfax-Regular;
-  text-length: 50;
+  text-length: 20;
   text-anchor: start;
+  text-overflow: ellipsis;
   x: 75;
   y: 95%;
   fill: silver;
@@ -161,8 +163,9 @@
 #todayDescriptionLabel {
   font-size: 26;
   font-family: Colfax-Medium;
-  text-length: 50;
+  text-length: 16;
   text-anchor: start;
+  text-overflow: ellipsis;
   x: 75;
   y: 19%;
   fill: white;
@@ -212,15 +215,16 @@
   text-length: 50;
   text-anchor: start;
   x: 1%;
-  y: 43%;
+  y: 42%;
   fill: white;
 }
 
 #tomorrowDescriptionLabel {
   font-size: 26;
   font-family: Colfax-Medium;
-  text-length: 50;
+  text-length: 16;
   text-anchor: start;
+  text-overflow: ellipsis;
   x: 75;
   y: 53%;
   fill: white;
@@ -277,8 +281,9 @@
 #day3DescriptionLabel {
   font-size: 26;
   font-family: Colfax-Medium;
-  text-length: 50;
+  text-length: 16;
   text-anchor: start;
+  text-overflow: ellipsis;
   x: 75;
   y: 88%;
   fill: white;

@@ -135,16 +135,25 @@ export function isInRange(value, low, high){
 }
 
 export function shortenText(text){
-  text = text.replace("And", "&");
+  text = text.replace("North", "N.");
+  text = text.replace("East", "E.");
+  text = text.replace("South", "S.");
+  text = text.replace("West", "W.");
+  
+  console.log(text.indexOf("Rain"));
+  if (text.indexOf("Rain") != -1)
+    text = text.replace("Showers", "");
+  else
+    text = text.replace("Showers", "Rain");
+  
+  text = text.replace("And ", "& ");
   text = text.replace("Mixed ", "");
   text = text.replace("Severe", "Bad");
   text = text.replace("Thunderstorms", "T-Storms");
   text = text.replace("Partly Cloudy", "Some Clouds");
   text = text.replace("Thundershowers", "T-Showers");
-  if (text == "Isolated Showers" || text == "Scattered Showers")
-    text = "Some Rain"
-  else if (text != "Showers")
-    text = text.replace("Showers", "");
+  text = text.replace("Isolated", "Some");
+  text = text.replace("Scattered", "Some");
   
   return text;  
 }
