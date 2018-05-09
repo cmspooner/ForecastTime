@@ -366,8 +366,11 @@ function updateStatsData(){
       distStatsLabel.style.fill = util.goalToColor(today.adjusted.distance, goals.distance);
       distStatsLabel.text = "Distance:";
       distGoalLabel.style.fill = util.goalToColor(today.adjusted.distance, goals.distance);
-      distGoalLabel.text = `${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.000621371) : 0 } / ${util.round2(goals.distance*0.000621371)}`;
-       
+      if (units.distance == "us")
+        distGoalLabel.text = `${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.000621371) : 0 } / ${util.round2(goals.distance*0.000621371)}`;
+      else
+        distGoalLabel.text = `${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.001) : 0 } / ${util.round2(goals.distance*0.001)}`;
+      
       floorsStatsLabel.style.fill = util.goalToColor(today.adjusted.elevationGain, goals.elevationGain);
       floorsStatsLabel.text = "Floors:";
       floorsGoalLabel.style.fill = util.goalToColor(today.adjusted.elevationGain, goals.elevationGain);
@@ -388,7 +391,10 @@ function updateStatsData(){
 
       // Multiply by .000621371 to convert from meters to miles
       distStatsLabel.style.fill = util.goalToColor(today.adjusted.distance, goals.distance);
-      distStatsLabel.text = `Distance: ${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.000621371) : 0 } / ${util.round2(goals.distance*0.000621371)}`;
+       if (units.distance == "us")
+         distStatsLabel.text = `Distance: ${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.000621371) : 0 } / ${util.round2(goals.distance*0.000621371)}`;
+       else
+         distStatsLabel.text = `Distance: ${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.001) : 0 } / ${util.round2(goals.distance*0.001)}`;
 
       floorsStatsLabel.style.fill = util.goalToColor(today.local.elevationGain, goals.elevationGain);
       floorsStatsLabel.text = `Floors: ${today.local.elevationGain ? today.local.elevationGain : 0} / ${goals.elevationGain}`;
@@ -498,7 +504,6 @@ display.onchange = function() {
     updateClockData();
     weather.fetch();
     clockView.style.display = "inline"; //test
-    weatherView.style.display = "inline";//test
     statsView.style.display = "none";
     forecastView.style.display = "none";
   } else {

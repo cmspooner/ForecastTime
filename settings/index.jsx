@@ -138,6 +138,9 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">Build Version and Notes</Text>}>
+         <Text>
+          Beta 0.3: Units Fixed.
+        </Text>
         <Text>
           Beta 0.2.1: Running.
         </Text>
