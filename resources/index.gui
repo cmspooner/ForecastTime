@@ -12,8 +12,14 @@
     <image x="30%" y="61%" width="18" height="18" href="icons/18/steps.png" load="sync"/>
     <text id="stepsLabel" />
     <image id="weatherImage" x="10" y="74%" width="60" height="60" href="" load="sync"/>
-    <text id="tempAndConditionLabel" />
-    <text id="weatherLocationLabel" />
+    <use id="tempAndConditionLabel" href='#marquee-text' value="50" font-size='28' font-family="Colfax-Bold" 
+          width='70%' height='13%' x="75" y ="76%" fill='white'>
+       <set href='group/text' attributeName='text-buffer' />
+    </use>
+    <use id="weatherLocationLabel" href='#marquee-text' value="50" font-size='28' font-family="Colfax-Regular" 
+          width='70%' height='11%' x="75" y ="89%" fill='white'>
+       <set href='group/text' attributeName='text-buffer' />
+    </use>
   </svg>
   <svg id="stats" display="none">
     <image x="0" y="4%" width="21" height="21" href="icons/21/steps.png" load="sync"/>

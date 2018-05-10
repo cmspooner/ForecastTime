@@ -7,6 +7,14 @@ function mySettings(props) {
            settingsKey="unitToggle"
            label="Tempterature in °F or °C"
          />
+        <Toggle
+           settingsKey="weatherScrollToggle"
+           label="Dissable weather scrolling"
+         />
+         <Toggle
+           settingsKey="locationScrollToggle"
+           label="Dissable location scrolling"
+         />
         <Select
           label={`Weather Update Interval`}
           settingsKey="updateInterval"
@@ -139,16 +147,7 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">Build Version and Notes</Text>}>
          <Text>
-          Beta 0.3: Units Fixed.
-        </Text>
-        <Text>
-          Beta 0.2.1: Running.
-        </Text>
-	      <Text>
-          Beta 0.2: Updates from KearsargeTime.
-        </Text>
-        <Text>
-          Beta 0.1: Ported from KearsargeTime.
+          1.0: First Release.
         </Text>
       </Section>
     </Page>
