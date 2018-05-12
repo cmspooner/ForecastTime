@@ -9,11 +9,11 @@ function mySettings(props) {
          />
         <Toggle
            settingsKey="weatherScrollToggle"
-           label="Dissable weather scrolling"
+           label="Disable weather scrolling"
          />
          <Toggle
            settingsKey="locationScrollToggle"
-           label="Dissable location scrolling"
+           label="Disable location scrolling"
          />
         <Select
           label={`Weather Update Interval`}
@@ -56,11 +56,11 @@ function mySettings(props) {
            label="Show number of weather attempts"
          />
         <Text align="left">
-          These are mostly for informataion for nerds and depugging.
+          These are mostly for information for nerds and debugging.
          </Text>
       </Section>
       <Section
-        title={<Text bold align="center">Seperator Bar Color</Text>}>
+        title={<Text bold align="center">Separator Bar Color</Text>}>
         <Text align="center">
           Color when not over-ridden
         </Text>
@@ -120,7 +120,7 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">Contact Me</Text>}>
         <Text>
-          Please don't hesitiate to contact me with questions or suggestions. This and all my other apps will always be free and Open Source. If you really like my app please considder buying me a coffee (or more likely electonic components that end up in my classroom). Thanks!
+          Please don't hesitiate to contact me with questions or suggestions; but be sure to let me know which app or watchface you are talking about. This and all my other apps will always be free and Open Source. If you really like my app please considder buying me a coffee (or more likely electonic components that end up in my classroom). Thanks!
         </Text>
         <Link source="https://rawgit.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/master/settings/email.html">
           <TextImageRow
@@ -146,6 +146,15 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">Build Version and Notes</Text>}>
+        <Text>
+          1.3: Fixed disabled typo.
+         </Text>
+         <Text>
+          1.2: Missed changing some references to local fitness values to account values.
+         </Text>
+         <Text>
+           1.1: Added scrolling text for long locations & conditions.
+        </Text>
          <Text>
           1.0: First Release.
         </Text>

@@ -404,14 +404,14 @@ function updateStatsData(){
        else
          distStatsLabel.text = `Distance: ${today.adjusted.distance ? util.round2(today.adjusted.distance * 0.001) : 0 } / ${util.round2(goals.distance*0.001)}`;
 
-      floorsStatsLabel.style.fill = util.goalToColor(today.local.elevationGain, goals.elevationGain);
-      floorsStatsLabel.text = `Floors: ${today.local.elevationGain ? today.local.elevationGain : 0} / ${goals.elevationGain}`;
+      floorsStatsLabel.style.fill = util.goalToColor(today.adjusted.elevationGain, goals.elevationGain);
+      floorsStatsLabel.text = `Floors: ${today.adjusted.elevationGain ? today.adjusted.elevationGain : 0} / ${goals.elevationGain}`;
 
-      activeStatsLabel.style.fill = util.goalToColor(today.local.activeMinutes, goals.activeMinutes);
-      activeStatsLabel.text = `Active: ${today.local.activeMinutes ? today.local.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
+      activeStatsLabel.style.fill = util.goalToColor(today.adjusted.activeMinutes, goals.activeMinutes);
+      activeStatsLabel.text = `Active: ${today.adjusted.activeMinutes ? today.adjusted.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
 
-      calsStatsLabel.style.fill = util.goalToColor(today.local.calories, goals.calories);
-      calsStatsLabel.text = `Calories: ${today.local.calories ? today.local.calories.toLocaleString() : 0} / ${parseInt(goals.calories).toLocaleString()}`;
+      calsStatsLabel.style.fill = util.goalToColor(today.adjusted.calories, goals.calories);
+      calsStatsLabel.text = `Calories: ${today.adjusted.calories ? today.adjusted.calories.toLocaleString() : 0} / ${parseInt(goals.calories).toLocaleString()}`;
     }
   }
 }
