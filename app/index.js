@@ -19,6 +19,8 @@ import { preferences } from "user-settings";
 import { units } from "user-settings";
 import { vibration } from "haptics"
 import { battery } from "power";
+import { memory } from "system";
+console.log("JS memory: " + memory.js.used + "/" + memory.js.total);
 
 import * as util from "../common/utils";
 
@@ -31,6 +33,7 @@ if (device.screen.width == 300 && device.screen.height == 300)
 
 const SETTINGS_TYPE = "cbor";
 const SETTINGS_FILE = "settings.cbor";
+
 
 var color = "deepskyblue";
 var updateInterval = 30;
@@ -170,6 +173,8 @@ messaging.peerSocket.onmessage = evt => {
     setLocationScroll();
   }
   saveSettings();
+  console.log("JS memory: " + memory.js.used + "/" + memory.js.total);
+
 };
 
 // Message socket opens
