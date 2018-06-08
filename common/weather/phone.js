@@ -332,9 +332,6 @@ function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, unit, s
 };
 
 function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
-  //latitude = "Concord";
-  //longitude = "NH";
-  //var url = 'https://query.yahooapis.com/v1/public/yql?q=select astronomy, location.city, item.condition from weather.forecast where woeid in '+ '(select woeid from geo.places(1) where text=\'(' + latitude+','+longitude+')\') and u=\'c\'&format=json';
   var url = 'https://query.yahooapis.com/v1/public/yql?q=select astronomy, location.city, item from weather.forecast where woeid in ' + '(select woeid from geo.places(1) where text=\'(' + latitude+','+longitude+')\') and u=\''+ unit +'\'&format=json';
   
   console.log("Yahoo: " + url)
@@ -350,9 +347,11 @@ function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
       
       //console.log(JSON.stringify(data));
       
-      var condition = parseInt(data.query.results.channel.item.condition.code);
-      var rawCondition = condition;
+      //var condition = parseInt(data.query.results.channel.item.condition.code);
+      //var rawCondition = condition;
 
+      //console.log("*************> Code: " + getSimpleCondition(parseInt(data.query.results.channel.item.condition.code)),)
+      
       var current_time = new Date();
       var sunrise_time = prv_timeParse(data.query.results.channel.astronomy.sunrise);
       var sunset_time  = prv_timeParse(data.query.results.channel.astronomy.sunset);
@@ -362,10 +361,10 @@ function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
         location : data.query.results.channel.location.city,
         description : data.query.results.channel.item.condition.text,
         isDay : current_time >  sunrise_time && current_time < sunset_time,
-        rawCondition : rawCondition,
-        conditionCode : getSimpleCondition(condition),
-        sunrise : sunrise_time.getTime(),
-        sunset : sunset_time.getTime(),
+        //rawCondition : condition,
+        conditionCode : getSimpleCondition(parseInt(data.query.results.channel.item.condition.code)),
+        //sunrise : sunrise_time.getTime(),
+        //sunset : sunset_time.getTime(),
         timestamp : current_time.getTime(),
         
         //todayDate : "Today",

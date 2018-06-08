@@ -15,7 +15,7 @@ inbox.nextFile = function() {
     return otherFiles.pop()
   }
   
-  var fileName
+  let fileName
   while (fileName = prevNextFile()) {
     if (MY_FILE_NAMES.indexOf(fileName) > -1) {
       myFiles.push(fileName)
@@ -32,7 +32,7 @@ const getCustomFile = function() {
     return myFiles.pop()
   }
   
-  var fileName
+  let fileName
   while (fileName = prevNextFile()) {
     if (MY_FILE_NAMES.indexOf(fileName) > -1) {
       return fileName
@@ -64,7 +64,7 @@ export default class Weather {
     
     // Event occurs when new file(s) are received
     inbox.addEventListener("newfile", (event) => {
-      var fileName = getCustomFile();
+      let fileName = getCustomFile();
       if (fileName === WEATHER_DATA_FILE) {
         this._weather = readFileSync(fileName, "cbor");
         if(this.onsuccess) this.onsuccess(this._weather);
@@ -108,12 +108,9 @@ export default class Weather {
   
   fetch() {
     console.log("I'm a fetch'n some weather!");
-    let now = new Date().getTime();
     if(this._weather !== undefined && this._weather.timestamp !== undefined){
-      console.log("Now: " + now + ", Time Stamp: " + this._weather.timestamp);
-      console.log("Time Diff: " + Math.round((now - this._weather.timestamp)/100000) + ", "  + Math.round(this._maximumAge/100000));
     }
-    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((now - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000))) {
+    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((new Date().getTime() - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000))) {
       // return previous weather if the maximum age is not reached
       console.log("Nevermind...I already have it");
       if(this.onsuccess) this.onsuccess(this._weather);

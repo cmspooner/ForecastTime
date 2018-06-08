@@ -15,7 +15,7 @@
   font-family: Colfax-Medium;
   text-length: 50;
   text-anchor: start;
-  x: 20;
+  x: 15;
   y: 24;
   fill: white;
 }
@@ -25,8 +25,8 @@
   font-family: Colfax-Medium;
   text-length: 4;
   text-anchor: end;
-  x: 92%;
-  y: 8%;
+  x: 320;
+  y: 20;
   fill: white;
 }
 
@@ -73,31 +73,6 @@
   y: 68%;
   fill: white;
 }
-
-/* Weather */
-/*
-#tempAndConditionLabel {
-  font-size: 28;
-  font-family: Colfax-Bold;
-  text-length: 20;
-  text-anchor: start;
-  text-overflow: ellipsis;
-  x: 75;
-  y: 83%;
-  fill: silver;
-}
-
-#weatherLocationLabel {
-  font-size: 28;
-  font-family: Colfax-Regular;
-  text-length: 20;
-  text-anchor: start;
-  text-overflow: ellipsis;
-  x: 75;
-  y: 95%;
-  fill: silver;
-}
-*/
 
 /* Stats View Labels */
 #stepStatsLabel {
@@ -156,7 +131,7 @@
   font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
-  x: 1%;
+  x: 50;
   y: 8%;
   fill: white;
 }
@@ -215,7 +190,7 @@
   font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
-  x: 1%;
+  x: 50;
   y: 42%;
   fill: white;
 }
@@ -274,7 +249,7 @@
   font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
-  x: 1%;
+  x: 50;
   y: 77%;
   fill: white;
 }

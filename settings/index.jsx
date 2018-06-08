@@ -2,22 +2,43 @@ function mySettings(props) {
   return (
     <Page>
       <Section
+        title={<Text bold align="center">Heading</Text>}>
+        <Select
+          label={`Date Format`}
+          settingsKey="dateFormat"
+          options={[
+            {name:"Mon, Jan 31"},
+            {name:"Jan 31, 2018"},
+            {name:"1/31/2018"},
+            {name:"Mon 31 Jan"},
+            {name:"31. Jan 2018"},
+            {name:"31/1/2018"},
+            {name:"2018.01.31"},
+            {name:"31. 1. 2018"},
+            {name:"31.01.2018"},
+          ]}
+          />
+        <Toggle
+           settingsKey="batteryToggle"
+           label="Change Battery Bar to Battery %" 
+           onChange={value => props.settingsStorage.setItem('unit', value.toString())}
+         />
+      </Section>
+      <Section
         title={<Text bold align="center">Weather</Text>}>
         <Toggle
            settingsKey="unitToggle"
-           label="US or Metric Units" 
+           label="Set Temperature units to Celsius" 
            onChange={value => props.settingsStorage.setItem('unit', value.toString())}
-        />
-        <Text>Temperatures in degrees {props.settingsStorage.getItem('unit') == "true" ? "celsius" : "fahrenheit"}</Text>
-      
+         />
         <Toggle
            settingsKey="weatherScrollToggle"
            label="Disable weather scrolling"
-        />
-        <Toggle
+         />
+         <Toggle
            settingsKey="locationScrollToggle"
            label="Disable location scrolling"
-        />
+         />
         <Select
           label={`Weather Update Interval`}
           settingsKey="updateInterval"
@@ -57,6 +78,10 @@ function mySettings(props) {
          <Toggle
            settingsKey="failCountToggle"
            label="Show number of weather attempts"
+         />
+        <Toggle
+           settingsKey="fetchToggle"
+           label="Show when weather is fetched"
          />
         <Text align="left">
           These are mostly for information for nerds and debugging.
@@ -145,7 +170,14 @@ function mySettings(props) {
         </Link>
       </Section>
       <Section
+        
         title={<Text bold align="center">Build Version and Notes</Text>}>
+        <Text>
+          3.0: More date formats and now moved date and steps to accommodate low battery and charging states.
+         </Text>
+        <Text>
+          2.0: Memory Improvements and Weather is now restored on load.
+        </Text>
         <Text>
           1.4: Settings now shows units
          </Text>
