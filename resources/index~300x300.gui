@@ -9,11 +9,11 @@
     <circle id = "seperatorEndRight"cx="97%" cy="15%" />
     <text id="clockLabel" />
     <image x="23%" y="44%" width="18" height="18" href="icons/21/heart.png" load="sync"/>
-    <text id="hrLabel" />
+    <text id="hrLabel" class="data" y="50%"/>
     <image x="23%" y="55%" width="18" height="18" href="icons/21/steps.png" load="sync"/>
-    <text id="stepsLabel" />
+    <text id="stepsLabel" class="data" y="61%" />
     <image x="23%" y="66%" width="18" height="18" href="icons/21/calories.png" load="sync"/>
-    <text id="calsLabel" />
+    <text id="calsLabel" class="data" y="72%"/>
     <image id="weatherImage" x="10" y="77%" width="60" height="60" href="" load="sync"/>
     <use id="tempAndConditionLabel" href='#marquee-text' value="50" font-size='28' font-family="Colfax-Bold" 
           width='70%' height='10%' x="75" y ="78%" fill='white'>
@@ -26,45 +26,45 @@
   </svg>
   <svg id="stats" display="none">
     <image id="stepsStatsImage" x="0" y="2%" width="21" height="21" href="icons/21/steps.png" load="sync"/>
-    <text id="stepStatsLabel" />
-    <text id="stepGoalLabel" />
+    <text id="stepStatsLabel" class="stats" y="10%"/>
+    <text id="stepGoalLabel" class="goal" y="19%"/>
     <image x="0" y="22%" width="21" height="21" href="icons/21/distance.png" load="sync"/>
-    <text id="distStatsLabel" />
-    <text id="distGoalLabel" />
+    <text id="distStatsLabel" class="stats" y="29%"/>
+    <text id="distGoalLabel" class="goal" y="38%"/>
     <image x="0" y="41%" width="21" height="21" href="icons/21/stairs.png" load="sync"/>
-    <text id="floorsStatsLabel" />
-    <text id="floorsGoalLabel" />
+    <text id="floorsStatsLabel" class="stats" y="48%"/>
+    <text id="floorsGoalLabel" class="goal" y="57%"/>
     <image x="0" y="60%" width="21" height="21" href="icons/21/watch.png" load="sync"/>
-    <text id="activeStatsLabel" />
-    <text id="activeGoalLabel" />
+    <text id="activeStatsLabel" class="stats" y="67%"/>
+    <text id="activeGoalLabel" class="goal" y="76%"/>
     <image x="0" y="79%" width="21" height="21" href="icons/21/calories.png" load="sync"/>
-    <text id="calsStatsLabel" />
-    <text id="calsGoalLabel" />
+    <text id="calsStatsLabel" class="stats" y="86%"/>
+    <text id="calsGoalLabel" class="goal" y="95%"/>
   </svg>
   <svg id="forecast" display="none">
-    <text id="todayDateLabel" />
+    <text id="todayDateLabel" class="forecastDate" y="8%"/>
     <image id="todayWeatherImage" x="10" y="8%" width="60" height="60" href="" load="sync"/>
-    <text id="todayDescriptionLabel" />
-    <text id="todayHighLabel" />
-    <text id="todayHighValLabel" />
-    <text id="todayLowLabel" />
-    <text id="todayLowValLabel" />
+    <text id="todayDescriptionLabel" class="forecastDescription" y="18%"/>
+    <text id="todayHighLabel" class="forecastHigh" y = "28%" />
+    <text id="todayHighValLabel" class="forecastHighVal" y = "28%" />
+    <text id="todayLowLabel" class="forecastLow" y = "28%"/>
+    <text id="todayLowValLabel" class="forecastLowVal" y="28%"/>
     
-    <text id="tomorrowDateLabel" />
+    <text id="tomorrowDateLabel" class="forecastDate" y="43%"/>
     <image id="tomorrowWeatherImage" x="10" y="43%" width="60" height="60" href="" load="sync"/>
-    <text id="tomorrowDescriptionLabel" />
-    <text id="tomorrowHighLabel" />
-    <text id="tomorrowHighValLabel" />
-    <text id="tomorrowLowLabel" />
-    <text id="tomorrowLowValLabel" />
+    <text id="tomorrowDescriptionLabel" class="forecastDescription" y="53%"/>
+    <text id="tomorrowHighLabel" class="forecastHigh" y = "63%" />
+    <text id="tomorrowHighValLabel" class="forecastHighVal" y = "63%" />
+    <text id="tomorrowLowLabel"class="forecastLow" y = "63%" />
+    <text id="tomorrowLowValLabel" class="forecastLowVal" y="63%"/>
     
-    <text id="day3DateLabel" />
+    <text id="day3DateLabel" class="forecastDate" y="78%"/>
     <image id="day3WeatherImage" x="10" y="78%" width="60" height="60" href="" load="sync"/>
-    <text id="day3DescriptionLabel" />
-    <text id="day3HighLabel" />
-    <text id="day3HighValLabel" />
-    <text id="day3LowLabel" />
-    <text id="day3LowValLabel" />
+    <text id="day3DescriptionLabel" class="forecastDescription" y="88%" />
+    <text id="day3HighLabel"class="forecastHigh" y = "98%" />
+    <text id="day3HighValLabel" class="forecastHighVal" y = "98%" />
+    <text id="day3LowLabel" class="forecastLow" y = "98%" />
+    <text id="day3LowValLabel" class="forecastLowVal" y="98%" />
   </svg>
   <rect id="clickbg" pointer-events="visible"/>
 </svg>

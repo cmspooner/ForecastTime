@@ -54,251 +54,77 @@
   fill: white;
 }
 
-#hrLabel {
+.data {
   font-size: 25;
   font-family: Colfax-Regular;
   text-anchor: start;
-  text-length: 32;
+  text-length: 33;
   x: 37%;
-  y: 56%;
-  fill: white;
-}
-
-#stepsLabel {
-  font-size: 25;
-  font-family: Colfax-Regular;
-  text-anchor: start;
-  text-length: 32;
-  x: 37%;
-  y: 68%;
   fill: white;
 }
 
 /* Stats View Labels */
-#stepStatsLabel {
+.stats {
   font-size: 30;
   font-family: Colfax-Medium;
   text-anchor: start;
   text-length: 32;
   x: 25;
-  y: 12%;
   fill: white;
 }
 
-#distStatsLabel {
-  font-size: 30;
-  font-family: Colfax-Medium;
-  text-anchor: start;
-  text-length: 32;
-  x: 25;
-  y: 32%;
-  fill: white;
-}
-
-#floorsStatsLabel {
-  font-size: 30;
-  font-family: Colfax-Medium;
-  text-anchor: start;
-  text-length: 32;
-  x: 25;
-  y: 52%;
-  fill: white;
-}
-
-#activeStatsLabel {
-  font-size: 30;
-  font-family: Colfax-Medium;
-  text-anchor: start;
-  text-length: 32;
-  x: 25;
-  y: 72%;
-  fill: white;
-}
-
-#calsStatsLabel {
-  font-size: 30;
-  font-family: Colfax-Medium;
-  text-anchor: start;
-  text-length: 32;
-  x: 25;
-  y: 92%;
-  fill: white;
-}
 
 /* Forcast Labels */
-#todayDateLabel {
-  font-size: 28;
+.forecastDate {
+  font-size: 26;
   font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
   x: 50;
-  y: 8%;
   fill: white;
 }
 
-#todayDescriptionLabel {
-  font-size: 26;
-  font-family: Colfax-Medium;
-  text-length: 16;
-  text-anchor: start;
-  text-overflow: ellipsis;
-  x: 75;
-  y: 19%;
-  fill: white;
-}
-
-#todayHighLabel {
+.forecastDescription {
   font-size: 24;
+  font-family: Colfax-Medium;
+  text-length: 50;
+  text-anchor: start;
+  x: 75;
+  fill: white;
+}
+
+.forecastHigh {
+  font-size: 22;
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
   x: 75;
-  y: 29%;
   fill: white;
 }
-#todayHighValLabel {
-  font-size: 24;
+
+.forecastHighVal {
+  font-size: 22;
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
   x: 135;
-  y: 29%;
   fill: red;
 }
 
-#todayLowLabel {
-  font-size: 28;
+.forecastLow {
+  font-size: 22;
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
   x: 183;
-  y: 29%;
   fill: white;
 }
-#todayLowValLabel {
-  font-size: 28;
+
+.forecastLowVal{
+  font-size: 22;
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
   x: 246;
-  y: 29%;
-  fill: cornflowerblue;
-}
-
-#tomorrowDateLabel {
-  font-size: 28;
-  font-family: Colfax-Bold;
-  text-length: 50;
-  text-anchor: start;
-  x: 50;
-  y: 42%;
-  fill: white;
-}
-
-#tomorrowDescriptionLabel {
-  font-size: 26;
-  font-family: Colfax-Medium;
-  text-length: 16;
-  text-anchor: start;
-  text-overflow: ellipsis;
-  x: 75;
-  y: 53%;
-  fill: white;
-}
-
-#tomorrowHighLabel {
-  font-size: 24;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 75;
-  y: 63%;
-  fill: white;
-}
-#tomorrowHighValLabel {
-  font-size: 24;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 135;
-  y: 63%;
-  fill: red;
-}
-
-#tomorrowLowLabel {
-  font-size: 28;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 183;
-  y: 63%;
-  fill: white;
-}
-#tomorrowLowValLabel {
-  font-size: 28;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 246;
-  y: 63%;
-  fill: cornflowerblue;
-}
-
-#day3DateLabel {
-  font-size: 28;
-  font-family: Colfax-Bold;
-  text-length: 50;
-  text-anchor: start;
-  x: 50;
-  y: 77%;
-  fill: white;
-}
-
-#day3DescriptionLabel {
-  font-size: 26;
-  font-family: Colfax-Medium;
-  text-length: 16;
-  text-anchor: start;
-  text-overflow: ellipsis;
-  x: 75;
-  y: 88%;
-  fill: white;
-}
-
-#day3HighLabel {
-  font-size: 24;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 75;
-  y: 98%;
-  fill: white;
-}
-#day3HighValLabel {
-  font-size: 24;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 135;
-  y: 98%;
-  fill: red;
-}
-
-#day3LowLabel {
-  font-size: 28;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 183;
-  y: 98%;
-  fill: white;
-}
-#day3LowValLabel {
-  font-size: 28;
-  font-family: Colfax-Regular;
-  text-length: 50;
-  text-anchor: start;
-  x: 246;
-  y: 98%;
   fill: cornflowerblue;
 }

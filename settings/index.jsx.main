@@ -67,9 +67,9 @@ function mySettings(props) {
          <Text align="center">
            Decreasing this will use more PHONE battery.
          </Text>
-        <Toggle
-           settingsKey="dataAgeToggle"
-           label="Show time of last weather update"
+         <Toggle
+           settingsKey="failCountToggle"
+           label="Show number of weather attempts"
          />
         <Toggle
            settingsKey="fetchToggle"
@@ -164,12 +164,6 @@ function mySettings(props) {
       <Section
         
         title={<Text bold align="center">Build Version and Notes</Text>}>
-        <Text>
-          4.0.1: Fixed screen wake draw issues
-        </Text>
-        <Text>
-          4.0: Moving Development here
-        </Text>
         <Text>
           3.0: More date formats and now moved date and steps to accommodate low battery and charging states.
          </Text>

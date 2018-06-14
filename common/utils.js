@@ -1,12 +1,14 @@
+import * as allStrings from "../app/strings.js";
+
 function months (){
   return [
     "Jan.", 
     "Feb.", 
     "Mar.", 
     "Apr.", 
-    "May", 
-    "June", 
-    "July", 
+    "May.", 
+    "Jun.", 
+    "Jul.", 
     "Aug.", 
     "Sept.", 
     "Oct.",
@@ -114,9 +116,9 @@ export function goalToColor(value, total, low = 'fb-red',
   
   let percent = value/total*100;
   let color = 'white'; // #FFFFFF
-  if (percent < 33.33){
+  if (percent < 33){
     color = low; // #F83C40
-  } else if (percent < 66.66){
+  } else if (percent < 66){
     color = medium; // #FFCC33
   } else if (percent < 100){
     color = high;  // #14D3F5
@@ -134,20 +136,22 @@ export function isInRange(value, low, high){
   return value >= low && value < high;
 }
 
-export function dateParse(fmt, today){
+export function dateParse(fmt, today, loc){
+  let strings = allStrings.getStrings(loc, "date");
+
   //dateLabel.text = `${util.toDay(today.getDay(), "short")}, ${util.toMonth(today.getMonth())} ${today.getDate()}`;
   //return toDay(today.getDay(), "short")+", " + toMonth(today.getMonth()) + " " + today.getDate();
   switch (fmt){
     case "Mon, Jan 31":
-      return toDay(today.getDay(), "short") + ", " + toMonth(today.getMonth()) + " " + today.getDate();
+      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + " " + today.getDate();
     case "Jan 31, 2018":
-      return toMonth(today.getMonth()) + " " + today.getDate() + ", " + (today.getYear()+1900);
+      return strings[toMonth(today.getMonth())] + " " + today.getDate() + ", " + (today.getYear()+1900);
     case "1/31/2018":
       return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
     case "Mon 31 Jan":
-      return toDay(today.getDay(), "short") + " " + today.getDate() + " " + toMonth(today.getMonth());
+      return strings[toDay(today.getDay(), "short")] + " " + today.getDate() + " " + strings[toMonth(today.getMonth())];
     case "31. Jan 2018":
-      return today.getDate() + ". " + toMonth(today.getMonth()) + " " + (today.getYear()+1900);
+      return today.getDate() + ". " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
     case "31/1/2018":
       return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
     case "2018.01.31":
@@ -194,56 +198,20 @@ export function wordStartsWith(letter, text){
     return false;
 }
 
-export function getWeatherIcon(data){
-  switch(data.conditionCode){
+export function getForecastIcon(code, description, isDay){
+  switch(code){
     case 0: //ClearSky
-      if (data.isDay)
+      if (isDay)
         return "../resources/icons/weather/whiteSun.png"
       else
         return "../resources/icons/weather/whiteMoon.png" 
       break;
     case 1: //FewClouds
     case 2: //ScatteredClouds
-      if (data.isDay)
+      if (isDay)
         return "../resources/icons/weather/whitePartlySunny.png"
       else
         return "../resources/icons/weather/whitePartlyMoon.png"
-      break;
-    case 3: //BrokenClouds
-      return "../resources/icons/weather/whiteCloud.png"
-      break;
-    case 4: //ShowerRain
-    case 5: //Rain
-     return "../resources/icons/weather/whiteRain.png"
-      break;
-    case 6: //Thunderstorm
-      if (wordStartsWith("T", data.description))
-        return "../resources/icons/weather/whiteStorm.png"
-      else
-        return "../resources/icons/weather/whiteRain.png"
-      break;
-    case 7: //Snow
-      return "../resources/icons/weather/whiteSnow.png"
-      break;
-    case 8: //Mist
-      return "../resources/icons/weather/whiteHaze .png"
-      break;
-    default: //Other
-      if (data.isDay)
-        return "../resources/icons/weather/whiteSun.png"
-      else
-        return "../resources/icons/weather/whiteMoon.png"
-      break;
-  }
-}
-export function getForecastIcon(code, description){
-  switch(code){
-    case 0: //ClearSky
-      return "../resources/icons/weather/whiteSun.png"
-      break;
-    case 1: //FewClouds
-    case 2: //ScatteredClouds
-      return "../resources/icons/weather/whitePartlySunny.png"
       break;
     case 3: //BrokenClouds
       return "../resources/icons/weather/whiteCloud.png"
@@ -265,7 +233,10 @@ export function getForecastIcon(code, description){
       return "../resources/icons/weather/whiteHaze .png"
       break;
     default: //Other
-      return "../resources/icons/weather/whiteSun.png"
+      if (isDay)
+        return "../resources/icons/weather/whiteSun.png"
+      else
+        return "../resources/icons/weather/whiteMoon.png"
       break;
-    }
+  }
 }
