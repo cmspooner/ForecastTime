@@ -138,20 +138,27 @@ export function isInRange(value, low, high){
 
 export function dateParse(fmt, today, loc){
   let strings = allStrings.getStrings(loc, "date");
+  let dayAdd = "";
+  if (loc == "zh")
+    dayAdd = "日";
+    
 
   //dateLabel.text = `${util.toDay(today.getDay(), "short")}, ${util.toMonth(today.getMonth())} ${today.getDate()}`;
   //return toDay(today.getDay(), "short")+", " + toMonth(today.getMonth()) + " " + today.getDate();
   switch (fmt){
-    case "Mon, Jan 31":
-      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + " " + today.getDate();
+    case "Wed, Jan 31":
+    case "1月31日,2018年":
+      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + " " + today.getDate() + dayAdd;
     case "Jan 31, 2018":
-      return strings[toMonth(today.getMonth())] + " " + today.getDate() + ", " + (today.getYear()+1900);
+    case "週三, 1月31日":
+      return strings[toMonth(today.getMonth())] + " " + today.getDate() + dayAdd + ", " + (today.getYear()+1900);
     case "1/31/2018":
       return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
-    case "Mon 31 Jan":
-      return strings[toDay(today.getDay(), "short")] + " " + today.getDate() + " " + strings[toMonth(today.getMonth())];
+    case "Wed 31 Jan":
+      return strings[toDay(today.getDay(), "short")] + " " + today.getDate() + dayAdd + " " + strings[toMonth(today.getMonth())];
     case "31. Jan 2018":
-      return today.getDate() + ". " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
+    case "1月31日,2018年": 
+      return today.getDate() + dayAdd + ". " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
     case "31/1/2018":
       return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
     case "2018.01.31":
@@ -163,27 +170,16 @@ export function dateParse(fmt, today, loc){
   } 
 }
 
-export function shortenText(text){
+export function shortenText(text, isDay){
+  if (!isDay)
+    text = text.replace("Sunny", "Clear");
+  
   text = text.replace("North", "N.");
   text = text.replace("East", "E.");
   text = text.replace("South", "S.");
   text = text.replace("West", "W.");
   
   //console.log(text.indexOf("Rain"));
-  if (text.indexOf("Rain") != -1)
-    text = text.replace("Showers", "");
-  else
-    text = text.replace("Showers", "Rain");
-  
-  text = text.replace("And ", "& ");
-  text = text.replace("Mixed ", "");
-  text = text.replace("Severe", "Bad");
-  text = text.replace("Thunderstorms", "T-Storms");
-  text = text.replace("Partly Cloudy", "Some Clouds");
-  text = text.replace("Thundershowers", "T-Showers");
-  text = text.replace("Isolated", "Some");
-  text = text.replace("Scattered", "Some");
-  
   return text;  
 }
 

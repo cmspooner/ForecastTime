@@ -68,7 +68,7 @@ let openedWeatherRequest = false;
 let hrm = new HeartRateSensor();
 
 //let myLocale = "es";
-//let myLocale = "zh";
+let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 
 //----------------------------Messaging and Settings--------------
@@ -77,7 +77,10 @@ function drawWeatherUpdatingMsg(){
   let tempAndConditionLabel = document.getElementById("tempAndConditionLabel");
   let weatherLocationLabel = document.getElementById("weatherLocationLabel");
   let weatherImage = document.getElementById("weatherImage");
-  tempAndConditionLabel = "Updating...";
+  
+  let strings = allStrings.getStrings(myLocale, "weather");
+  
+  tempAndConditionLabel = strings["Updating..."];
   weatherLocationLabel = "";
   weatherImage = ""; 
 }
@@ -168,6 +171,8 @@ function drawWeather(data){
   let weatherLocationLabel = document.getElementById("weatherLocationLabel");
   let weatherImage = document.getElementById("weatherImage");
   
+  let strings = allStrings.getStrings(myLocale, "weather");
+  
   isFetching = false;
   openedWeatherRequest = false;
   
@@ -177,18 +182,29 @@ function drawWeather(data){
   weatherInterval = setInterval(fetchWeather,settings.updateInterval * 60 * 1000);
   //var time = new Date();
   //time = util.hourAndMinToTime(time.getHours(), time.getMinutes());
-
-  tempAndConditionLabel.text = `${data.temperature}° ${util.shortenText(data.description)}`;
+  console.log("Weather Desc: " + data.description)
+  if (strings[util.shortenText(data.description, data.isDay)])
+    tempAndConditionLabel.text = `${data.temperature}° ${strings[util.shortenText(data.description, data.isDay)]}`;
+  else
+    tempAndConditionLabel.text = `${data.temperature}° ${util.shortenText(data.description, data.isDay)}`;
   let timeStamp = new Date(weatherData.timestamp);
   if (timeStamp.getDate()!=today.getDate())
     timeStamp = timeStamp.getMonth()+1+"/"+timeStamp.getDate()
   else
     timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
 
-  if (settings.showDataAge)
-    weatherLocationLabel.text = `${util.shortenText(data.location)} (${timeStamp})`;
-  else
-    weatherLocationLabel.text = `${util.shortenText(data.location)}`;
+  if (settings.showDataAge) {
+    if (strings[util.shortenText(data.location, data.isDay)])
+      weatherLocationLabel.text = `${strings[util.shortenText(data.location, data.isDay)]} (${timeStamp})`;
+    else
+      weatherLocationLabel.text = `${util.shortenText(data.location, data.isDay)} (${timeStamp})`;
+  } else {
+    if (strings[util.shortenText(data.location, data.isDay)])
+      weatherLocationLabel.text = `${strings[util.shortenText(data.location, data.isDay)]}`;
+    else 
+      weatherLocationLabel.text = `${util.shortenText(data.location, data.isDay)}`;
+
+  }
   
   weatherImage.href = util.getForecastIcon(data.code, data.description, data.isDay);  
 }
@@ -203,6 +219,8 @@ function drawError(error){
   let weatherLocationLabel = document.getElementById("weatherLocationLabel");
   let weatherImage = document.getElementById("weatherImage");
   
+  let strings = allStrings.getStrings(myLocale, "weather");
+  
   weather.setMaximumAge(30 * 1000); 
   openedWeatherRequest = false;
   if (weatherInterval != null)
@@ -215,19 +233,26 @@ function drawError(error){
   if (!weatherData){
     weatherImage.href = "";
     
-    tempAndConditionLabel.text = "Updating...";
+    tempAndConditionLabel.text = strings["Updating..."];
     weatherLocationLabel.text = ``;
   } else {
-      tempAndConditionLabel.text = `${weatherData.temperature}° ${weatherData.description}`;
+      tempAndConditionLabel.text = `${weatherData.temperature}° ${strings[weatherData.description]}`;
       let timeStamp = new Date(weatherData.timestamp);
       if (timeStamp.getDate()!=today.getDate())
         timeStamp = timeStamp.getMonth()+1+"/"+timeStamp.getDate()
       else
           timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
-      if (settings.showDataAge)
-        weatherLocationLabel.text = `${util.shortenText(weatherData.location, weatherData.isDay)} (${timeStamp})`;
-      else
-        weatherLocationLabel.text = `${util.shortenText(weatherData.location, weatherData.isDay)}`;error
+      if (settings.showDataAge){
+        if (strings[util.shortenText(weatherData.location, weatherData.isDay)])
+          weatherLocationLabel.text = `${strings[util.shortenText(weatherData.location, weatherData.isDay)]} (${timeStamp})`;
+        else
+          weatherLocationLabel.text = `${util.shortenText(weatherData.location, weatherData.isDay)} (${timeStamp})`;
+      } else {
+        if (strings[util.shortenText(weatherData.location, weatherData.isDay)])
+          weatherLocationLabel.text = `${strings[util.shortenText(weatherData.location, weatherData.isDay)]}`;
+        else
+          weatherLocationLabel.text = `${util.shortenText(weatherData.location, weatherData.isDay)}`;
+      }
       weatherImage.href = util.getForecastIcon(weatherData.code, weatherData.description, weatherData.isDay);  
   }
 }
@@ -287,10 +312,10 @@ function updateClockData() {
 
   //console.log(hrm.heart);
   if (!hrm){
-    hrLabel.text = "NO SENSOR!!!";
+    hrLabel.text = strings["NO SENSOR!!!"];
   } else if (!hrm.heartRate) {
     //hrLabel.text = hrm.timeStamp;
-    hrLabel.text = "NO HEART RATE"
+    hrLabel.text = strings["NO HEART RATE"];
     hrm.start(); 
   } else if (hrm.heartRate == 0){
     hrLabel.text = "0";
@@ -438,31 +463,41 @@ function updateForecastData(){
     todayWeatherImage.href = util.getForecastIcon(weatherData.todayCondition, 
                                                   weatherData.tomorrowDescription,
                                                   true);
-    todayDescriptionLabel.text = weatherData.todayDescription;
-    todayHighLabel.text = strings["High"] + ":"
-    todayHighValLabel.text = weatherData.todayHigh + "°"
-    todayLowLabel.text = strings["Low"] + ":"
-    todayLowValLabel.text = weatherData.todayLow + "°"
+    if (strings[weatherData.todayDescription])
+      todayDescriptionLabel.text = strings[weatherData.todayDescription];
+    else
+      todayDescriptionLabel.text = weatherData.todayDescription;
+    
+    todayHighLabel.text = strings["High"] + ": " + weatherData.todayHigh + "°"
+    todayHighValLabel.text = ""
+    todayLowLabel.text = strings["Low"] + ": " + weatherData.todayLow + "°"
+    todayLowValLabel.text = ""
     
     tomorrowDateLabel.text = strings[util.toDay(day+1, "long")].toUpperCase();
     tomorrowWeatherImage.href = util.getForecastIcon(weatherData.tomorrowCondition, 
                                                      weatherData.tomorrowDescription,
                                                      true);
-    tomorrowDescriptionLabel.text = weatherData.tomorrowDescription;
-    tomorrowHighLabel.text = strings["High"] + ":"
-    tomorrowHighValLabel.text = weatherData.tomorrowHigh + "°"
-    tomorrowLowLabel.text = strings["Low"] + ":"
-    tomorrowLowValLabel.text = weatherData.tomorrowLow + "°"
+    if (strings[weatherData.tomorrowDescription])
+      tomorrowDescriptionLabel.text = strings[weatherData.tomorrowDescription];
+    else
+      tomorrowDescriptionLabel.text = weatherData.tomorrowDescription;
+    tomorrowHighLabel.text = strings["High"] + ": " + weatherData.tomorrowHigh + "°"
+    tomorrowHighValLabel.text = ""
+    tomorrowLowLabel.text = strings["Low"] + ": " + weatherData.tomorrowLow + "°"
+    tomorrowLowValLabel.text = ""
     
     day3DateLabel.text = strings[util.toDay(day+2, "long")].toUpperCase();
     day3WeatherImage.href = util.getForecastIcon(weatherData.day3Condition, 
                                                  weatherData.day3Description,
                                                  true);
-    day3DescriptionLabel.text = weatherData.day3Description, true;
-    day3HighLabel.text = strings["High"] + ":"
-    day3HighValLabel.text = weatherData.day3High + "°"
-    day3LowLabel.text = strings["Low"] + ":"
-    day3LowValLabel.text = weatherData.day3Low + "°"
+    if (strings[weatherData.day3Description])
+      day3DescriptionLabel.text = strings[weatherData.day3Description];
+    else
+      day3DescriptionLabel.text = weatherData.day3Description;
+    day3HighLabel.text = strings["High"] + ": " +  weatherData.day3High + "°"
+    day3HighValLabel.text = "";
+    day3LowLabel.text = strings["Low"] + ": " + weatherData.day3Low + "°"
+    day3LowValLabel.text = ""
   }
 }
 
@@ -652,7 +687,6 @@ function setUnit(){
     if (oldUnits != userUnits){
       weather.setMaximumAge(0 * 60 * 1000); 
       weather.setUnit(userUnits);
-      tempAndConditionLabel.text = `${weatherData.temperature}° ${weatherData.description, weatherData.isDay}`;
       if (!openedWeatherRequest){
         console.log("Forcing Update Unit Change");
         openedWeatherRequest = true;
@@ -672,15 +706,19 @@ function setWeatherScroll(){
   let weatherLocationLabel = document.getElementById("weatherLocationLabel");
   let weatherImage = document.getElementById("weatherImage");
   
+  let strings = allStrings.getStrings(myLocale, "weather");
+
+  
   if (settings.weatherScrollToggle){
     tempAndConditionLabel.state = "disabled"
     tempAndConditionLabel.text = "";
     if (weatherData)
       tempAndConditionLabel.text = `${weatherData.temperature}° ${weatherData.description}`;
-    else
-      tempAndConditionLabel.text = "Updating..."
+    else {
+      tempAndConditionLabel.text = strings["Updating..."];
+    }
   } else
-    tempAndConditionLabel.state = "enabled"
+    tempAndConditionLabel.state = "enabled";
 }
 
 function setLocationScroll(){
@@ -771,18 +809,18 @@ function saveWeather() {
 
 function fetchWeather(caller){
   console.log(caller)
-  if (!isFetching){
-    console.log("Doing Fetch");
-    if (settings.fetchToggle){
-      let weatherLocationLabel = document.getElementById("weatherLocationLabel");
-      let timeStamp = new Date();
-      timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
-      weatherLocationLabel.text = "Fetching at " + timeStamp;
+  console.log("Doing Fetch");
+  if (settings.fetchToggle){
+    let weatherLocationLabel = document.getElementById("weatherLocationLabel");
+    let timeStamp = new Date();
+    let strings = allStrings.getStrings(myLocale, "clockData");
 
-    }
-    isFetching = true;
-    weather.fetch();
+    timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
+    console.log(strings["Fetching at "] + timeStamp);
+    weatherLocationLabel.text = strings["Fetching at "] + timeStamp;
   }
+  isFetching = true;
+  weather.fetch();
 }
 
 //------------------Event Handleing--------------------

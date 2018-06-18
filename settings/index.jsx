@@ -1,86 +1,94 @@
+import * as allStrings from "strings.js";
+import { settingsStorage } from "settings";
+
+
 function mySettings(props) {
+  
+  let myLocale = props.settings.locale
+  let strings = allStrings.getStrings(myLocale);
+  //let d1 = 
   return (
     <Page>
       <Section
-        title={<Text bold align="center">Heading</Text>}>
+        title={<Text bold align="center">{strings["Heading"]}</Text>}>
         <Select
-          label={`Date Format`}
+          label={strings["Date Format"]}
           settingsKey="dateFormat"
           options={[
-            {name:"Mon, Jan 31"},
-            {name:"Jan 31, 2018"},
-            {name:"1/31/2018"},
-            {name:"Mon 31 Jan"},
-            {name:"31. Jan 2018"},
-            {name:"31/1/2018"},
-            {name:"2018.01.31"},
-            {name:"31. 1. 2018"},
-            {name:"31.01.2018"},
+            {name: strings["Wed, Jan 31"]},
+            {name: strings["Jan 31, 2018"]},
+            {name: "1/31/2018"},
+            {name: strings["Wed 31 Jan"]},
+            {name: strings["31 Jan 2018"]},
+            {name: "31/1/2018"},
+            {name: "2018.01.31"},
+            {name: "31. 1. 2018"},
+            {name: "31.01.2018"},
           ]}
           />
         <Toggle
            settingsKey="batteryToggle"
-           label="Change Battery Bar to Battery %" 
+           label={strings["Battery Bar"]}
            onChange={value => props.settingsStorage.setItem('unit', value.toString())}
          />
       </Section>
       <Section
-        title={<Text bold align="center">Weather</Text>}>
+        title={<Text bold align="center">{strings["Weather"]}</Text>}>
         <Toggle
            settingsKey="unitToggle"
-           label="Set Temperature units to Celsius" 
+           label={strings["Celsius"]}
            onChange={value => props.settingsStorage.setItem('unit', value.toString())}
          />
         <Toggle
            settingsKey="weatherScrollToggle"
-           label="Disable weather scrolling"
+           label={strings["weather scrolling"]}
          />
          <Toggle
            settingsKey="locationScrollToggle"
-           label="Disable location scrolling"
+           label={strings["location scrolling"]}
          />
         <Select
-          label={`Weather Update Interval`}
+          label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
-            {name:"5 minutes"},
-            {name:"15 minutes"},
-            {name:"30 minutes"},
-            {name:"1 hour"},
-            {name:"2 hours"},
+            {name:strings["5 minutes"]},
+            {name:strings["15 minutes"]},
+            {name:strings["30 minutes"]},
+            {name:strings["1 hour"]},
+            {name:strings["2 hours"]},
           ]}
          />
         <Text align="center">
-          Decreasing this will use more WATCH battery. 
+          {strings["WATCH battery"]}
         </Text>
         <Select
-          label={`Location Update Interval`}
+          label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
-            {name:"5 minutes"},
-            {name:"15 minutes"},
-            {name:"30 minutes"},
-            {name:"1 hour"},
-            {name:"2 hours"},
+            {name:strings["5 minutes"]},
+            {name:strings["15 minutes"]},
+            {name:strings["30 minutes"]},
+            {name:strings["1 hour"]},
+            {name:strings["2 hours"]},
           ]}
          />
          <Text align="center">
-           Decreasing this will use more PHONE battery.
+            {strings["PHONE battery"]}
          </Text>
         <Toggle
            settingsKey="dataAgeToggle"
-           label="Show time of last weather update"
+           label={strings["update time"]}
          />
         <Toggle
            settingsKey="fetchToggle"
-           label="Show when weather is fetched"
+           label={strings["fetched time"] }
          />
         <Text align="left">
-          These are mostly for information for nerds and debugging.
+          {strings["nerds and debugging"]}
          </Text>
       </Section>
       <Section
-        title={<Text bold align="center">Separator Bar Color</Text>}>
+        title={<Text bold align="center">{strings["Separator Bar Color"]}</Text>}>
         <ColorSelect
           settingsKey="color"
           colors={[
@@ -137,11 +145,11 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">Contact Me</Text>}>
         <Text>
-          Please don't hesitate to contact me with questions or suggestions; but be sure to let me know which app or watchface you are talking about. This and all my other apps will always be free and Open Source. If you really like my app please consider buying me a coffee (or more likely electronic components that end up in my classroom). Thanks!
+          {strings["Contact Me"]}
         </Text>
         <Link source="https://rawgit.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/master/settings/email.html">
           <TextImageRow
-            label="Email"
+            label={strings["Email"]}
             sublabel="cmspooner@gmail.com"
             icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Email.png?raw=true"
           />
@@ -163,7 +171,43 @@ function mySettings(props) {
       </Section>
       <Section
         
-        title={<Text bold align="center">Build Version and Notes</Text>}>
+        title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          4.3: Settings Translated into Chinese!
+        </Text>
+        <Text>
+          4.2.6.2: Back to less formal High/Low in chinese
+        </Text>
+        <Text>
+          4.2.6.1: Changes to spacing on High/Low; text now coloroed
+        </Text>
+        <Text>
+          4.2.6: Changes to High, Low, and Rain in Chinese Translation
+        </Text>
+        <Text>
+          4.2.5.1: Turned off force chinese
+        </Text>
+        <Text>
+          4.2.5: Work on chinese dates
+        </Text>
+        <Text>
+          4.2.4: Small translation fixes
+        </Text>
+        <Text>
+          4.2.3: Fixed "Fetching at " error. It was looking at the wrong section of the transation table.
+        </Text>
+        <Text>
+          4.2.2: Catch errors and show english if error.
+        </Text>
+        <Text>
+          4.2.1: steps is now 步數 in chinese version
+        </Text>
+        <Text>
+          4.2: Chinese translation done in main app?
+        </Text>
+        <Text>
+          4.1: Weather Conditions Translated into Chinese!
+        </Text>
         <Text>
           4.0.1: Fixed screen wake draw issues
         </Text>

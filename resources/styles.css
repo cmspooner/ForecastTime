@@ -99,7 +99,7 @@
   text-length: 50;
   text-anchor: start;
   x: 75;
-  fill: white;
+  fill: red;
 }
 
 .forecastHighVal {
@@ -107,7 +107,7 @@
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
-  x: 135;
+  x: 148;
   fill: red;
 }
 
@@ -116,8 +116,8 @@
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
-  x: 183;
-  fill: white;
+  x: 196;
+  fill: cornflowerblue;
 }
 
 .forecastLowVal{
@@ -125,6 +125,6 @@
   font-family: Colfax-Regular;
   text-length: 50;
   text-anchor: start;
-  x: 246;
+  x: 272;
   fill: cornflowerblue;
 }

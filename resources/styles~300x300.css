@@ -108,7 +108,7 @@
   text-length: 50;
   text-anchor: start;
   x: 75;
-  fill: white;
+  fill: red;
 }
 
 
@@ -127,7 +127,7 @@
   text-length: 50;
   text-anchor: start;
   x: 183;
-  fill: white;
+  fill: cornflowerblue;
 }
 
 .forecastLowVal{
