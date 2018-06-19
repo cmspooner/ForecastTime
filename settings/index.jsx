@@ -173,6 +173,12 @@ function mySettings(props) {
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          4.5: Spanish Done!
+        </Text>
+        <Text>
+          4.4: Larger Battery Text
+        </Text>
+        <Text>
           4.3: Settings Translated into Chinese!
         </Text>
         <Text>

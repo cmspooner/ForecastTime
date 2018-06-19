@@ -138,27 +138,46 @@ export function isInRange(value, low, high){
 
 export function dateParse(fmt, today, loc){
   let strings = allStrings.getStrings(loc, "date");
+  
   let dayAdd = "";
   if (loc == "zh")
     dayAdd = "日";
-    
-
+  let yearAdd = "";
+  if (loc == "zh")
+    yearAdd = "年";
+  
+  let ofAdd = "";
+  if (loc == "es")
+    ofAdd = " de";
+  
+  let dotAdd = "";
+  if (loc == "en")
+    dotAdd = ".";
+  let spaceAdd = "";
+  if (loc == "en")
+    spaceAdd = " ";
+  
+  let commaAdd = "";
+  if (loc == "es" || loc == "zh")
+    commaAdd = ",";
+  
   //dateLabel.text = `${util.toDay(today.getDay(), "short")}, ${util.toMonth(today.getMonth())} ${today.getDate()}`;
   //return toDay(today.getDay(), "short")+", " + toMonth(today.getMonth()) + " " + today.getDate();
   switch (fmt){
     case "Wed, Jan 31":
-    case "1月31日,2018年":
-      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + " " + today.getDate() + dayAdd;
-    case "Jan 31, 2018":
     case "週三, 1月31日":
-      return strings[toMonth(today.getMonth())] + " " + today.getDate() + dayAdd + ", " + (today.getYear()+1900);
+      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
+    case "Jan 31, 2018":
+    case "1月31日,2018年": 
+      return strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
     case "1/31/2018":
       return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
     case "Wed 31 Jan":
-      return strings[toDay(today.getDay(), "short")] + " " + today.getDate() + dayAdd + " " + strings[toMonth(today.getMonth())];
+    case "Mx, 31 de Enero":
+      return strings[toDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
     case "31. Jan 2018":
-    case "1月31日,2018年": 
-      return today.getDate() + dayAdd + ". " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
+    case "31 de Enero, 2018":
+      return today.getDate() + dotAdd + ofAdd + " " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
     case "31/1/2018":
       return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
     case "2018.01.31":

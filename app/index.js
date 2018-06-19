@@ -67,7 +67,7 @@ let openedWeatherRequest = false;
 // Heart Rate Monitor
 let hrm = new HeartRateSensor();
 
-//let myLocale = "es";
+let myLocale = "es";
 let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 
@@ -290,7 +290,7 @@ function updateClock() {
   }
 
   if (!settings.dateFormat){
-    settings.dateFormat = "Mon, Jan 31"
+    settings.dateFormat = "Wed, Jan 31"
   dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale) ? util.dateParse(settings.dateFormat, today, myLocale) : strings[util.toDay(today.getDay(), "short")] + ", " + strings[util.toMonth(today.getMonth())] + " " + today.getDate();
   }
   
@@ -565,19 +565,19 @@ function setBattery(){
     } else {
       dateLabel.x = 15;
       if (deviceType == "Versa"){
-        batteryLevelLabel.x = 276;
-        batteryLevelLabel.y = 28;
+        batteryLevelLabel.x = 246;
+        batteryLevelLabel.y = 29;
       } else {
-        batteryLevelLabel.y = 20;
+        batteryLevelLabel.y = 22;
       }
-      batteryLevelLabel.style.fontSize = 14;
+      batteryLevelLabel.style.fontSize = 21;
       batteryLevelImage.href = "icons/battery/battery.png";
     }
     updateStatsData();
   }
   if (settings.batteryToggle || isBatteryAlert){
     batteryLevelLabel.style.fill = util.goalToColor(battery.chargeLevel, 90)
-    batteryLevelLabel.text = `${battery.chargeLevel}%`
+    batteryLevelLabel.text = `${battery.chargeLevel}`//%`
     batteryLevelRect.style.display = "none";
     batteryLevelLabel.style.display = "inline";
   } else {
@@ -758,7 +758,7 @@ function loadSettings() {
     // Defaults
     console.log("Loading stock settings")
     return {
-      dateFormat : "Mon, Jan 31",
+      dateFormat : "Wed, Jan 31",
       batteryToggle : false,
       updateInterval : "30 minutes",
       updateLocationInterval : "30 minutes",

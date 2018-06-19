@@ -4,7 +4,7 @@ import { locale } from "user-settings";
 
 import { me } from "companion";
 
-//let myLocale = "es";
+let myLocale = "es";
 let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 settingsStorage.setItem('locale', myLocale)

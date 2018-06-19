@@ -2,7 +2,33 @@ export function getStrings(lang, type){
   switch (lang){
     case "es":
       return {
-        
+        "Heading"                       : "Título",
+        "Date Format"                   : "Formato de Fecha",
+        "Wed, Jan 31"                   : "Mx, 31 de Enero",
+        "Jan 31, 2018"                  : "31 de Enero, 2018",
+        "Wed 31 Jan"                    : "Mx, 31 de Enero",
+        "31 Jan 2018"                   : "31 de Enero, 2018",
+        "Battery Bar"                   : "Cambia Barra de Batería a Porcentaje",
+        "Weather"                       : "Tiempo",
+        "Celsius"                       : "Fijar Temperatura a Centígrado",
+        "weather scrolling"             : "Desactivar Desplazamiento de Tiempo",
+        "location scrolling"            : "Desactivar Desplazamiento de Ubicación",
+        "Weather Update Interval"       : "Intervalo de Actualización de Tiempo",
+        "Location Update Interval"      : "Intervalo de Actualización de Ubicación", 
+        "5 minutes"                     : "5 minutos",
+        "15 minutes"                    : "15 minutos",
+        "30 minutes"                    : "30 minutos",
+        "1 hour"                        : "1 hora",
+        "2 hours"                       : "2 horas",
+        "WATCH battery"                 : "Disminución resultará en aumento de uso de batería de RELOJ.",
+        "PHONE battery"                 : "Disminución resultará en aumento de uso de batería de MÓVIL.",
+        "update time"                   : "Mostrar último actualización de tiempo",
+        "fetched time"                  : "Show when weather is fetched",																								
+        "nerds and debugging"           : "Para expertos o ñoños/sacar errores.",
+        "Separator Bar Color"           : "Color de Barra de Separación",
+        "Contact Me"                    : "Favor de no vacilar en contactarme con preguntas o sugerencias; déjeme saber a cualquiér app o esfera de reloj se refiera.  Éste y todos mis apps siempre serán gratis y Código Abierto. Si le gusta mucho el app, favor de comprarme un café (o sea un componente electrónico para mis clases). ¡Gracias!",
+        "Email"                         : "Correo Electrónico",
+        "Build Version"                 : "Versión y Apuntes (Sólo Inglés)"
       }
     case "zh":
       return {
@@ -46,7 +72,7 @@ export function getStrings(lang, type){
         "Weather"                       : "Weather",
         "Celsius"                       : "Set Temperature units to Celsius",
         "weather scrolling"             : "Disable weather scrolling",
-        "location scrlling"             : "Disable location scrolling",
+        "location scrolling"             : "Disable location scrolling",
         "Weather Update Interval"       : "Weather Update Interval",
         "Location Update Interval"      : "Location Update Interval", 
         "5 minutes"                     : "5 minutes",
