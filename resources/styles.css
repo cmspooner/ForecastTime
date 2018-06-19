@@ -21,12 +21,12 @@
 }
 
 #batteryLevelLabel {
-  font-size: 14;
+  font-size: 21;
   font-family: Colfax-Medium;
   text-length: 4;
-  text-anchor: end;
-  x: 320;
-  y: 20;
+  text-anchor: center;
+  x: 288;
+  y: 22;
   fill: white;
 }
 
