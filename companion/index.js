@@ -2,11 +2,12 @@ import * as messaging from "messaging";
 import { settingsStorage } from "settings";
 import { locale } from "user-settings";
 
-import { me } from "companion";
+//import { me } from "companion";
 
 let myLocale = "es";
 let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
+//let myLocale = "en"
 settingsStorage.setItem('locale', myLocale)
 console.log("Companion locale: " + settingsStorage.getItem('locale'));
 

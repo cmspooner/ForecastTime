@@ -8,9 +8,9 @@ export function getStrings(lang, type){
             "steps"     : "pasos", 
             "kcal"      : "kcal",
             
-            "NO SENSOR"     : "NO SENSOR",
-            "NO HEART RATE" : "NO HEART RATE",
-            "Fetching at "   : "Fetching at ",
+            "NO SENSOR"     : "NO RECEPTOR",
+            "NO HEART RATE" : "NO CARDIACO",
+            "Fetching at "   : "Recibiendo a ",
           }
         case "stats":
           return {
@@ -71,7 +71,7 @@ export function getStrings(lang, type){
             "High"      : "Alta",
             "Low"       : "Baja",
             
-            "Updating..."   : "Updating...",
+            "Updating..."   : "Actualizando...",
             
             "Tornado"                 : "Tornado",
             "Tropical Storm"          : "Tempestad Tropical",

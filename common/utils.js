@@ -163,29 +163,30 @@ export function dateParse(fmt, today, loc){
   
   //dateLabel.text = `${util.toDay(today.getDay(), "short")}, ${util.toMonth(today.getMonth())} ${today.getDate()}`;
   //return toDay(today.getDay(), "short")+", " + toMonth(today.getMonth()) + " " + today.getDate();
+  console.log("format is: " + fmt + typeof(fmt))
   switch (fmt){
-    case "Wed, Jan 31":
-    case "週三, 1月31日":
+    case 0:
+      console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
       return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
-    case "Jan 31, 2018":
-    case "1月31日,2018年": 
+      break;
+    case 1: 
       return strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
-    case "1/31/2018":
+    case 2:
       return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
-    case "Wed 31 Jan":
-    case "Mx, 31 de Enero":
+    case 3:
       return strings[toDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
-    case "31. Jan 2018":
-    case "31 de Enero, 2018":
+    case 4:
       return today.getDate() + dotAdd + ofAdd + " " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
-    case "31/1/2018":
+    case 5:
       return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
-    case "2018.01.31":
+    case 6:
       return today.getYear()+1900 + "." + zeroPad((today.getMonth()+1)) + "." + zeroPad(today.getDate());
-    case "31. 1. 2018":
+    case 7:
       return today.getDate() + ". " + (today.getMonth()+1) + ". " + (today.getYear()+1900);
-    case "31.01.2018":
+    case 8:
       return zeroPad(today.getDate()) + "." + zeroPad(today.getMonth()+1) + "." + (today.getYear()+1900);
+    default:
+      console.log("failed switch")
   } 
 }
 

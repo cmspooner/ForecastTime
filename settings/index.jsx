@@ -173,6 +173,30 @@ function mySettings(props) {
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          4.6: Changed settings code so it uses setting index rather than name for options lists.
+        </Text>
+        <Text>
+          4.5.9: Fully remove translations from settings.
+        </Text>
+        <Text>
+          4.5.8: Settings back to locale setting
+        </Text>
+        <Text>
+          4.5.7: Forcing Chinese in settings to see if I get slowdown
+        </Text>
+        <Text>
+          4.5.4: Turned off settings translation
+        </Text>
+        <Text>
+          4.5.3: Turned off settings translation
+        </Text>
+        <Text>
+          4.5.2: Turned off forced chinese
+        </Text>
+        <Text>
+          4.5.1: Spanish More Done!
+        </Text>
+        <Text>
           4.5: Spanish Done!
         </Text>
         <Text>

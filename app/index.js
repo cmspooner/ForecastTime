@@ -88,8 +88,9 @@ function drawWeatherUpdatingMsg(){
 messaging.peerSocket.onmessage = evt => {
   console.log(`App received: ${JSON.stringify(evt)}`);
   if (evt.data.key === "dateFormat" && evt.data.newValue) {
-    if(settings.dateFormat != JSON.parse(evt.data.newValue).values[0].name){
-      settings.dateFormat = JSON.parse(evt.data.newValue).values[0].name;
+    if(settings.dateFormat != Number(JSON.parse(evt.data.newValue).selected)){
+      console.log(JSON.parse(evt.data.newValue).selected)
+      settings.dateFormat = Number(JSON.parse(evt.data.newValue).selected);
       setDateFormat();
     }
   }
@@ -100,16 +101,16 @@ messaging.peerSocket.onmessage = evt => {
     }
   }
   if (evt.data.key === "updateInterval" && evt.data.newValue) {
-    if (settings.updateInterval != JSON.parse(evt.data.newValue).values[0].name){
+    if (settings.updateInterval != Number(JSON.parse(evt.data.newValue).selected)){
       let oldInterval = settings.updateInterval;
-      settings.updateInterval = JSON.parse(evt.data.newValue).values[0].name;
+      settings.updateInterval = Number(JSON.parse(evt.data.newValue).selected);
       setUpdateInterval(oldInterval);
     }
   }
   if (evt.data.key === "locationUpdateInterval" && evt.data.newValue) {
-    if (settings.updateLocationInterval = JSON.parse(evt.data.newValue).values[0].name){
+    if (settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).selected)){
       let oldInterval = settings.updateLocationInterval;
-      settings.updateLocationInterval = JSON.parse(evt.data.newValue).values[0].name;
+      settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).selected);
       setLocationUpdateInterval(oldInterval);
     }
   }
@@ -290,7 +291,7 @@ function updateClock() {
   }
 
   if (!settings.dateFormat){
-    settings.dateFormat = "Wed, Jan 31"
+    settings.dateFormat = 0
   dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale) ? util.dateParse(settings.dateFormat, today, myLocale) : strings[util.toDay(today.getDay(), "short")] + ", " + strings[util.toMonth(today.getMonth())] + " " + today.getDate();
   }
   
@@ -591,15 +592,15 @@ function setBattery(){
 function setUpdateInterval(oldInterval){
   console.log(`updateInterval is: ${settings.updateInterval}`);
   //let oldInterval = settings.updateInterval;
-  if (settings.updateInterval == "5 minutes")
+  if (settings.updateInterval == 0)
     settings.updateInterval = 5;
-  else if (settings.updateInterval == "15 minutes")
+  else if (settings.updateInterval == 1)
     settings.updateInterval = 15;
-  else if (settings.updateInterval == "30 minutes")
+  else if (settings.updateInterval == 2)
     settings.updateInterval = 30;
-  else if (settings.updateInterval == "1 hour")
+  else if (settings.updateInterval == 3)
     settings.updateInterval = 60;
-  else if (settings.updateInterval == "2 hours")
+  else if (settings.updateInterval == 4)
     settings.updateInterval = 120;
   if (settings.updateInterval < oldInterval){
     weather.setMaximumAge(1 * 60 * 1000); 
@@ -618,15 +619,15 @@ function setUpdateInterval(oldInterval){
 function setLocationUpdateInterval(oldLocationInterval){
   console.log(`locationUpdateInterval is: ${settings.updateLocationInterval}`);
   //let oldLocationInterval = settings.updateLocationInterval;
-  if (settings.updateLocationInterval == "5 minutes")
+  if (settings.updateLocationInterval == 0)
     settings.updateLocationInterval = 5;
-  else if (settings.updateLocationInterval == "15 minutes")
+  else if (settings.updateLocationInterval == 1)
     settings.updateLocationInterval = 15;
-  else if (settings.updateLocationInterval == "30 minutes")
+  else if (settings.updateLocationInterval == 2)
     settings.updateLocationInterval = 30;
-  else if (settings.updateLocationInterval == "1 hour")
+  else if (settings.updateLocationInterval == 3)
     settings.updateLocationInterval = 60;
-  else if (settings.updateLocationInterval == "2 hours")
+  else if (settings.updateLocationInterval == 4)
     settings.updateLocationInterval = 120;
   if (settings.updateLocationInterval < oldLocationInterval){
     weather.setMaximumLocationAge(1 * 60 * 1000); 
@@ -758,10 +759,10 @@ function loadSettings() {
     // Defaults
     console.log("Loading stock settings")
     return {
-      dateFormat : "Wed, Jan 31",
+      dateFormat : 0,
       batteryToggle : false,
-      updateInterval : "30 minutes",
-      updateLocationInterval : "30 minutes",
+      updateInterval : 2,
+      updateLocationInterval : 2,
       unitToggle : false,
       showDataAge : true,
       fetchToggle : false,
