@@ -4,9 +4,10 @@
     <image id="batteryLevelImage" x="80%" y="2%" width="50" height="20" href="icons/battery/battery.png" load="sync"/>
     <rect id="batteryLevelRect" x="281" y="8" width="39" height="14" fill="white" />
     <text id="batteryLevelLabel" />
-    <circle id = "seperatorEndLeft"cx="5%" cy="15%" />
-    <line id = "seperatorLine" x1="5%" y1="15%" x2="95%" y2="15%"/>
-    <circle id = "seperatorEndRight"cx="95%" cy="15%" />
+    <circle id = "seperatorEndLeft"cx="5%" cy="38" />
+    <line id = "seperatorLine" x1="5%" y1="37" x2="95%" y2="37"/>
+    <circle id = "seperatorEndRight"cx="95%" cy="38" />
+    <image id="seperatorLineImage" x="13" y="33" width="321" height="10" href="" load="sync"/>
     <text id="clockLabel" />
     <image x="30%" y="49%" width="18" height="18" href="icons/21/heart.png" load="sync"/>
     <text id="hrLabel" class="data" y="56%"/>

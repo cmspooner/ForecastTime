@@ -10,7 +10,7 @@ function mySettings(props) {
   return (
     <Page>
       <Section
-        title={<Text bold align="center">{strings["Heading"]}</Text>}>
+        title={<Text bold align="center">{strings["Heading & Time"]}</Text>}>
         <Select
           label={strings["Date Format"]}
           settingsKey="dateFormat"
@@ -31,6 +31,15 @@ function mySettings(props) {
            label={strings["Battery Bar"]}
            onChange={value => props.settingsStorage.setItem('unit', value.toString())}
          />
+        <Select
+          label={strings["Time Format"]}
+          settingsKey="timeFormat"
+          options={[
+            {name: strings["12:00 am (only 12 hour time)"]},
+            {name: "12:00"},
+            {name: "12:00:00"}
+          ]}
+          />
       </Section>
       <Section
         title={<Text bold align="center">{strings["Weather"]}</Text>}>
@@ -141,6 +150,15 @@ function mySettings(props) {
             {color: "#FF006A"}
           ]}
         />
+        <Select
+          label={strings["Image"]}
+          settingsKey="seperatorImage"
+          options={[
+            {name:strings["None"]},
+            {name:strings["Rainbow"]},
+            {name:strings["Glass"]},
+          ]}
+         />
       </Section>
       <Section
         title={<Text bold align="center">Contact Me</Text>}>
@@ -172,6 +190,27 @@ function mySettings(props) {
       <Section
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          4.12: Glass Option For Bar (If you can photo shop better then me I'd love any help with it!)
+        </Text>
+        <Text>
+          4.11.1: Slight graphics tweaks
+        </Text>
+        <Text>
+          4.11: Proctoring exams is boring so now there is an option to format the time and it now shows resting heart rate
+        </Text>
+        <Text>
+          4.10: Low battery mode fixed
+        </Text>
+        <Text>
+          4.9: Rainbow Option for bar
+        </Text>
+        <Text>
+          4.8: Fixed conditionCode issue
+        </Text>
+         <Text>
+          4.7: Fixed Date issue!!!!!
+        </Text>
         <Text>
           4.6: Changed settings code so it uses setting index rather than name for options lists.
         </Text>

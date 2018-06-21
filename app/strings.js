@@ -115,7 +115,7 @@ export function getStrings(lang, type){
             "Snow Showers"            : "Nevadas Temporales",
             "Isolated Thundershowers" : "Tormentas Aisladas",
             "Rain"                    : "Lluvia",
-            "Mostly Sunny"            : "Mayormente Soleado"
+            "Mostly Sunny"            : "Soleado"
           }
         case "directions":
           return {

@@ -2,13 +2,15 @@ export function getStrings(lang, type){
   switch (lang){
     case "es":
       return {
-        "Heading"                       : "Título",
+        "Heading & Time"                : "Título",
         "Date Format"                   : "Formato de Fecha",
         "Wed, Jan 31"                   : "Mx, 31 de Enero",
         "Jan 31, 2018"                  : "31 de Enero, 2018",
         "Wed 31 Jan"                    : "Mx, 31 de Enero",
         "31 Jan 2018"                   : "31 de Enero, 2018",
         "Battery Bar"                   : "Cambia Barra de Batería a Porcentaje",
+        "Time Format"                   : "Time Format",
+        "12:00 am (only 12 hour time)"  : "12:00 am (only 12 hour time)",
         "Weather"                       : "Tiempo",
         "Celsius"                       : "Fijar Temperatura a Centígrado",
         "weather scrolling"             : "Desactivar Desplazamiento de Tiempo",
@@ -26,19 +28,25 @@ export function getStrings(lang, type){
         "fetched time"                  : "Show when weather is fetched",																								
         "nerds and debugging"           : "Para expertos o ñoños/sacar errores.",
         "Separator Bar Color"           : "Color de Barra de Separación",
+        "Image"                         : "Imagen",
+        "None"                          : "Ninguna",
+        "Rainbow"                       : "Rainbow",
+        "Glass"                         : "Glass",
         "Contact Me"                    : "Favor de no vacilar en contactarme con preguntas o sugerencias; déjeme saber a cualquiér app o esfera de reloj se refiera.  Éste y todos mis apps siempre serán gratis y Código Abierto. Si le gusta mucho el app, favor de comprarme un café (o sea un componente electrónico para mis clases). ¡Gracias!",
         "Email"                         : "Correo Electrónico",
         "Build Version"                 : "Versión y Apuntes (Sólo Inglés)"
       }
     case "zh":
       return {
-        "Heading"                       : "上方欄位",
+        "Heading & Time"                : "上方欄位",
         "Date Format"                   : "日期格式",
         "Wed, Jan 31"                   : "週三, 1月31日",
         "Jan 31, 2018"                  : "1月31日,2018年",
         "Wed 31 Jan"                    : "週三, 1月31日",
         "31 Jan 2018"                   : "1月31日,2018年",
         "Battery Bar"                   : "更改電量顯示方式為百分比",
+        "Time Format"                   : "Time Format",
+        "12:00 am (only 12 hour time)"  : "12:00 am (only 12 hour time)",
         "Weather"                       : "日期欄位",
         "Celsius"                       : "設定氣溫單位為攝氏",
         "weather scrolling"             : "關閉天氣捲動顯示功能",
@@ -56,19 +64,25 @@ export function getStrings(lang, type){
         "fetched time"                  : "Show when weather is fetched",																								
         "nerds and debugging"           : "這些資訊主要用於除錯",
         "Separator Bar Color"           : "分隔線的顏色",
+        "Image"                         : "图片",
+        "None"                          : "没有",
+        "Rainbow"                       : "彩虹",
+        "Glass"                         : "Glass",
         "Contact Me"                    : "P有任何問題時,歡迎與我聯繫,但也麻煩您提供使用上遇到的問題,還有問題是發生在哪個應用或是表盤,這個程式將永遠免費且為開源軟體,若您真的喜歡這軟體,可以考慮買一杯咖啡送我(或是像一些電子零件,這些最終出現我的教室裡),謝謝",
         "Email"                         : "電子信箱",
         "Build Version"                 : "版本號說明資訊(只提供英文說明)"
       }
     default:
       return {
-        "Heading"                       : "Heading",
+        "Heading & Time"                : "Heading & Time",
         "Date Format"                   : "Date Format",
         "Wed, Jan 31"                   : "Wed, Jan 31",
         "Jan 31, 2018"                  : "Jan 31, 2018",
         "Wed 31 Jan"                    : "Wed 31 Jan",
         "31 Jan 2018"                   : "31. Jan 2018",
         "Battery Bar"                   : "Change Battery Bar to Battery %",
+        "Time Format"                   : "Time Format",
+        "12:00 am (only 12 hour time)"  : "12:00 am (only 12 hour time)",
         "Weather"                       : "Weather",
         "Celsius"                       : "Set Temperature units to Celsius",
         "weather scrolling"             : "Disable weather scrolling",
@@ -86,6 +100,10 @@ export function getStrings(lang, type){
         "fetched time"                  : "Show when weather is fetched",																								
         "nerds and debugging"           : "These are mostly for information for nerds and debugging.",
         "Separator Bar Color"           : "Separator Bar Color",
+        "Image"                         : "Image",
+        "None"                          : "None",
+        "Rainbow"                       : "Rainbow",
+        "Glass"                         : "Glass",
         "Contact Me"                    : "Please don't hesitate to contact me with questions or suggestions; but be sure to let me know which app or watchface you are talking about. This and all my other apps will always be free and Open Source. If you really like my app please consider buying me a coffee (or more likely electronic components that end up in my classroom). Thanks!",
         "Email"                         : "Email",
         "Build Version"                 : "Build Version and Notes (English Only)"

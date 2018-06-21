@@ -55,7 +55,7 @@ let today = new Date();
 let time = util.hourAndMinToTime(today.getHours(), today.getMinutes());
 
 // Update the clock every minute
-clock.granularity = "minutes";
+clock.granularity = "seconds";
 
 let background = document.getElementById("clickbg");
 
@@ -100,6 +100,13 @@ messaging.peerSocket.onmessage = evt => {
       setBattery();
     }
   }
+  if (evt.data.key === "timeFormat" && evt.data.newValue) {
+    if(settings.timeFormat != Number(JSON.parse(evt.data.newValue).selected)){
+      console.log(JSON.parse(evt.data.newValue).selected)
+      settings.timeFormat = Number(JSON.parse(evt.data.newValue).selected);
+      updateClock();
+    }
+  }
   if (evt.data.key === "updateInterval" && evt.data.newValue) {
     if (settings.updateInterval != Number(JSON.parse(evt.data.newValue).selected)){
       let oldInterval = settings.updateInterval;
@@ -118,6 +125,12 @@ messaging.peerSocket.onmessage = evt => {
     if (settings.color != JSON.parse(evt.data.newValue)){
       settings.color = JSON.parse(evt.data.newValue);
       setColor();
+    }
+  }
+   if (evt.data.key === "seperatorImage" && evt.data.newValue) {
+    if (settings.seperatorImage != Number(JSON.parse(evt.data.newValue).selected)){
+      settings.seperatorImage = Number(JSON.parse(evt.data.newValue).selected);
+      setSeperatorImage();
     }
   }
   if (evt.data.key === "dataAgeToggle" && evt.data.newValue) {
@@ -183,7 +196,7 @@ function drawWeather(data){
   weatherInterval = setInterval(fetchWeather,settings.updateInterval * 60 * 1000);
   //var time = new Date();
   //time = util.hourAndMinToTime(time.getHours(), time.getMinutes());
-  console.log("Weather Desc: " + data.description)
+  console.log("Weather Desc: " + data.description + ", " + data.conditionCode)
   if (strings[util.shortenText(data.description, data.isDay)])
     tempAndConditionLabel.text = `${data.temperature}° ${strings[util.shortenText(data.description, data.isDay)]}`;
   else
@@ -207,7 +220,7 @@ function drawWeather(data){
 
   }
   
-  weatherImage.href = util.getForecastIcon(data.code, data.description, data.isDay);  
+  weatherImage.href = util.getForecastIcon(data.conditionCode, data.description, data.isDay);  
 }
 
 weather.onerror = (error) => {
@@ -272,6 +285,7 @@ function updateClock() {
   //let year = today.getYear()-100+2000;
   let hours = today.getHours();
   let mins = util.zeroPad(today.getMinutes());
+  let secs = util.zeroPad(today.getSeconds());
   let ampm = " am";
   
   let strings = allStrings.getStrings(myLocale, "date");
@@ -291,11 +305,24 @@ function updateClock() {
   }
 
   if (!settings.dateFormat){
-    settings.dateFormat = 0
+    settings.dateFormat = 0;
+  }
   dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale) ? util.dateParse(settings.dateFormat, today, myLocale) : strings[util.toDay(today.getDay(), "short")] + ", " + strings[util.toMonth(today.getMonth())] + " " + today.getDate();
+
+  switch (settings.timeFormat) {
+    case 1:
+      clockLabel.text = `${hours}:${mins}`;
+      break;
+    case 2:
+      clockLabel.text = `${hours}:${mins}:${secs}`;
+      break;
+    default:
+      clockLabel.text = `${hours}:${mins}${ampm}`;
+      break;
   }
   
-  clockLabel.text = `${hours}:${mins}${ampm}`;
+  
+  updateClockData();
 }
 
 function updateClockData() {
@@ -330,7 +357,7 @@ function updateClockData() {
     } else if (user.heartRateZone(hrm.heartRate) == "peak"){
       hrLabel.style.fill = 'fb-red'; // #F83C40
     }
-    hrLabel.text = `${hrm.heartRate} ${strings["bpm"]}`;
+    hrLabel.text = `(${user.restingHeartRate}) ${hrm.heartRate} ${strings["bpm"]}`;
   }
     
   stepsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0, goals.steps);
@@ -512,6 +539,7 @@ function applySettings(startIndex = 0){
       setUpdateInterval,
       setLocationUpdateInterval,
       setColor,
+      setSeperatorImage,
       setDataAge,
       setUnit,
       setWeatherScroll,
@@ -542,6 +570,8 @@ function setBattery(){
   let batteryLevelRect = document.getElementById("batteryLevelRect");
   let batteryLevelImage = document.getElementById("batteryLevelImage");
   
+  //let batterychargeLevel = 12
+  
   wasBatteryAlert = isBatteryAlert;
   if ((battery.chargeLevel <= 15 || battery.charging) && !isBatteryAlert) {
     console.log("battery Alert on");
@@ -556,9 +586,10 @@ function setBattery(){
       dateLabel.x = 44;
       batteryLevelLabel.style.fontSize = 30;
       if (deviceType == "Versa"){
-        batteryLevelLabel.x = 290;
+        batteryLevelLabel.x = 236;
         batteryLevelLabel.y = 30;
       } else{ 
+        batteryLevelLabel.x = 280;
         batteryLevelLabel.y = 24;
       }
       batteryLevelRect.style.display = "none";
@@ -578,7 +609,10 @@ function setBattery(){
   }
   if (settings.batteryToggle || isBatteryAlert){
     batteryLevelLabel.style.fill = util.goalToColor(battery.chargeLevel, 90)
-    batteryLevelLabel.text = `${battery.chargeLevel}`//%`
+    if (isBatteryAlert)
+      batteryLevelLabel.text = `${battery.chargeLevel}%`
+    else
+      batteryLevelLabel.text = `${battery.chargeLevel}`
     batteryLevelRect.style.display = "none";
     batteryLevelLabel.style.display = "inline";
   } else {
@@ -649,6 +683,21 @@ function setColor(){
   seperatorEndLeft.style.fill = settings.color;
   seperatorLine.style.fill = settings.color;
   seperatorEndRight.style.fill = settings.color;
+}
+
+function setSeperatorImage(){
+  let seperatorLineImage = document.getElementById("seperatorLineImage");
+  switch(settings.seperatorImage){
+    case 1:
+      seperatorLineImage.href = "icons/bar/pride-" + deviceType + ".png";
+      break;
+    case 2:
+      seperatorLineImage.href = "icons/bar/glass.png";
+      break;
+    default:
+      seperatorLineImage.href = "";
+      break;
+  }
 }
 
 function setDataAge(){
@@ -761,6 +810,7 @@ function loadSettings() {
     return {
       dateFormat : 0,
       batteryToggle : false,
+      timeFormat : 0,
       updateInterval : 2,
       updateLocationInterval : 2,
       unitToggle : false,
@@ -769,6 +819,7 @@ function loadSettings() {
       weatherScrollToggle : false,
       locationScrollToggle : false,
       color : "#004C99",
+      seperatorImage: 0,
       noFile : true
     }
   }
@@ -847,7 +898,7 @@ background.onclick = function(evt) {
       show = "clock";
       statsView.style.display = "none";
       updateClock();
-      updateClockData();
+      //updateClockData();
       clockView.style.display = "inline";//test
       weatherView.style.display = "inline";//test
       console.log("Clock Loaded");
@@ -856,7 +907,7 @@ background.onclick = function(evt) {
     show = "clock";
     forecastView.style.display = "none";
     updateClock();
-    updateClockData();
+    //updateClockData();
     clockView.style.display = "inline";//test
     console.log("Clock Loaded");
   }
@@ -870,7 +921,7 @@ display.onchange = function() {
   if (!display.on && show != "clock") {
     show = "clock";
     updateClock();
-    updateClockData();
+    //updateClockData();
     
     statsView.style.display = "none";
     forecastView.style.display = "none";
@@ -904,7 +955,7 @@ applySettings();
 
 hrm.start();
   
-updateClockData();
+//updateClockData();
 setBattery();
 
 
@@ -919,7 +970,7 @@ weather.onsuccess = (data) =>{
   drawWeather(data);
 }
 
-setInterval(updateClockData, 1*1000);
+//setInterval(updateClockData, 1*1000);
 setInterval(setBattery, 60*1000);
 
 console.log("JS memory: " + memory.js.used + "/" + memory.js.total);

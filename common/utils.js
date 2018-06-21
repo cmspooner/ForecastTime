@@ -163,7 +163,7 @@ export function dateParse(fmt, today, loc){
   
   //dateLabel.text = `${util.toDay(today.getDay(), "short")}, ${util.toMonth(today.getMonth())} ${today.getDate()}`;
   //return toDay(today.getDay(), "short")+", " + toMonth(today.getMonth()) + " " + today.getDate();
-  console.log("format is: " + fmt + typeof(fmt))
+  //console.log("format is: " + fmt + typeof(fmt))
   switch (fmt){
     case 0:
       console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
@@ -215,6 +215,7 @@ export function wordStartsWith(letter, text){
 }
 
 export function getForecastIcon(code, description, isDay){
+  console.log(code + ", " + description + ", " + isDay)
   switch(code){
     case 0: //ClearSky
       if (isDay)
