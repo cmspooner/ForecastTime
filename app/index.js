@@ -573,10 +573,10 @@ function setBattery(){
   //let batterychargeLevel = 12
   
   wasBatteryAlert = isBatteryAlert;
-  if ((battery.chargeLevel <= 15 || battery.charging) && !isBatteryAlert) {
+  if ((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) {
     console.log("battery Alert on");
     isBatteryAlert = true;
-  } else if (!(battery.chargeLevel <= 15 || battery.charging)){
+  } else if (!(battery.chargeLevel <= 16 || battery.charging)){
     console.log("battery Alert off");
     isBatteryAlert = false;
   }
@@ -693,6 +693,9 @@ function setSeperatorImage(){
       break;
     case 2:
       seperatorLineImage.href = "icons/bar/glass.png";
+      break;
+     case 3:
+      seperatorLineImage.href = "icons/bar/glassPride-" + deviceType + ".png";
       break;
     default:
       seperatorLineImage.href = "";
