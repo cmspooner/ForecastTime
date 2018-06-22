@@ -157,6 +157,7 @@ function mySettings(props) {
             {name:strings["None"]},
             {name:strings["Rainbow"]},
             {name:strings["Glass"]},
+            {name:strings["Glass Rainbow"]},
           ]}
          />
       </Section>
@@ -190,6 +191,12 @@ function mySettings(props) {
       <Section
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          4.13: Low battery mode starts at 16% not 15%
+        </Text>
+        <Text>
+          4.12.1: Glass Rainbow?
+        </Text>
         <Text>
           4.12: Glass Option For Bar (If you can photo shop better then me I'd love any help with it!)
         </Text>
