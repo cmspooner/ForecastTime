@@ -116,9 +116,9 @@ export function goalToColor(value, total, low = 'fb-red',
   
   let percent = value/total*100;
   let color = 'white'; // #FFFFFF
-  if (percent < 33){
+  if (percent < 33.33){
     color = low; // #F83C40
-  } else if (percent < 66){
+  } else if (percent < 66.66){
     color = medium; // #FFCC33
   } else if (percent < 100){
     color = high;  // #14D3F5
@@ -166,7 +166,7 @@ export function dateParse(fmt, today, loc){
   //console.log("format is: " + fmt + typeof(fmt))
   switch (fmt){
     case 0:
-      console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
+      //console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
       return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
       break;
     case 1: 

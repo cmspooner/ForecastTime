@@ -1,6 +1,6 @@
 {
   "fitbit": {
-    "appUUID": "b5c3ee47-7350-4402-b93c-39e428d7d2c8",
+    "appUUID": "aa2ef146-e1c9-403c-a17b-0011ceec7d12",
     "appType": "clockface",
     "appDisplayName": "ForecastTime Beta",
     "iconFile": "resources/icon.png",

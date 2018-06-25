@@ -19,3 +19,15 @@ https://pixabay.com/en/logo-icon-github-2582757/
 
 email.html
 https://kencaron.github.io/fitbit-os-settings-assets/
+
+Translations:
+German:	
+Spanish:	David Kasregis
+French:	
+Italian:	
+Japanese:	
+Korean:	
+Dutch:	
+Swedish:	
+Chinese (Simplified):	
+Chinese (Traditional):	黎俊廷 & 愛迪生e

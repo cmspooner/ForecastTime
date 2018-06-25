@@ -38,7 +38,6 @@ else
 
 let clockView = document.getElementById("clock");
 let periodView = document.getElementById("period");
-let weatherView = document.getElementById("weather");
 let statsView = document.getElementById("stats");
 let scheduleView = document.getElementById("schedule");
 let forecastView = document.getElementById("forecast");
@@ -67,8 +66,8 @@ let openedWeatherRequest = false;
 // Heart Rate Monitor
 let hrm = new HeartRateSensor();
 
-let myLocale = "es";
-let myLocale = "zh";
+//let myLocale = "es";
+//let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 
 //----------------------------Messaging and Settings--------------
@@ -573,10 +572,10 @@ function setBattery(){
   //let batterychargeLevel = 12
   
   wasBatteryAlert = isBatteryAlert;
-  if ((battery.chargeLevel <= 15 || battery.charging) && !isBatteryAlert) {
+  if ((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) {
     console.log("battery Alert on");
     isBatteryAlert = true;
-  } else if (!(battery.chargeLevel <= 15 || battery.charging)){
+  } else if (!(battery.chargeLevel <= 16 || battery.charging)){
     console.log("battery Alert off");
     isBatteryAlert = false;
   }
@@ -693,6 +692,9 @@ function setSeperatorImage(){
       break;
     case 2:
       seperatorLineImage.href = "icons/bar/glass.png";
+      break;
+     case 3:
+      seperatorLineImage.href = "icons/bar/glassPride-" + deviceType + ".png";
       break;
     default:
       seperatorLineImage.href = "";
@@ -900,7 +902,6 @@ background.onclick = function(evt) {
       updateClock();
       //updateClockData();
       clockView.style.display = "inline";//test
-      weatherView.style.display = "inline";//test
       console.log("Clock Loaded");
     } 
   } else {                                  // In Schedule -> Switching to Clock
@@ -954,6 +955,7 @@ let weatherData = loadWeather();
 applySettings();
 
 hrm.start();
+fetchWeather();
   
 //updateClockData();
 setBattery();

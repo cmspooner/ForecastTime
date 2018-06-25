@@ -95,25 +95,25 @@
 
 .forecastHigh {
   font-size: 22;
-  font-family: Colfax-Regular;
+  font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
   x: 75;
-  fill: red;
+  fill: tomato;
 }
 
 .forecastHighVal {
   font-size: 22;
-  font-family: Colfax-Regular;
+  font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
   x: 148;
-  fill: red;
+  fill: tomato;
 }
 
 .forecastLow {
   font-size: 22;
-  font-family: Colfax-Regular;
+  font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
   x: 196;
@@ -122,7 +122,7 @@
 
 .forecastLowVal{
   font-size: 22;
-  font-family: Colfax-Regular;
+  font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
   x: 272;
