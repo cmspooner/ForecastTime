@@ -5,8 +5,7 @@ import { settingsStorage } from "settings";
 function mySettings(props) {
   
   let myLocale = props.settings.locale
-  let strings = allStrings.getStrings(myLocale);
-  //let d1 = 
+  let strings = allStrings.getStrings(myLocale); 
   return (
     <Page>
       <Section
@@ -60,11 +59,11 @@ function mySettings(props) {
           label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
-            {name:strings["5 minutes"]},
-            {name:strings["15 minutes"]},
-            {name:strings["30 minutes"]},
-            {name:strings["1 hour"]},
-            {name:strings["2 hours"]},
+            {name:strings["5 minutes"], value:5},
+            {name:strings["15 minutes"], value:15},
+            {name:strings["30 minutes"], value:30},
+            {name:strings["1 hour"], value:60},
+            {name:strings["2 hours"], value:120},
           ]}
          />
         <Text align="center">
@@ -74,11 +73,11 @@ function mySettings(props) {
           label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
-            {name:strings["5 minutes"]},
-            {name:strings["15 minutes"]},
-            {name:strings["30 minutes"]},
-            {name:strings["1 hour"]},
-            {name:strings["2 hours"]},
+            {name:strings["5 minutes"], value:5},
+            {name:strings["15 minutes"], value:15},
+            {name:strings["30 minutes"], value:30},
+            {name:strings["1 hour"], value:60},
+            {name:strings["2 hours"], value:120},
           ]}
          />
          <Text align="center">
@@ -162,6 +161,57 @@ function mySettings(props) {
          />
       </Section>
       <Section
+        title={<Text bold align="center">{strings["Custom Range Colors"]}</Text>}>
+        <Text>
+          {strings["Low Color"]}
+        </Text>
+        <ColorSelect
+          settingsKey="lowColor"
+          colors={[
+            {color: "white"},
+            {color: "coral"},
+            {color: "tomato"},
+            {color: "firebrick"}
+          ]}
+        />
+        <Text>
+          {strings["Medium Color"]}
+        </Text>
+        <ColorSelect
+          settingsKey="medColor"
+          colors={[
+            {color: "white"},
+            {color: "yellow"},
+            {color: "#FFCC33"},
+            {color: "gold"},
+          ]}
+        />
+        <Text>
+          {strings["High Color"]}
+        </Text>
+        <ColorSelect
+          settingsKey="highColor"
+          colors={[
+            {color: "white"},
+            {color: "cyan"},
+            {color: "#14D3F5"},
+            {color: "dodgerblue"},
+          ]}
+        />
+        <Text>
+          {strings["Complete Color"]}
+        </Text>
+        <ColorSelect
+          settingsKey="comColor"
+          colors={[
+            {color: "white"},
+            {color: "lawngreen"},
+            {color: "#5BE37D"},
+            {color: "forestgreen"},
+          ]}
+        />
+      </Section>
+      <Section
         title={<Text bold align="center">Contact Me</Text>}>
         <Text>
           {strings["Contact Me"]}
@@ -192,11 +242,23 @@ function mySettings(props) {
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          5.3 beta: Buttons to clear files
+        </Text>
+        <Text>
+          5.2 beta: New Range Color options
+        </Text>
+        <Text>
+          5.1 beta: Fixed dumb typo in cloudy
+        </Text>
+        <Text>
+          5.0 beta: Changed fb-red to tomato for readablity
+        </Text>
+        <Text>
           4.0: Now localized for Chinese and Spanish! New time display and separator bar options. Plus bug fixes and improvements!
         </Text>
         <Text>
           3.0: More date formats and now moved date and steps to accommodate low battery and charging states.
-        </Text>
+         </Text>
         <Text>
           2.0: Memory Improvements and Weather is now restored on load.
         </Text>
@@ -215,6 +277,19 @@ function mySettings(props) {
          <Text>
           1.0: First Release.
         </Text>
+      </Section>
+      <Section
+        title={<Text bold align="center">{strings["Reset Data"]}</Text>}>
+        <Button
+          list
+          label="Reset Settings"
+          onClick={() => props.settingsStorage.setItem('settings', 'kill')}
+        />
+        <Button
+          list
+          label="Reset Weather"
+          onClick={() => props.settingsStorage.setItem('weather', 'kill')}
+        />
       </Section>
     </Page>
   );

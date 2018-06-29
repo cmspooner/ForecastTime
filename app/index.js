@@ -53,6 +53,9 @@ let weather = new Weather();
 let today = new Date();
 let time = util.hourAndMinToTime(today.getHours(), today.getMinutes());
 
+let skipFirstKillSettings = false;
+let skipFirstKillWeather = false;
+
 // Update the clock every minute
 clock.granularity = "seconds";
 
@@ -106,20 +109,47 @@ messaging.peerSocket.onmessage = evt => {
       updateClock();
     }
   }
+  if (evt.data.key === "unitToggle" && evt.data.newValue) {
+    if (settings.unitToggle != JSON.parse(evt.data.newValue)){
+      settings.unitToggle = JSON.parse(evt.data.newValue);
+      setUnit();
+    }
+  }
+  if (evt.data.key === "weatherScrollToggle" && evt.data.newValue) {
+    if (settings.weatherScrollToggle != JSON.parse(evt.data.newValue)){
+      settings.weatherScrollToggle = JSON.parse(evt.data.newValue);
+      setWeatherScroll();
+    }
+  }
+  if (evt.data.key === "locationScrollToggle" && evt.data.newValue) {
+    if (settings.locationScrollToggle != JSON.parse(evt.data.newValue)){
+      settings.locationScrollToggle = JSON.parse(evt.data.newValue);
+      setLocationScroll();
+    }
+  }
   if (evt.data.key === "updateInterval" && evt.data.newValue) {
-    if (settings.updateInterval != Number(JSON.parse(evt.data.newValue).selected)){
+    if (settings.updateInterval != Number(JSON.parse(evt.data.newValue).values[0].value)){
       let oldInterval = settings.updateInterval;
-      settings.updateInterval = Number(JSON.parse(evt.data.newValue).selected);
+      settings.updateInterval = Number(JSON.parse(evt.data.newValue).values[0].value);
       setUpdateInterval(oldInterval);
     }
   }
   if (evt.data.key === "locationUpdateInterval" && evt.data.newValue) {
-    if (settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).selected)){
+    if (settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).values[0].value)){
       let oldInterval = settings.updateLocationInterval;
-      settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).selected);
+      settings.updateLocationInterval = Number(JSON.parse(evt.data.newValue).values[0].value);
       setLocationUpdateInterval(oldInterval);
     }
   }
+  if (evt.data.key === "dataAgeToggle" && evt.data.newValue) {
+    if (settings.showDataAge != JSON.parse(evt.data.newValue)){
+      settings.showDataAge = JSON.parse(evt.data.newValue);
+      setDataAge();
+    }
+  }
+  if (evt.data.key === "fetchToggle" && evt.data.newValue) {
+    settings.fetchToggle = JSON.parse(evt.data.newValue);
+  }  
   if (evt.data.key === "color" && evt.data.newValue) {
     if (settings.color != JSON.parse(evt.data.newValue)){
       settings.color = JSON.parse(evt.data.newValue);
@@ -132,31 +162,46 @@ messaging.peerSocket.onmessage = evt => {
       setSeperatorImage();
     }
   }
-  if (evt.data.key === "dataAgeToggle" && evt.data.newValue) {
-    if (settings.showDataAge != JSON.parse(evt.data.newValue)){
-      settings.showDataAge = JSON.parse(evt.data.newValue);
-      setDataAge();
+  if (evt.data.key === "lowColor" && evt.data.newValue) {
+    if (settings.lowColor != JSON.parse(evt.data.newValue)){
+      settings.lowColor = JSON.parse(evt.data.newValue);
     }
   }
-  if (evt.data.key === "unitToggle" && evt.data.newValue) {
-    if (settings.unitToggle != JSON.parse(evt.data.newValue)){
-      settings.unitToggle = JSON.parse(evt.data.newValue);
-      setUnit();
+  if (evt.data.key === "medColor" && evt.data.newValue) {
+    if (settings.medColor != JSON.parse(evt.data.newValue)){
+      settings.medColor = JSON.parse(evt.data.newValue);
     }
   }
-  if (evt.data.key === "fetchToggle" && evt.data.newValue) {
-    settings.fetchToggle = JSON.parse(evt.data.newValue);
-  }  
-  if (evt.data.key === "weatherScrollToggle" && evt.data.newValue) {
-    if (settings.weatherScrollToggle != JSON.parse(evt.data.newValue)){
-      settings.weatherScrollToggle = JSON.parse(evt.data.newValue);
-      setWeatherScroll();
+  if (evt.data.key === "highColor" && evt.data.newValue) {
+    if (settings.highColor != JSON.parse(evt.data.newValue)){
+      settings.highColor = JSON.parse(evt.data.newValue);
     }
   }
-  if (evt.data.key === "locationScrollToggle" && evt.data.newValue) {
-    if (settings.locationScrollToggle != JSON.parse(evt.data.newValue)){
-      settings.locationScrollToggle = JSON.parse(evt.data.newValue);
-      setLocationScroll();
+  if (evt.data.key === "comColor" && evt.data.newValue) {
+    if (settings.comColor != JSON.parse(evt.data.newValue)){
+      settings.comColor = JSON.parse(evt.data.newValue);
+    }
+  }
+  if (evt.data.key === "settings" && evt.data.newValue) {
+    if (evt.data.newValue === "kill" && skipFirstKillSettings){
+      console.log("---------------------------------------------------killing settings");
+      const SETTINGS_TYPE = "cbor";
+      const SETTINGS_FILE = "settings.cbor";
+      fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE)
+    } else {
+      console.log("---------------------SKIP SETTINGS KILL-----------------")
+      skipFirstKillSettings = true;
+    }
+  }
+  if (evt.data.key === "weather" && evt.data.newValue) {
+    if (evt.data.newValue === "kill"&& skipFirstKillWeather){
+      console.log("---------------------------------------------------killing weather");
+      const SETTINGS_TYPE = "cbor";
+      const SETTINGS_FILE = "weather.cbor";
+      fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE)
+    } else {
+      console.log("---------------------SKIP WEATHER KILL-----------------")
+      skipFirstKillWeather = true;
     }
   }
   //saveSettings();
@@ -348,21 +393,23 @@ function updateClockData() {
     hrLabel.text = "0";
   } else {
     if (user.heartRateZone(hrm.heartRate) == "out-of-range"){
-      hrLabel.style.fill = 'fb-cyan';  // #14D3F5
+      hrLabel.style.fill = settings.highColor;  // #14D3F5
     } else if (user.heartRateZone(hrm.heartRate) == "fat-burn"){
-      hrLabel.style.fill = 'fb-mint'; // #5BE37D
+      hrLabel.style.fill = settings.comColor; // #5BE37D
     } else if (user.heartRateZone(hrm.heartRate) == "cardio"){
-      hrLabel.style.fill = 'fb-peach'; // #FFCC33
+      hrLabel.style.fill = settings.medColor; // #FFCC33
     } else if (user.heartRateZone(hrm.heartRate) == "peak"){
-      hrLabel.style.fill = 'fb-red'; // #F83C40
+      hrLabel.style.fill = settings.lowColor; // #F83C40
     }
     hrLabel.text = `(${user.restingHeartRate}) ${hrm.heartRate} ${strings["bpm"]}`;
   }
     
-  stepsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0, goals.steps);
+  stepsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0, goals.steps, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
   stepsLabel.text = `${(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0).toLocaleString()} ${strings["steps"]}`;
   if (deviceType == "Versa") {
-    calsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories ? todayActivity.adjusted.calories: 0, goals.calories);
+    calsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories ? todayActivity.adjusted.calories: 0, goals.calories, 
+                                           settings.lowCOlor, settings.medColor, settings.highColor, settings.comColor);
     calsLabel.text = `${(todayActivity.adjusted.calories ? todayActivity.adjusted.calories: 0).toLocaleString()} ${strings["kcal"]}`;
   }
 }
@@ -398,54 +445,69 @@ function updateStatsData(){
       let activeGoalLabel = document.getElementById("activeGoalLabel");
       let calsGoalLabel = document.getElementById("calsGoalLabel");
       
-      stepStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps);
+      stepStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       stepStatsLabel.text = strings["Steps"] + ":";
-      stepGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps);
+      stepGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       stepGoalLabel.text = `${todayActivity.adjusted.steps ? todayActivity.adjusted.steps.toLocaleString() : 0} / ${goals.steps.toLocaleString()}`;
       
-      distStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance);
+      distStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       distStatsLabel.text = strings["Distance"] + ":";
-      distGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance);
+      distGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       if (units.distance == "us")
         distGoalLabel.text = `${todayActivity.adjusted.distance ? util.round2(todayActivity.adjusted.distance * 0.000621) : 0 } / ${util.round2(goals.distance*0.000621)}`;
       else
         distGoalLabel.text = `${todayActivity.adjusted.distance ? util.round2(todayActivity.adjusted.distance * 0.001) : 0 } / ${util.round2(goals.distance*0.001)}`;
       
-      floorsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain);
+      floorsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       floorsStatsLabel.text = strings["Floors"] + ":";
-      floorsGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain);
+      floorsGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       floorsGoalLabel.text = `${todayActivity.adjusted.elevationGain ? todayActivity.adjusted.elevationGain : 0} / ${goals.elevationGain}`;
       
-      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes);
+      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       activeStatsLabel.text = strings["Active"] + ":";
-      activeGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes);
+      activeGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       activeGoalLabel.text = `${todayActivity.adjusted.activeMinutes ? todayActivity.adjusted.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
  
-      calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories);
+      calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       calsStatsLabel.text = strings["Calories"] + ":";
-      calsGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories);
+      calsGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       calsGoalLabel.text = `${todayActivity.adjusted.calories ? todayActivity.adjusted.calories.toLocaleString() : 0} / ${parseInt(goals.calories).toLocaleString()}`;
     } else {
-      stepStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps);
+      stepStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       if (isBatteryAlert){
         stepStatsLabel.text = `${strings["Steps"]}: ${todayActivity.adjusted.steps ? todayActivity.adjusted.steps.toLocaleString() : 0} / ${parseInt(goals.steps/1000)}k`;
       } else {
         stepStatsLabel.text = `${strings["Steps"]}: ${todayActivity.adjusted.steps ? todayActivity.adjusted.steps.toLocaleString() : 0} / ${goals.steps.toLocaleString()}`;
       }
       // Multiply by .000621371 to convert from meters to miles
-      distStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance);
+      distStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.distance, goals.distance, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       if (units.distance == "us"){
         distStatsLabel.text = `${strings["Distance"]}: ${todayActivity.adjusted.distance ? util.round2(todayActivity.adjusted.distance * 0.000621) : 0 } / ${util.round2(goals.distance*0.000621)}`;
       } else {
         distStatsLabel.text = `${strings["Distance"]}: ${todayActivity.adjusted.distance ? util.round2(todayActivity.adjusted.distance * 0.001) : 0 } / ${util.round2(goals.distance*0.001)}`;
       }
-      floorsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain);
+      floorsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.elevationGain, goals.elevationGain, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       floorsStatsLabel.text = `${strings["Floors"]}: ${todayActivity.adjusted.elevationGain ? todayActivity.adjusted.elevationGain : 0} / ${goals.elevationGain}`;
 
-      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes);
+      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       activeStatsLabel.text = `${strings["Active"]}: ${todayActivity.adjusted.activeMinutes ? todayActivity.adjusted.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
 
-      calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories);
+      calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories, 
+                                           settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       calsStatsLabel.text = `${strings["Calories"]}: ${todayActivity.adjusted.calories ? todayActivity.adjusted.calories.toLocaleString() : 0} / ${parseInt(goals.calories).toLocaleString()}`;
     }
   }
@@ -623,18 +685,11 @@ function setBattery(){
 }
 
 function setUpdateInterval(oldInterval){
+  if (!settings.updateInterval)
+    settings.updateInterval = 30;
   console.log(`updateInterval is: ${settings.updateInterval}`);
   //let oldInterval = settings.updateInterval;
-  if (settings.updateInterval == 0)
-    settings.updateInterval = 5;
-  else if (settings.updateInterval == 1)
-    settings.updateInterval = 15;
-  else if (settings.updateInterval == 2)
-    settings.updateInterval = 30;
-  else if (settings.updateInterval == 3)
-    settings.updateInterval = 60;
-  else if (settings.updateInterval == 4)
-    settings.updateInterval = 120;
+  
   if (settings.updateInterval < oldInterval){
     weather.setMaximumAge(1 * 60 * 1000); 
     if (!openedWeatherRequest){
@@ -650,18 +705,11 @@ function setUpdateInterval(oldInterval){
 }
 
 function setLocationUpdateInterval(oldLocationInterval){
+  if (!settings.updateLocationInterval)
+    settings.updateLocationInterval = 30;
   console.log(`locationUpdateInterval is: ${settings.updateLocationInterval}`);
   //let oldLocationInterval = settings.updateLocationInterval;
-  if (settings.updateLocationInterval == 0)
-    settings.updateLocationInterval = 5;
-  else if (settings.updateLocationInterval == 1)
-    settings.updateLocationInterval = 15;
-  else if (settings.updateLocationInterval == 2)
-    settings.updateLocationInterval = 30;
-  else if (settings.updateLocationInterval == 3)
-    settings.updateLocationInterval = 60;
-  else if (settings.updateLocationInterval == 4)
-    settings.updateLocationInterval = 120;
+  
   if (settings.updateLocationInterval < oldLocationInterval){
     weather.setMaximumLocationAge(1 * 60 * 1000); 
     if (!openedWeatherRequest){
@@ -822,6 +870,10 @@ function loadSettings() {
       locationScrollToggle : false,
       color : "#004C99",
       seperatorImage: 0,
+      lowColor: "tomato",
+      medColor: "#FFCC33",
+      highColor: "#14D3F5",
+      comColor: "#5BE37D",
       noFile : true
     }
   }

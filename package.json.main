@@ -19,6 +19,12 @@
     "i18n": {
       "en": {
         "name": "ForecastTime"
+      },
+      "es": {
+        "name": "PronosTiempo Beta"
+      },
+      "zh-tw": {
+        "name": "ForecastTime Beta"
       }
     }
   }

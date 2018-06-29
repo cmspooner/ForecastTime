@@ -105,7 +105,7 @@ export function expandDay(day){
   return days[days.indexOf(day)+7];
 }
 
-export function goalToColor(value, total, low = 'fb-red', 
+export function goalToColor(value, total, low = 'tomato', 
                                           medium = 'fb-peach', 
                                           high = 'fb-cyan', 
                                           complete = 'fb-mint', ){
@@ -224,7 +224,7 @@ export function getForecastIcon(code, description, isDay){
         return "../resources/icons/weather/whiteMoon.png" 
       break;
     case 1: //FewClouds
-    case 2: //ScatteredClouds
+    case 2: //Scattered Clouds
       if (isDay)
         return "../resources/icons/weather/whitePartlySunny.png"
       else
