@@ -194,10 +194,10 @@ export function shortenText(text, isDay){
   if (!isDay)
     text = text.replace("Sunny", "Clear");
   
-  text = text.replace("North", "N.");
-  text = text.replace("East", "E.");
-  text = text.replace("South", "S.");
-  text = text.replace("West", "W.");
+  text = text.replace("North ", "N. ");
+  text = text.replace("East ", "E. ");
+  text = text.replace("South ", "S. ");
+  text = text.replace("West ", "W. ");
   
   //console.log(text.indexOf("Rain"));
   return text;  

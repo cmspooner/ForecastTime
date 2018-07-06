@@ -41,61 +41,6 @@ function mySettings(props) {
           />
       </Section>
       <Section
-        title={<Text bold align="center">{strings["Weather"]}</Text>}>
-        <Toggle
-           settingsKey="unitToggle"
-           label={strings["Celsius"]}
-           onChange={value => props.settingsStorage.setItem('unit', value.toString())}
-         />
-        <Toggle
-           settingsKey="weatherScrollToggle"
-           label={strings["weather scrolling"]}
-         />
-         <Toggle
-           settingsKey="locationScrollToggle"
-           label={strings["location scrolling"]}
-         />
-        <Select
-          label={strings["Weather Update Interval"]}
-          settingsKey="updateInterval"
-          options={[
-            {name:strings["5 minutes"], value:5},
-            {name:strings["15 minutes"], value:15},
-            {name:strings["30 minutes"], value:30},
-            {name:strings["1 hour"], value:60},
-            {name:strings["2 hours"], value:120},
-          ]}
-         />
-        <Text align="center">
-          {strings["WATCH battery"]}
-        </Text>
-        <Select
-          label={strings["Location Update Interval"]}
-          settingsKey="locationUpdateInterval"
-          options={[
-            {name:strings["5 minutes"], value:5},
-            {name:strings["15 minutes"], value:15},
-            {name:strings["30 minutes"], value:30},
-            {name:strings["1 hour"], value:60},
-            {name:strings["2 hours"], value:120},
-          ]}
-         />
-         <Text align="center">
-            {strings["PHONE battery"]}
-         </Text>
-        <Toggle
-           settingsKey="dataAgeToggle"
-           label={strings["update time"]}
-         />
-        <Toggle
-           settingsKey="fetchToggle"
-           label={strings["fetched time"] }
-         />
-        <Text align="left">
-          {strings["nerds and debugging"]}
-         </Text>
-      </Section>
-      <Section
         title={<Text bold align="center">{strings["Separator Bar Color"]}</Text>}>
         <ColorSelect
           settingsKey="color"
@@ -212,6 +157,68 @@ function mySettings(props) {
         />
       </Section>
       <Section
+        title={<Text bold align="center">{strings["Activities"]}</Text>}>
+        <Toggle
+           settingsKey="rhrToggle"
+           label={strings["rhr"] }
+         />
+      </Section>
+      <Section
+        title={<Text bold align="center">{strings["Weather"]}</Text>}>
+        <Toggle
+           settingsKey="unitToggle"
+           label={strings["Celsius"]}
+           onChange={value => props.settingsStorage.setItem('unit', value.toString())}
+         />
+        <Toggle
+           settingsKey="weatherScrollToggle"
+           label={strings["weather scrolling"]}
+         />
+         <Toggle
+           settingsKey="locationScrollToggle"
+           label={strings["location scrolling"]}
+         />
+        <Select
+          label={strings["Weather Update Interval"]}
+          settingsKey="updateInterval"
+          options={[
+            {name:strings["5 minutes"], value:5},
+            {name:strings["15 minutes"], value:15},
+            {name:strings["30 minutes"], value:30},
+            {name:strings["1 hour"], value:60},
+            {name:strings["2 hours"], value:120},
+          ]}
+         />
+        <Text align="center">
+          {strings["WATCH battery"]}
+        </Text>
+        <Select
+          label={strings["Location Update Interval"]}
+          settingsKey="locationUpdateInterval"
+          options={[
+            {name:strings["5 minutes"], value:5},
+            {name:strings["15 minutes"], value:15},
+            {name:strings["30 minutes"], value:30},
+            {name:strings["1 hour"], value:60},
+            {name:strings["2 hours"], value:120},
+          ]}
+         />
+         <Text align="center">
+            {strings["PHONE battery"]}
+         </Text>
+        <Toggle
+           settingsKey="dataAgeToggle"
+           label={strings["update time"]}
+         />
+        <Toggle
+           settingsKey="fetchToggle"
+           label={strings["fetched time"] }
+         />
+        <Text align="left">
+          {strings["nerds and debugging"]}
+         </Text>
+      </Section>
+      <Section
         title={<Text bold align="center">Contact Me</Text>}>
         <Text>
           {strings["Contact Me"]}
@@ -242,23 +249,17 @@ function mySettings(props) {
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
-          5.3 beta: Buttons to clear files
+          5.0.1: Tweak to heart versa heartrate reading
         </Text>
         <Text>
-          5.2 beta: New Range Color options
-        </Text>
-        <Text>
-          5.1 beta: Fixed dumb typo in cloudy
-        </Text>
-        <Text>
-          5.0 beta: Changed fb-red to tomato for readablity
+          5.0: Re-arranged settings. Added ability turn off resting heart rate, change colors of activity stats, and buttons to reset settings and weather data.
         </Text>
         <Text>
           4.0: Now localized for Chinese and Spanish! New time display and separator bar options. Plus bug fixes and improvements!
         </Text>
         <Text>
           3.0: More date formats and now moved date and steps to accommodate low battery and charging states.
-         </Text>
+        </Text>
         <Text>
           2.0: Memory Improvements and Weather is now restored on load.
         </Text>

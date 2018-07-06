@@ -53,11 +53,8 @@ let weather = new Weather();
 let today = new Date();
 let time = util.hourAndMinToTime(today.getHours(), today.getMinutes());
 
-let skipFirstKillSettings = false;
-let skipFirstKillWeather = false;
-
 // Update the clock every minute
-clock.granularity = "seconds";
+
 
 let background = document.getElementById("clickbg");
 
@@ -68,6 +65,7 @@ let openedWeatherRequest = false;
 
 // Heart Rate Monitor
 let hrm = new HeartRateSensor();
+hrm.start();
 
 //let myLocale = "es";
 //let myLocale = "zh";
@@ -182,26 +180,36 @@ messaging.peerSocket.onmessage = evt => {
       settings.comColor = JSON.parse(evt.data.newValue);
     }
   }
+  if (evt.data.key === "rhrToggle" && evt.data.newValue) {
+    if (settings.rhrToggle != JSON.parse(evt.data.newValue)){
+      settings.rhrToggle = JSON.parse(evt.data.newValue);
+      updateClockData();
+    }
+  }
   if (evt.data.key === "settings" && evt.data.newValue) {
-    if (evt.data.newValue === "kill" && skipFirstKillSettings){
+    if (evt.data.newValue === "kill"){
       console.log("---------------------------------------------------killing settings");
       const SETTINGS_TYPE = "cbor";
       const SETTINGS_FILE = "settings.cbor";
-      fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE)
-    } else {
-      console.log("---------------------SKIP SETTINGS KILL-----------------")
-      skipFirstKillSettings = true;
-    }
+      try {
+        fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE);
+      } catch (ex) {
+        console.log(ex)
+      }
+      loadSettings();
+    } 
   }
   if (evt.data.key === "weather" && evt.data.newValue) {
-    if (evt.data.newValue === "kill"&& skipFirstKillWeather){
+    if (evt.data.newValue === "kill"){
       console.log("---------------------------------------------------killing weather");
       const SETTINGS_TYPE = "cbor";
       const SETTINGS_FILE = "weather.cbor";
-      fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE)
-    } else {
-      console.log("---------------------SKIP WEATHER KILL-----------------")
-      skipFirstKillWeather = true;
+      try {
+        fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE)
+      } catch (ex) {
+        console.log(ex)
+      }
+      fetchWeather("Reset Weather");
     }
   }
   //saveSettings();
@@ -319,6 +327,7 @@ function drawError(error){
 
 // Update the <text> element with the current time
 function updateClock() {
+  console.log("TICK")
   // Clock view
   let clockLabel = document.getElementById("clockLabel");
   let dateLabel = document.getElementById("dateLabel");
@@ -353,6 +362,9 @@ function updateClock() {
   }
   dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale) ? util.dateParse(settings.dateFormat, today, myLocale) : strings[util.toDay(today.getDay(), "short")] + ", " + strings[util.toMonth(today.getMonth())] + " " + today.getDate();
 
+  if (!settings.timeFormat){
+    settings.timeFormat = 0;
+  }
   switch (settings.timeFormat) {
     case 1:
       clockLabel.text = `${hours}:${mins}`;
@@ -364,9 +376,6 @@ function updateClock() {
       clockLabel.text = `${hours}:${mins}${ampm}`;
       break;
   }
-  
-  
-  updateClockData();
 }
 
 function updateClockData() {
@@ -376,19 +385,31 @@ function updateClockData() {
     let calsLabel = document.getElementById("calsLabel");
   let strings = allStrings.getStrings(myLocale, "clockData");
 
+  if (!settings.lowColor)
+    settings.lowColor = "tomato"
+  if (!settings.medColor)
+    settings.medColor = "#FFCC33"
+  if (!settings.highColor)
+    settings.highColor = "#14D3F5"
+  if (!settings.comColor)
+    settings.comColor = "#5BE37D"
+  
+  if (!settings.rhrToggle)
+    settings.rhrToggle = false;
 
   hrLabel.style.fill = 'white';
   stepsLabel.style.fill = 'white';
   if (deviceType == "Versa")
     calsLabel.style.fill = 'white';
 
-  //console.log(hrm.heart);
+  //console.log("Activated: " +hrm.heartRate);
+  
   if (!hrm){
     hrLabel.text = strings["NO SENSOR!!!"];
   } else if (!hrm.heartRate) {
-    //hrLabel.text = hrm.timeStamp;
+    console.log(hrm.activated);
     hrLabel.text = strings["NO HEART RATE"];
-    hrm.start(); 
+    //hrm.start(); 
   } else if (hrm.heartRate == 0){
     hrLabel.text = "0";
   } else {
@@ -401,7 +422,10 @@ function updateClockData() {
     } else if (user.heartRateZone(hrm.heartRate) == "peak"){
       hrLabel.style.fill = settings.lowColor; // #F83C40
     }
-    hrLabel.text = `(${user.restingHeartRate}) ${hrm.heartRate} ${strings["bpm"]}`;
+    if (settings.rhrToggle || !user.restingHeartRate)
+      hrLabel.text = `${hrm.heartRate} ${strings["bpm"]}`;
+    else
+      hrLabel.text = `(${user.restingHeartRate}) ${hrm.heartRate} ${strings["bpm"]}`;
   }
     
   stepsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0, goals.steps, 
@@ -437,6 +461,15 @@ function updateStatsData(){
     let floorsStatsLabel = document.getElementById("floorsStatsLabel");
     let activeStatsLabel = document.getElementById("activeStatsLabel");
     let calsStatsLabel = document.getElementById("calsStatsLabel");
+    
+    if (!settings.lowColor)
+      settings.lowColor = "tomato"
+    if (!settings.medColor)
+      settings.medColor = "#FFCC33"
+    if (!settings.highColor)
+      settings.highColor = "#14D3F5"
+    if (!settings.comColor)
+      settings.comColor = "#5BE37D"
     
     if (deviceType == "Versa") {
       let stepGoalLabel = document.getElementById("stepGoalLabel");
@@ -618,6 +651,8 @@ function applySettings(startIndex = 0){
 }
 
 function setDateFormat(){
+  if (!settings.dateFormat)
+    settings.dateFormat = 0;
   console.log(`dateFormat is: ${settings.dateFormat}`);
   
   let dateLabel = document.getElementById("dateLabel");
@@ -722,6 +757,8 @@ function setLocationUpdateInterval(oldLocationInterval){
 }
 
 function setColor(){
+  if (!settings.color)
+    settings.color = "#004C99";
   console.log(`Setting Seperator Bar color: ${settings.color}`);
   let seperatorEndLeft = document.getElementById("seperatorEndLeft");
   let seperatorLine = document.getElementById("seperatorLine");
@@ -733,6 +770,8 @@ function setColor(){
 }
 
 function setSeperatorImage(){
+  if (!settings.seperatorImage)
+    settings.seperatorImage = 0;
   let seperatorLineImage = document.getElementById("seperatorLineImage");
   switch(settings.seperatorImage){
     case 1:
@@ -751,6 +790,8 @@ function setSeperatorImage(){
 }
 
 function setDataAge(){
+  if (!settings.showDataAge)
+    settings.showDataAge = false;
   console.log(`Data Age: ${settings.showDataAge}`);
   
   // Weather View
@@ -773,6 +814,8 @@ function setDataAge(){
 }
 
 function setUnit(){
+  if (!settings.unitToggle)
+    settings.unitToggle = false;
   console.log(`Celsius: ${settings.unitToggle}`);
   
   let tempAndConditionLabel = document.getElementById("tempAndConditionLabel");
@@ -799,6 +842,8 @@ function setUnit(){
 }
  
 function setWeatherScroll(){
+  if (!settings.weatherScrollToggle)
+    settings.weatherScrollToggle = false;
   console.log(`Weather Scroll Dissable: ${settings.weatherScrollToggle}`);
   
   // Weather View
@@ -822,6 +867,8 @@ function setWeatherScroll(){
 }
 
 function setLocationScroll(){
+  if (!settings.locationScrollToggle)
+    settings.locationScrollToggle = false;
   console.log(`Location Scroll Dissable: ${settings.locationScrollToggle}`);
   // Weather View
   let tempAndConditionLabel = document.getElementById("tempAndConditionLabel");
@@ -874,6 +921,7 @@ function loadSettings() {
       medColor: "#FFCC33",
       highColor: "#14D3F5",
       comColor: "#5BE37D",
+      rhrToggle: false,
       noFile : true
     }
   }
@@ -914,6 +962,8 @@ function saveWeather() {
 }
 
 function fetchWeather(caller){
+  if (!caller)
+    caller = "auto called"
   console.log(caller)
   console.log("Doing Fetch");
   if (settings.fetchToggle){
@@ -1007,13 +1057,14 @@ let weatherData = loadWeather();
 applySettings();
 
 hrm.start();
+hrm.onerror = function() { console.log("--------------------------------------------------HR err"); } 
 fetchWeather();
   
 //updateClockData();
 setBattery();
 
 
-if (weatherData == null){
+if (weatherData == null || !weatherData){
   drawWeatherUpdatingMsg();
 } else {
   drawWeather(weatherData);
@@ -1024,7 +1075,9 @@ weather.onsuccess = (data) =>{
   drawWeather(data);
 }
 
-//setInterval(updateClockData, 1*1000);
+
+clock.granularity = "seconds";
+setInterval(updateClockData, 1*1000);
 setInterval(setBattery, 60*1000);
 
 console.log("JS memory: " + memory.js.used + "/" + memory.js.total);

@@ -340,7 +340,7 @@ function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
     response.json()
     .then((data) => {
       
-      if(data.query === undefined || data.query.results === undefined || data.query.results.channel === undefined) {
+      if(data.query === undefined || data.query.results === undefined || !data.query.results || data.query.results.channel === undefined) {
         if(error) error(data);
         return;
       }

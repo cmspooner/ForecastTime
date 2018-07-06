@@ -25,7 +25,7 @@ export function getStrings(lang, type){
         "WATCH battery"                 : "Disminución resultará en aumento de uso de batería de RELOJ.",
         "PHONE battery"                 : "Disminución resultará en aumento de uso de batería de MÓVIL.",
         "update time"                   : "Mostrar último actualización de tiempo",
-        "fetched time"                  : "Show when weather is fetched",																								
+        "fetched time"                  : "Show when fetching weather",																								
         "nerds and debugging"           : "Para expertos o ñoños/sacar errores.",
         "Separator Bar Color"           : "Color de Barra de Separación",
         "Image"                         : "Imagen",
@@ -41,7 +41,9 @@ export function getStrings(lang, type){
         "Contact Me"                    : "Favor de no vacilar en contactarme con preguntas o sugerencias; déjeme saber a cualquiér app o esfera de reloj se refiera.  Éste y todos mis apps siempre serán gratis y Código Abierto. Si le gusta mucho el app, favor de comprarme un café (o sea un componente electrónico para mis clases). ¡Gracias!",
         "Email"                         : "Correo Electrónico",
         "Build Version"                 : "Versión y Apuntes (Sólo Inglés)",
-        "Reset Data"                    : "Reset Data"
+        "Reset Data"                    : "Reset Data",
+        "Activities"                    : "Activities",
+        "rhr"                           : "Hide Resting Heart Rate"
       }
     case "zh":
       return {
@@ -84,7 +86,9 @@ export function getStrings(lang, type){
         "Contact Me"                    : "P有任何問題時,歡迎與我聯繫,但也麻煩您提供使用上遇到的問題,還有問題是發生在哪個應用或是表盤,這個程式將永遠免費且為開源軟體,若您真的喜歡這軟體,可以考慮買一杯咖啡送我(或是像一些電子零件,這些最終出現我的教室裡),謝謝",
         "Email"                         : "電子信箱",
         "Build Version"                 : "版本號說明資訊(只提供英文說明)",
-        "Reset Data"                    : "Reset Data"
+        "Reset Data"                    : "Reset Data",
+        "Activities"                    : "Activities",
+        "rhr"                           : "Hide Resting Heart Rate"
       }
     default:
       return {
@@ -127,7 +131,9 @@ export function getStrings(lang, type){
         "Contact Me"                    : "Please don't hesitate to contact me with questions or suggestions; but be sure to let me know which app or watchface you are talking about. This and all my other apps will always be free and Open Source. If you really like my app please consider buying me a coffee (or more likely electronic components that end up in my classroom). Thanks!",
         "Email"                         : "Email",
         "Build Version"                 : "Build Version and Notes (English Only)",
-        "Reset Data"                    : "Reset Data"
+        "Reset Data"                    : "Reset Data",
+        "Activities"                    : "Activities",
+        "rhr"                           : "Hide Resting Heart Rate"
       }
   }
 }

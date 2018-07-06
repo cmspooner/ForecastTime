@@ -34,6 +34,10 @@ settingsStorage.onchange = evt => {
     newValue: evt.newValue
   };
   sendVal(data);
+  if (evt.key == "settings")
+    settingsStorage.setItem('settings', null)
+  if (evt.key == "weather")
+    settingsStorage.setItem('weather', null)
 };
 
 // Restore any previously saved settings and send to the device
