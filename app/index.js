@@ -376,6 +376,7 @@ function updateClock() {
       clockLabel.text = `${hours}:${mins}${ampm}`;
       break;
   }
+  updateClockData()
 }
 
 function updateClockData() {
@@ -436,6 +437,7 @@ function updateClockData() {
                                            settings.lowCOlor, settings.medColor, settings.highColor, settings.comColor);
     calsLabel.text = `${(todayActivity.adjusted.calories ? todayActivity.adjusted.calories: 0).toLocaleString()} ${strings["kcal"]}`;
   }
+  
 }
 
 function updateStatsData(){
@@ -1040,6 +1042,7 @@ me.onunload = saveSettings;
 
 //-----------------Startup------------------------
 // Update the clock every tick event
+clock.granularity = "seconds";
 clock.ontick = () => updateClock();
 
 updateClock();  
@@ -1075,8 +1078,6 @@ weather.onsuccess = (data) =>{
   drawWeather(data);
 }
 
-
-clock.granularity = "seconds";
 setInterval(updateClockData, 1*1000);
 setInterval(setBattery, 60*1000);
 
