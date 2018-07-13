@@ -100,8 +100,16 @@ function mySettings(props) {
           options={[
             {name:strings["None"]},
             {name:strings["Rainbow"]},
+            {name:strings["Wood 1"]},
+            {name:strings["Wood 2"]},
+          ]}
+         />
+        <Select
+          label={strings["Effect"]}
+          settingsKey="seperatorEffect"
+          options={[
+            {name:strings["None"]},
             {name:strings["Glass"]},
-            {name:strings["Glass Rainbow"]},
           ]}
          />
       </Section>
@@ -214,6 +222,10 @@ function mySettings(props) {
            settingsKey="fetchToggle"
            label={strings["fetched time"] }
          />
+        <Toggle
+           settingsKey="colorToggle"
+           label={strings["high low color"] }
+         />
         <Text align="left">
           {strings["nerds and debugging"]}
          </Text>
@@ -249,17 +261,53 @@ function mySettings(props) {
         
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
-          5.0.1: Tweak to heart versa heartrate reading
+          6.1.2 beta: Delete More Settings
+        </Text>
+        <Text>
+          6.1.1 beta: Delete Settings
+        </Text>
+        <Text>
+          6.1 beta: Seperated Images and Effect, Toggle to turn off High/Low Temp Colors
+        </Text>
+        <Text>
+          6.0 beta: New image options...woods!
+        </Text>
+        <Text>
+          5.7 beta: Uploading...becuase; why not 
+        </Text>
+        <Text>
+          5.6 beta: Added a space to shortening of directions. I still think Northampton is a stupid name. 
+        </Text>
+        <Text>
+          5.5 beta: Rearranged settings order(Trying to reflect the order on face), added toggle to turn off resting heart rate.
         </Text>
         <Text>
-          5.0: Re-arranged settings. Added ability turn off resting heart rate, change colors of activity stats, and buttons to reset settings and weather data.
+          5.4.2 beta: Fixed Reset button to not run on start
+        </Text>
+        <Text>
+          5.4.1 beta: Missed a few
+        </Text>
+        <Text>
+          5.4 beta: If no setting...make sure there is a value set
+        </Text>
+        <Text>
+          5.3 beta: Buttons to clear files
+        </Text>
+        <Text>
+          5.2 beta: New Range Color options
+        </Text>
+        <Text>
+          5.1 beta: Fixed dumb typo in cloudy
+        </Text>
+        <Text>
+          5.0 beta: Changed fb-red to tomato for readablity
         </Text>
         <Text>
           4.0: Now localized for Chinese and Spanish! New time display and separator bar options. Plus bug fixes and improvements!
         </Text>
         <Text>
           3.0: More date formats and now moved date and steps to accommodate low battery and charging states.
-        </Text>
+         </Text>
         <Text>
           2.0: Memory Improvements and Weather is now restored on load.
         </Text>
