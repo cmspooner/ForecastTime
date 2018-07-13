@@ -104,7 +104,7 @@ messaging.peerSocket.onmessage = evt => {
     if(settings.timeFormat != Number(JSON.parse(evt.data.newValue).selected)){
       console.log(JSON.parse(evt.data.newValue).selected)
       settings.timeFormat = Number(JSON.parse(evt.data.newValue).selected);
-      updateClock();
+      //updateClock();
     }
   }
   if (evt.data.key === "unitToggle" && evt.data.newValue) {
@@ -148,6 +148,9 @@ messaging.peerSocket.onmessage = evt => {
   if (evt.data.key === "fetchToggle" && evt.data.newValue) {
     settings.fetchToggle = JSON.parse(evt.data.newValue);
   }  
+  if (evt.data.key === "colorToggle" && evt.data.newValue) {
+    settings.colorToggle = JSON.parse(evt.data.newValue);
+  }  
   if (evt.data.key === "color" && evt.data.newValue) {
     if (settings.color != JSON.parse(evt.data.newValue)){
       settings.color = JSON.parse(evt.data.newValue);
@@ -158,6 +161,12 @@ messaging.peerSocket.onmessage = evt => {
     if (settings.seperatorImage != Number(JSON.parse(evt.data.newValue).selected)){
       settings.seperatorImage = Number(JSON.parse(evt.data.newValue).selected);
       setSeperatorImage();
+    }
+  }
+  if (evt.data.key === "seperatorEffect" && evt.data.newValue) {
+    if (settings.seperatorEffect != Number(JSON.parse(evt.data.newValue).selected)){
+      settings.seperatorEffect = Number(JSON.parse(evt.data.newValue).selected);
+      setSeperatorEffect();
     }
   }
   if (evt.data.key === "lowColor" && evt.data.newValue) {
@@ -326,8 +335,9 @@ function drawError(error){
 //-------------------------------Update Functions-----------------
 
 // Update the <text> element with the current time
-function updateClock() {
-  console.log("TICK")
+function updateClock(caller) {
+  //console.log("TICK from " + caller);
+
   // Clock view
   let clockLabel = document.getElementById("clockLabel");
   let dateLabel = document.getElementById("dateLabel");
@@ -376,16 +386,15 @@ function updateClock() {
       clockLabel.text = `${hours}:${mins}${ampm}`;
       break;
   }
-  updateClockData()
+  updateClockData();
 }
 
-function updateClockData() {
+hrm.onreading = function() {
+  // Peek the current sensor values
+  console.log("Current heart rate: " + hrm.heartRate);
   let hrLabel = document.getElementById("hrLabel");
-  let stepsLabel = document.getElementById("stepsLabel");
-  if (deviceType == "Versa")
-    let calsLabel = document.getElementById("calsLabel");
   let strings = allStrings.getStrings(myLocale, "clockData");
-
+  
   if (!settings.lowColor)
     settings.lowColor = "tomato"
   if (!settings.medColor)
@@ -399,11 +408,6 @@ function updateClockData() {
     settings.rhrToggle = false;
 
   hrLabel.style.fill = 'white';
-  stepsLabel.style.fill = 'white';
-  if (deviceType == "Versa")
-    calsLabel.style.fill = 'white';
-
-  //console.log("Activated: " +hrm.heartRate);
   
   if (!hrm){
     hrLabel.text = strings["NO SENSOR!!!"];
@@ -428,6 +432,31 @@ function updateClockData() {
     else
       hrLabel.text = `(${user.restingHeartRate}) ${hrm.heartRate} ${strings["bpm"]}`;
   }
+
+}
+
+function updateClockData() {
+ 
+  let stepsLabel = document.getElementById("stepsLabel");
+  if (deviceType == "Versa")
+    let calsLabel = document.getElementById("calsLabel");
+  let strings = allStrings.getStrings(myLocale, "clockData");
+
+  if (!settings.lowColor)
+    settings.lowColor = "tomato"
+  if (!settings.medColor)
+    settings.medColor = "#FFCC33"
+  if (!settings.highColor)
+    settings.highColor = "#14D3F5"
+  if (!settings.comColor)
+    settings.comColor = "#5BE37D"
+  
+  
+  stepsLabel.style.fill = 'white';
+  if (deviceType == "Versa")
+    calsLabel.style.fill = 'white';
+
+  //console.log("Activated: " +hrm.heartRate);
     
   stepsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps ? todayActivity.adjusted.steps: 0, goals.steps, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
@@ -592,6 +621,25 @@ function updateForecastData(){
     else
       todayDescriptionLabel.text = weatherData.todayDescription;
     
+    if (!settings.colorToggle)
+      settings.colorToggle = false
+    
+    if (settings.colorToggle){
+      todayHighLabel.style.fill = "#FFFFFF";
+      todayLowLabel.style.fill = "#FFFFFF";
+      tomorrowHighLabel.style.fill = "#FFFFFF";
+      tomorrowLowLabel.style.fill = "#FFFFFF";
+      day3HighLabel.style.fill = "#FFFFFF";
+      day3LowLabel.style.fill = "#FFFFFF";
+    } else {
+      todayHighLabel.style.fill = "tomato";
+      todayLowLabel.style.fill = "cornflowerblue";
+      tomorrowHighLabel.style.fill = "tomato";
+      tomorrowLowLabel.style.fill = "cornflowerblue";
+      day3HighLabel.style.fill = "tomato";
+      day3LowLabel.style.fill = "cornflowerblue";
+    }
+    
     todayHighLabel.text = strings["High"] + ": " + weatherData.todayHigh + "°"
     todayHighValLabel.text = ""
     todayLowLabel.text = strings["Low"] + ": " + weatherData.todayLow + "°"
@@ -636,6 +684,7 @@ function applySettings(startIndex = 0){
       setLocationUpdateInterval,
       setColor,
       setSeperatorImage,
+      setSeperatorEffect,
       setDataAge,
       setUnit,
       setWeatherScroll,
@@ -775,18 +824,46 @@ function setSeperatorImage(){
   if (!settings.seperatorImage)
     settings.seperatorImage = 0;
   let seperatorLineImage = document.getElementById("seperatorLineImage");
+  
+  if (!settings.color)
+    settings.color = "#004C99";
+  let seperatorEndLeft = document.getElementById("seperatorEndLeft");
+  let seperatorLine = document.getElementById("seperatorLine");
+  let seperatorEndRight = document.getElementById("seperatorEndRight");
+  
+  seperatorEndLeft.style.fill = "#000000";
+  seperatorLine.style.fill = "#000000";
+  seperatorEndRight.style.fill = "#000000";
+  
   switch(settings.seperatorImage){
     case 1:
       seperatorLineImage.href = "icons/bar/pride-" + deviceType + ".png";
       break;
     case 2:
-      seperatorLineImage.href = "icons/bar/glass.png";
+      seperatorLineImage.href = "icons/bar/wood1-" + deviceType + ".png";
       break;
-     case 3:
-      seperatorLineImage.href = "icons/bar/glassPride-" + deviceType + ".png";
+    case 3:
+      seperatorLineImage.href = "icons/bar/wood2-" + deviceType + ".png";
       break;
     default:
       seperatorLineImage.href = "";
+      seperatorEndLeft.style.fill = settings.color;
+      seperatorLine.style.fill = settings.color;
+      seperatorEndRight.style.fill = settings.color;
+      break;
+  }
+}
+
+function setSeperatorEffect(){
+  if (!settings.seperatorEffect)
+    settings.seperatorEffect = 0;
+  let seperatorLineEffect = document.getElementById("seperatorLineEffect");
+  switch(settings.seperatorEffect){
+    case 1:
+      seperatorLineEffect.href = "icons/bar/glass.png";
+      break;
+    default:
+      seperatorLineEffect.href = "";
       break;
   }
 }
@@ -899,7 +976,7 @@ function setLocationScroll(){
 
 function loadSettings() {
   console.log("Loading Settings!")
-  const SETTINGS_TYPE = "cbor";
+  const SETFNGS_TYPE = "cbor";
   const SETTINGS_FILE = "settings.cbor";
   try {
     return fs.readFileSync(SETTINGS_FILE, SETTINGS_TYPE);
@@ -1003,7 +1080,7 @@ background.onclick = function(evt) {
     } else {
       show = "clock";
       statsView.style.display = "none";
-      updateClock();
+      //updateClock();
       //updateClockData();
       clockView.style.display = "inline";//test
       console.log("Clock Loaded");
@@ -1011,7 +1088,7 @@ background.onclick = function(evt) {
   } else {                                  // In Schedule -> Switching to Clock
     show = "clock";
     forecastView.style.display = "none";
-    updateClock();
+    //updateClock();
     //updateClockData();
     clockView.style.display = "inline";//test
     console.log("Clock Loaded");
@@ -1043,9 +1120,10 @@ me.onunload = saveSettings;
 //-----------------Startup------------------------
 // Update the clock every tick event
 clock.granularity = "seconds";
-clock.ontick = () => updateClock();
+console.log(">>>>>>>>>>>>>>>>>>>>>> " + clock.granularity)
+clock.ontick = () => updateClock("ontick");
 
-updateClock();  
+updateClock("start");  
 settings = loadSettings();
 console.log(settings.color)
 
@@ -1078,7 +1156,7 @@ weather.onsuccess = (data) =>{
   drawWeather(data);
 }
 
-setInterval(updateClockData, 1*1000);
+//setInterval(updateClockData, 1*1000);
 setInterval(setBattery, 60*1000);
 
 console.log("JS memory: " + memory.js.used + "/" + memory.js.total);

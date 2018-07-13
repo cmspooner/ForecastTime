@@ -4,11 +4,15 @@ import { locale } from "user-settings";
 
 //import { me } from "companion";
 
+//clear storage before setting
+settingsStorage.clear()
+
 let myLocale = "es";
 let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 //let myLocale = "en"
 settingsStorage.setItem('locale', myLocale)
+
 console.log("Companion locale: " + settingsStorage.getItem('locale'));
 
 import Weather from '../common/weather/phone';
