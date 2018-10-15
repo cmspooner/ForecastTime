@@ -1,4 +1,4 @@
-import * as allStrings from "strings.js";
+import * as allStrings from "./strings.js";
 import { settingsStorage } from "settings";
 
 
@@ -15,6 +15,8 @@ function mySettings(props) {
           settingsKey="dateFormat"
           options={[
             {name: strings["Wed, Jan 31"]},
+            {name: strings["Wednesday Jan 31"]},
+            {name: strings["Wednesday 31"]},
             {name: strings["Jan 31, 2018"]},
             {name: "1/31/2018"},
             {name: strings["Wed 31 Jan"]},
@@ -28,7 +30,10 @@ function mySettings(props) {
         <Toggle
            settingsKey="batteryToggle"
            label={strings["Battery Bar"]}
-           onChange={value => props.settingsStorage.setItem('unit', value.toString())}
+         />
+        <Toggle
+           settingsKey="24hToggle"
+           label={strings["Force 24 Hour Time"]}
          />
         <Select
           label={strings["Time Format"]}
@@ -258,9 +263,35 @@ function mySettings(props) {
         </Link>
       </Section>
       <Section
-        
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          6.5.1 beta: Made date a teeny bit larger
+        </Text>
+        <Text>
+          6.5 beta: Added new date formats
+        </Text>
+        <Text>
+          6.4 beta: Fixed (?) Battery label moving/changing impropery
+        </Text>
+        <Text>
+          6.3 beta: finding crash...date now shows "Start!" before loading date.
+        </Text>
+        <Text>
+          6.3 beta: finding crash...date now shows "Start!" before loading date.
+        </Text>
+        <Text>
+          6.2.1 beta: Timestamp now 24 hour if selected either through fitbit or settings
+        </Text>
+        <Text>
+          6.2 beta: New options to force 24 hour time, leading zero on hours in 24 hour mode.
+        </Text>
+        <Text>
+          6.1.4 beta: FIXED SETTINGS LOAD ISSUE....SPELLING COUNTS!!!
+        </Text>
+        <Text>
+          6.1.3 beta: stop deleting settings 
+        </Text>
+        <Text>
           6.1.2 beta: Delete More Settings
         </Text>
         <Text>

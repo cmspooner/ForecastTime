@@ -25,7 +25,7 @@ console.log("JS memory: " + memory.js.used + "/" + memory.js.total);
 
 import * as util from "../common/utils";
 import Weather from '../common/weather/device';
-import * as allStrings from "strings.js";
+import * as allStrings from "./strings.js";
 
 
 import { me as device } from "device";
@@ -98,6 +98,11 @@ messaging.peerSocket.onmessage = evt => {
     if (settings.batteryToggle != JSON.parse(evt.data.newValue)){
       settings.batteryToggle = JSON.parse(evt.data.newValue);
       setBattery();
+    }
+  }
+  if (evt.data.key === "24hToggle" && evt.data.newValue) {
+    if (settings.twentyFour != JSON.parse(evt.data.newValue)){
+      settings.twentyFour = JSON.parse(evt.data.newValue);
     }
   }
   if (evt.data.key === "timeFormat" && evt.data.newValue) {
@@ -266,7 +271,11 @@ function drawWeather(data){
   if (timeStamp.getDate()!=today.getDate())
     timeStamp = timeStamp.getMonth()+1+"/"+timeStamp.getDate()
   else
-    timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
+    if (preferences.clockDisplay == "12h" && !settings.twentyFour){
+      timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
+    } else {
+      timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
+    }
 
   if (settings.showDataAge) {
     if (strings[util.shortenText(data.location, data.isDay)])
@@ -342,6 +351,8 @@ function updateClock(caller) {
   let clockLabel = document.getElementById("clockLabel");
   let dateLabel = document.getElementById("dateLabel");
   
+  let dateLabel = "Start!"
+  
 
   today = new Date();
   time = util.hourAndMinToTime(today.getHours(), today.getMinutes());
@@ -354,7 +365,7 @@ function updateClock(caller) {
   let strings = allStrings.getStrings(myLocale, "date");
   
   //console.log(preferences.clockDisplay);
-  if (preferences.clockDisplay == "12h"){
+  if (preferences.clockDisplay == "12h" && !settings.twentyFour){
     if (hours > 12){
       ampm = " pm";
       hours -= 12;
@@ -364,8 +375,10 @@ function updateClock(caller) {
       hours += 12;
     }
   } else {
+    hours = util.zeroPad(hours);
     ampm = ""
   }
+  
 
   if (!settings.dateFormat){
     settings.dateFormat = 0;
@@ -747,6 +760,7 @@ function setBattery(){
         batteryLevelLabel.x = 246;
         batteryLevelLabel.y = 29;
       } else {
+        batteryLevelLabel.x = 288;
         batteryLevelLabel.y = 22;
       }
       batteryLevelLabel.style.fontSize = 21;
@@ -976,8 +990,9 @@ function setLocationScroll(){
 
 function loadSettings() {
   console.log("Loading Settings!")
-  const SETFNGS_TYPE = "cbor";
+  const SETTINGS_TYPE = "cbor";
   const SETTINGS_FILE = "settings.cbor";
+  
   try {
     return fs.readFileSync(SETTINGS_FILE, SETTINGS_TYPE);
   } catch (ex) {
@@ -1026,8 +1041,10 @@ function saveSettings() {
   const SETTINGS_FILE = "settings.cbor";
   const SETTINGS_TYPE = "cbor";
   
+  //fs.unlinkSync(SETTINGS_FILE, SETTINGS_TYPE);
   settings.noFile = false;
   fs.writeFileSync(SETTINGS_FILE, settings, SETTINGS_TYPE);
+  
   saveWeather();
 }
 
@@ -1036,7 +1053,7 @@ function saveWeather() {
   
   const WEATHER_FILE = "weather.cbor";
   const SETTINGS_TYPE = "cbor";
-
+  
   fs.writeFileSync(WEATHER_FILE, weatherData, SETTINGS_TYPE);
 }
 
@@ -1096,7 +1113,7 @@ background.onclick = function(evt) {
 }
 
 battery.onchange = function() {
-  updateClockData()
+  setBattery()
 };
 
 display.onchange = function() {

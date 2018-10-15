@@ -5,7 +5,7 @@ import { locale } from "user-settings";
 //import { me } from "companion";
 
 //clear storage before setting
-settingsStorage.clear()
+//settingsStorage.clear()
 
 let myLocale = "es";
 let myLocale = "zh";

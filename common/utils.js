@@ -169,21 +169,25 @@ export function dateParse(fmt, today, loc){
       //console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
       return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
       break;
-    case 1: 
-      return strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
+    case 1:
+      return strings[toDay(today.getDay(), "long")] + " " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
     case 2:
-      return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
-    case 3:
-      return strings[toDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
+      return strings[toDay(today.getDay(), "long")] + " " + spaceAdd + today.getDate() + dayAdd;
+    case 3: 
+      return strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
     case 4:
-      return today.getDate() + dotAdd + ofAdd + " " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
+      return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
     case 5:
-      return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
+      return strings[toDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
     case 6:
-      return today.getYear()+1900 + "." + zeroPad((today.getMonth()+1)) + "." + zeroPad(today.getDate());
+      return today.getDate() + dotAdd + ofAdd + " " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
     case 7:
-      return today.getDate() + ". " + (today.getMonth()+1) + ". " + (today.getYear()+1900);
+      return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
     case 8:
+      return today.getYear()+1900 + "." + zeroPad((today.getMonth()+1)) + "." + zeroPad(today.getDate());
+    case 9:
+      return today.getDate() + ". " + (today.getMonth()+1) + ". " + (today.getYear()+1900);
+    case 10:
       return zeroPad(today.getDate()) + "." + zeroPad(today.getMonth()+1) + "." + (today.getYear()+1900);
     default:
       console.log("failed switch")

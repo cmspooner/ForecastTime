@@ -27,5 +27,8 @@
         "name": "ForecastTime Beta"
       }
     }
+  },
+  "devDependencies": {
+    "@fitbit/sdk": "~1.0.0"
   }
 }
