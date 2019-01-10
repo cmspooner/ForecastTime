@@ -132,12 +132,20 @@ export function round2(number){
   return Math.round(number * Math.pow(10, 2)) / Math.pow(10, 2);
 }
 
+export function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
 export function isInRange(value, low, high){
   return value >= low && value < high;
 }
 
 export function dateParse(fmt, today, loc){
   let strings = allStrings.getStrings(loc, "date");
+  //console.log("Doing Date: "+ today)
+  today = new Date();
   
   let dayAdd = "";
   if (loc == "zh")
@@ -251,7 +259,7 @@ export function getForecastIcon(code, description, isDay){
       return "../resources/icons/weather/whiteSnow.png"
       break;
     case 8: //Mist
-      return "../resources/icons/weather/whiteHaze .png"
+      return "../resources/icons/weather/whiteHaze.png"
       break;
     default: //Other
       if (isDay)
