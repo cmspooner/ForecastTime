@@ -214,11 +214,22 @@ function prv_queryOWMWeatherForecast(apiKey, latitude, longitude, unit, success,
         location : data.name,
         timestamp : new Date().getTime(),
         
-        todayDate : "Today",
-        //todayHigh : parseInt(data.query.results.channel.item.forecast[0].high),
-        //todayLow : parseInt(data.query.results.channel.item.forecast[0].low),
-        //todayCondition : getSimpleCondition(parseInt(data.query.results.channel.item.forecast[0].code)),
-        //todayDescription : data.query.results.channel.item.forecast[0].text,
+        todayHigh : Math.round(data.list[0].temp.max),
+        todayLow : Math.round(data.list[0].temp.min),
+        todayCondition : getSimpleOWMCondition(parseInt(data.list[0].weather[0].icon.substring(0,2), 10)),
+        todayDescription : data.list[0].weather[0].description,
+        
+        //tomorrowDate : Date(data.query.results.channel.item.forecast[2].date),
+        tomorrowHigh : Math.round(data.list[1].temp.max),
+        tomorrowLow : Math.round(data.list[1].temp.min),
+        tomorrowCondition : getSimpleOWMCondition(parseInt(data.list[1].weather[0].icon.substring(0,2), 10)),
+        tomorrowDescription : data.list[1].weather[0].description,
+        
+        //day3Date : Date((data.query.results.channel.item.forecast[2].date)),
+        day3High : Math.round(data.list[2].temp.max),
+        day3Low : Math.round(data.list[2].temp.min),
+        day3Condition : getSimpleOWMCondition(parseInt(data.list[2].weather[0].icon.substring(0,2), 10)),
+        day3Description : data.list[2].weather[0].description
         
         
       };
@@ -445,7 +456,23 @@ function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
   });
 };
 
-function getSimpleCondition(c){
+function getSimpleOWMCondition(condition){
+  switch(condition){
+          case 1 :  condition = Conditions.ClearSky; break;
+          case 2 :  condition = Conditions.FewClouds;  break;
+          case 3 :  condition = Conditions.ScatteredClouds;  break;
+          case 4 :  condition = Conditions.BrokenClouds;  break;
+          case 9 :  condition = Conditions.ShowerRain;  break;
+          case 10 : condition = Conditions.Rain; break;
+          case 11 : condition = Conditions.Thunderstorm; break;
+          case 13 : condition = Conditions.Snow; break;
+          case 50 : condition = Conditions.Mist; break;
+          default : condition = Conditions.Unknown; break;
+        }
+  return condition;
+}
+
+function getSimpleYahooCondition(c){
   switch(c){
         case 31 :
         case 32 :

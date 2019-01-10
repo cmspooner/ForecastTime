@@ -47,6 +47,7 @@ export default class Weather {
   constructor() {
     this._apiKey = '30e538c070a8907d0ea7545a7fc75fdc';
     this._provider = 'owm';
+    this._oldProvider = '';
     this._feelsLike = true;
     //this._weather = undefined;
     this._maximumAge = 0;
@@ -107,16 +108,14 @@ export default class Weather {
   }
   
   fetch() {
-    console.log("I'm a fetch'n some weather!");
-    if(this._weather !== undefined && this._weather.timestamp !== undefined){
-    }
-    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((new Date().getTime() - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000))) {
+    console.log("I'm a fetch'n some weather! "+this._provider + " " + this._oldProvider);
+    if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((new Date().getTime() - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000)) && this._oldProvider == this._provider) {
       // return previous weather if the maximum age is not reached
       console.log("Nevermind...I already have it");
       if(this.onsuccess) this.onsuccess(this._weather);
       return this._weather;
     }
-    
+    this._oldProvider = this._provider;
     if (peerSocket.readyState === peerSocket.OPEN) {
       // Send a command to the companion
       let message = {};

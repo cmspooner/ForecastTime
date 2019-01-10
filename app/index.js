@@ -1125,7 +1125,7 @@ background.onclick = function(evt) {
     console.log("stats Loaded");
     display.poke()
   } else if (show == "stats"){                   // In Stats -> Switching to forcast or schedule    
-    if(false){//forecastData != null) {
+    if(forecastData != null) {
       show = "forecast";
       statsView.style.display = "none";
       updateForecastData();
@@ -1188,14 +1188,14 @@ weather.setFeelsLike(false);
 weather.setUnit(userUnits);
 
 let weatherData = loadWeather();
-let forecastData = loadForecast();
+let forecastData = null//loadForecast();
 
 applySettings();
 
 hrm.start();
 hrm.onerror = function() { console.log("--------------------------------------------------HR err"); } 
 fetchWeather();
-  
+
 //updateClockData();
 setBattery();
 
@@ -1211,9 +1211,12 @@ weather.onsuccess = (data) =>{
     weatherData = data;
     console.log("Got Weather Data!");
     drawWeather(data);
+    weather.setProvider("owmf"); 
+    fetchWeather();
   } else if (weather._provider == "owmf"){
     forecastData = data;
     console.log("Got Forecast Data!");
+    weather.setProvider("owm"); 
   }
 }
 

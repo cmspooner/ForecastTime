@@ -418,6 +418,7 @@ export function getStrings(lang, type){
             "broken clouds"           : "Mostly Cloudy",
             "Clear"                   : "Clear",
             "clear sky"               : "Clear",
+            "sky is clear"            : "Clear",
             "Sunny"                   : "Sunny",
             "Fair"                    : "Fair",
             "Mixed Rain And Hail"     : "Rain & Hail",

@@ -265,6 +265,9 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          6.11 beta: 3 Day is Back!...and maybe date fixed??
+        </Text>
+        <Text>
           6.10.4 beta: More small changes...stil not reliable...
         </Text>
         <Text>
