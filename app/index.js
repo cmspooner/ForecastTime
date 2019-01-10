@@ -29,12 +29,7 @@ import * as allStrings from "./strings.js";
 
 
 import { me as device } from "device";
-if (!device.screen) device.screen = { width: 348, height: 250 };
-
-if (device.screen.width == 300 && device.screen.height == 300)
-  const deviceType = "Versa";
-else
-  const deviceType = "Ionic";
+const deviceType = (device.screen.width == 300 && device.screen.height == 300) ? "Versa" : "Ionic"
 
 let clockView = document.getElementById("clock");
 let periodView = document.getElementById("period");
@@ -87,6 +82,7 @@ function drawWeatherUpdatingMsg(){
 
 messaging.peerSocket.onmessage = evt => {
   console.log(`App received: ${JSON.stringify(evt)}`);
+  //if settings[evt.data.key] != 
   if (evt.data.key === "dateFormat" && evt.data.newValue) {
     if(settings.dateFormat != Number(JSON.parse(evt.data.newValue).selected)){
       console.log(JSON.parse(evt.data.newValue).selected)
@@ -271,7 +267,7 @@ function drawWeather(data){
   if (timeStamp.getDate()!=today.getDate())
     timeStamp = timeStamp.getMonth()+1+"/"+timeStamp.getDate()
   else
-    if (preferences.clockDisplay == "12h" && !settings.twentyFour){
+    if ((preferences.clockDisplay == "12h" && !settings.twentyFour) && settings.timeFormat!=1){
       timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
     } else {
       timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
@@ -383,19 +379,27 @@ function updateClock(caller) {
   if (!settings.dateFormat){
     settings.dateFormat = 0;
   }
-  dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale) ? util.dateParse(settings.dateFormat, today, myLocale) : strings[util.toDay(today.getDay(), "short")] + ", " + strings[util.toMonth(today.getMonth())] + " " + today.getDate();
+  
+  dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale)
+  
 
   if (!settings.timeFormat){
     settings.timeFormat = 0;
   }
   switch (settings.timeFormat) {
     case 1:
+      clockLabel.textAnchor = "middle";
+      clockLabel.x = device.screen.width/2
       clockLabel.text = `${hours}:${mins}`;
       break;
     case 2:
+      clockLabel.textAnchor = "start";
+      clockLabel.x = 10
       clockLabel.text = `${hours}:${mins}:${secs}`;
       break;
     default:
+      clockLabel.textAnchor = "middle";
+      clockLabel.x = device.screen.width/2
       clockLabel.text = `${hours}:${mins}${ampm}`;
       break;
   }
@@ -404,7 +408,7 @@ function updateClock(caller) {
 
 hrm.onreading = function() {
   // Peek the current sensor values
-  console.log("Current heart rate: " + hrm.heartRate);
+  //console.log("Current heart rate: " + hrm.heartRate);
   let hrLabel = document.getElementById("hrLabel");
   let strings = allStrings.getStrings(myLocale, "clockData");
   
@@ -626,13 +630,14 @@ function updateForecastData(){
 
     
     todayDateLabel.text  = strings["Today"].toUpperCase();
-    todayWeatherImage.href = util.getForecastIcon(weatherData.todayCondition, 
-                                                  weatherData.tomorrowDescription,
+    todayDateLabel.style.fill = settings.color;
+    todayWeatherImage.href = util.getForecastIcon(forecastData.todayCondition, 
+                                                  forecastData.tomorrowDescription,
                                                   true);
-    if (strings[weatherData.todayDescription])
-      todayDescriptionLabel.text = strings[weatherData.todayDescription];
+    if (strings[forecastData.todayDescription])
+      todayDescriptionLabel.text = strings[forecastData.todayDescription];
     else
-      todayDescriptionLabel.text = weatherData.todayDescription;
+      todayDescriptionLabel.text = forecastData.todayDescription;
     
     if (!settings.colorToggle)
       settings.colorToggle = false
@@ -653,35 +658,37 @@ function updateForecastData(){
       day3LowLabel.style.fill = "cornflowerblue";
     }
     
-    todayHighLabel.text = strings["High"] + ": " + weatherData.todayHigh + "°"
+    todayHighLabel.text = strings["High"] + ": " + forecastData.todayHigh + "°"
     todayHighValLabel.text = ""
-    todayLowLabel.text = strings["Low"] + ": " + weatherData.todayLow + "°"
+    todayLowLabel.text = strings["Low"] + ": " + forecastData.todayLow + "°"
     todayLowValLabel.text = ""
     
     tomorrowDateLabel.text = strings[util.toDay(day+1, "long")].toUpperCase();
-    tomorrowWeatherImage.href = util.getForecastIcon(weatherData.tomorrowCondition, 
-                                                     weatherData.tomorrowDescription,
+    tomorrowDateLabel.style.fill = settings.color;
+    tomorrowWeatherImage.href = util.getForecastIcon(forecastData.tomorrowCondition, 
+                                                     forecastData.tomorrowDescription,
                                                      true);
-    if (strings[weatherData.tomorrowDescription])
-      tomorrowDescriptionLabel.text = strings[weatherData.tomorrowDescription];
+    if (strings[forecastData.tomorrowDescription])
+      tomorrowDescriptionLabel.text = strings[forecastData.tomorrowDescription];
     else
-      tomorrowDescriptionLabel.text = weatherData.tomorrowDescription;
-    tomorrowHighLabel.text = strings["High"] + ": " + weatherData.tomorrowHigh + "°"
+      tomorrowDescriptionLabel.text = forecastData.tomorrowDescription;
+    tomorrowHighLabel.text = strings["High"] + ": " + forecastData.tomorrowHigh + "°"
     tomorrowHighValLabel.text = ""
-    tomorrowLowLabel.text = strings["Low"] + ": " + weatherData.tomorrowLow + "°"
+    tomorrowLowLabel.text = strings["Low"] + ": " + forecastData.tomorrowLow + "°"
     tomorrowLowValLabel.text = ""
     
     day3DateLabel.text = strings[util.toDay(day+2, "long")].toUpperCase();
-    day3WeatherImage.href = util.getForecastIcon(weatherData.day3Condition, 
-                                                 weatherData.day3Description,
+    day3DateLabel.style.fill = settings.color;
+    day3WeatherImage.href = util.getForecastIcon(forecastData.day3Condition, 
+                                                 forecastData.day3Description,
                                                  true);
-    if (strings[weatherData.day3Description])
-      day3DescriptionLabel.text = strings[weatherData.day3Description];
+    if (strings[forecastData.day3Description])
+      day3DescriptionLabel.text = strings[forecastData.day3Description];
     else
-      day3DescriptionLabel.text = weatherData.day3Description;
-    day3HighLabel.text = strings["High"] + ": " +  weatherData.day3High + "°"
+      day3DescriptionLabel.text = forecastData.day3Description;
+    day3HighLabel.text = strings["High"] + ": " +  forecastData.day3High + "°"
     day3HighValLabel.text = "";
-    day3LowLabel.text = strings["Low"] + ": " + weatherData.day3Low + "°"
+    day3LowLabel.text = strings["Low"] + ": " + forecastData.day3Low + "°"
     day3LowValLabel.text = ""
   }
 }
@@ -720,7 +727,7 @@ function setDateFormat(){
   console.log(`dateFormat is: ${settings.dateFormat}`);
   
   let dateLabel = document.getElementById("dateLabel");
- 
+  today = new Date()
   dateLabel.text = util.dateParse(settings.dateFormat, today, myLocale);
 }
 
@@ -734,10 +741,10 @@ function setBattery(){
   
   wasBatteryAlert = isBatteryAlert;
   if ((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) {
-    console.log("battery Alert on");
+    //console.log("battery Alert on");
     isBatteryAlert = true;
   } else if (!(battery.chargeLevel <= 16 || battery.charging)){
-    console.log("battery Alert off");
+    //console.log("battery Alert off");
     isBatteryAlert = false;
   }
   
@@ -858,6 +865,12 @@ function setSeperatorImage(){
       break;
     case 3:
       seperatorLineImage.href = "icons/bar/wood2-" + deviceType + ".png";
+      break;
+    case 4:
+      seperatorLineImage.href = "icons/bar/candy_cane1-" + deviceType + ".png";
+      break;
+    case 5:
+      seperatorLineImage.href = "icons/bar/candy_cane2-" + deviceType + ".png";
       break;
     default:
       seperatorLineImage.href = "";
@@ -1035,6 +1048,20 @@ function loadWeather(){
   }
 }
 
+function loadForecast(){
+  console.log("Loading Weather");
+  
+  const FORECAST_FILE = "forecast.cbor";
+  const SETTINGS_TYPE = "cbor";
+
+  try {
+    return fs.readFileSync(FORECAST_FILE, SETTINGS_TYPE);
+  } catch (ex) {
+    // Defaults
+    return null;
+  }
+}
+
 function saveSettings() {
   console.log("Saving Settings");
   
@@ -1055,6 +1082,10 @@ function saveWeather() {
   const SETTINGS_TYPE = "cbor";
   
   fs.writeFileSync(WEATHER_FILE, weatherData, SETTINGS_TYPE);
+  const FORECAST_FILE = "forecast.cbor";
+  const SETTINGS_TYPE = "cbor";
+  
+  fs.writeFileSync(FORECAST_FILE, forecastData, SETTINGS_TYPE);
 }
 
 function fetchWeather(caller){
@@ -1069,10 +1100,16 @@ function fetchWeather(caller){
 
     timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
     console.log(strings["Fetching at "] + timeStamp);
+    if ((preferences.clockDisplay == "12h" && !settings.twentyFour) && settings.timeFormat!=1){
+      timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
+    } else {
+      timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
+    }
     weatherLocationLabel.text = strings["Fetching at "] + timeStamp;
   }
   isFetching = true;
   weather.fetch();
+  
 }
 
 //------------------Event Handleing--------------------
@@ -1088,7 +1125,7 @@ background.onclick = function(evt) {
     console.log("stats Loaded");
     display.poke()
   } else if (show == "stats"){                   // In Stats -> Switching to forcast or schedule    
-    if(weatherData != null) {
+    if(false){//forecastData != null) {
       show = "forecast";
       statsView.style.display = "none";
       updateForecastData();
@@ -1144,13 +1181,14 @@ updateClock("start");
 settings = loadSettings();
 console.log(settings.color)
 
-weather.setProvider("yahoo"); 
-weather.setApiKey("");
+weather.setProvider("owm"); 
+weather.setApiKey("30e538c070a8907d0ea7545a7fc75fdc");
 weather.setMaximumAge(10 * 60 * 1000); 
 weather.setFeelsLike(false);
 weather.setUnit(userUnits);
 
 let weatherData = loadWeather();
+let forecastData = loadForecast();
 
 applySettings();
 
@@ -1169,8 +1207,14 @@ if (weatherData == null || !weatherData){
 }
 
 weather.onsuccess = (data) =>{
-  weatherData = data;
-  drawWeather(data);
+  if (weather._provider == "owm"){
+    weatherData = data;
+    console.log("Got Weather Data!");
+    drawWeather(data);
+  } else if (weather._provider == "owmf"){
+    forecastData = data;
+    console.log("Got Forecast Data!");
+  }
 }
 
 //setInterval(updateClockData, 1*1000);
