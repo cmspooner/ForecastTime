@@ -11,11 +11,11 @@
 
 /* Clock View Labels */
 #dateLabel {
-  font-size: 30;
-  font-family: Colfax-Medium;
+  font-size: 32;
+  font-family: Colfax-Bold;
   text-length: 50;
   text-anchor: start;
-  x: 15;
+  x: 5;
   y: 30;
   fill: white;
 }
