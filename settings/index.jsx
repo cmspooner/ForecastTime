@@ -107,6 +107,8 @@ function mySettings(props) {
             {name:strings["Rainbow"]},
             {name:strings["Wood 1"]},
             {name:strings["Wood 2"]},
+            {name:strings["Candy Cane 1"]},
+            {name:strings["Candy Cane 2"]},
           ]}
          />
         <Select
@@ -195,7 +197,6 @@ function mySettings(props) {
           label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
-            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -209,7 +210,6 @@ function mySettings(props) {
           label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
-            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -264,6 +264,36 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.10.4 beta: More small changes...stil not reliable...
+        </Text>
+        <Text>
+          6.10.3 beta: Fixed haze to Haze
+        </Text>
+        <Text>
+          6.10.2 beta: Fixed error where fetch did not respect time preference...you're welcome Paul ;-)
+        </Text>
+        <Text>
+          6.10.1 beta: Small fixes to new weather
+        </Text>
+        <Text>
+          6.10 beta: Switch to open weather map, turned off 3 day weather
+        </Text>
+        <Text>
+          6.9 beta: Changing the time displayto show seconds now left justifies the clock label.
+        </Text>
+        <Text>
+          6.8 beta: A sweet little option under the images options.
+        </Text>
+        <Text>
+          6.7 beta: Date labels are now seperator bar color.
+        </Text>
+        <Text>
+          6.6 beta: Attempting to fix date change error.
+        </Text>
+        <Text>
+          6.5.2 beta: Made date MOAR BOLD and moved it an ity-bitty bit left.
+        </Text>
         <Text>
           6.5.1 beta: Made date a teeny bit larger
         </Text>

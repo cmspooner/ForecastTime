@@ -8,8 +8,8 @@ import { WEATHER_MESSAGE_KEY, WEATHER_DATA_FILE, WEATHER_ERROR_FILE, Conditions 
 export default class Weather {
   
   constructor() {
-    this._apiKey = '';
-    this._provider = 'yahoo';
+    this._apiKey = '30e538c070a8907d0ea7545a7fc75fdc';
+    this._provider = 'owm';
     this._feelsLike = true;
     this._weather = undefined;
     this._maximumAge = 0;
@@ -116,6 +116,9 @@ function prv_fetch(provider, apiKey, feelsLike, unit, latitude, longitude, succe
   if( provider === "owm" ) {
     prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error);
   }
+  else if( provider === "owmf" ) {
+    prv_queryOWMWeatherForecast(apiKey, latitude, longitude, unit, success, error);
+  }
   else if( provider === "wunderground" ) {
     prv_queryWUWeather(apiKey, feelsLike, latitude, longitude, unit, success, error);
   }
@@ -127,6 +130,7 @@ function prv_fetch(provider, apiKey, feelsLike, unit, latitude, longitude, succe
   }
   else 
   {
+    console.log(">>>>>>>>>>>> I HAVE FAILED " + provider + "!")
     prv_queryYahooWeather(latitude, longitude, unit, success, error);
   }
 }
@@ -139,7 +143,8 @@ function prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error) 
   
   var url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude + '&units=' + unit;
   console.log("Open Weather Map: " + url)
-  
+  //var fcurl = 'https://api.openweathermap.org/data/2.5/forecast/daily?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude + '&units=' + unit + '&cnt=3';
+  //console.log("Open Weather Map Forecast: " + fcurl)
   fetch(url)
   .then((response) => {return response.json()})
   .then((data) => { 
@@ -164,17 +169,58 @@ function prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error) 
       }
       let weather = {
         //temperatureK : data.main.temp.toFixed(1),
-        temperature : data.main.temp,
-        temperatureC : data.main.temp - 273.15,
-        temperatureF : (data.main.temp - 273.15)*9/5 + 32,
+        temperature : Math.round(data.main.temp),
         location : data.name,
         description : data.weather[0].description,
         isDay : (data.dt > data.sys.sunrise && data.dt < data.sys.sunset),
         conditionCode : condition,
-        realConditionCode : data.weather[0].id,
-        sunrise : data.sys.sunrise * 1000,
-        sunset : data.sys.sunset * 1000,
         timestamp : new Date().getTime()
+        
+        //todayDate : "Today",
+        //todayHigh : parseInt(data.query.results.channel.item.forecast[0].high),
+        //todayLow : parseInt(data.query.results.channel.item.forecast[0].low),
+        //todayCondition : getSimpleCondition(parseInt(data.query.results.channel.item.forecast[0].code)),
+        //todayDescription : data.query.results.channel.item.forecast[0].text,
+        
+        
+      };
+      // Send the weather data to the device
+      if(success) success(weather);
+  })
+  .catch((err) => { if(error) error(err); });
+};
+
+function prv_queryOWMWeatherForecast(apiKey, latitude, longitude, unit, success, error) {
+  if (unit == 'f')
+    unit = 'imperial'
+  else
+    unit = 'metric'
+  
+  var url = 'https://api.openweathermap.org/data/2.5/forecast/daily?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude + '&units=' + unit + '&cnt=3';
+  console.log("Open Weather Map Forecast: " + url)
+  fetch(url)
+  .then((response) => {return response.json()})
+  .then((data) => { 
+      
+      if(data.list === undefined){
+        if(error) error(data);
+        console.log(data)
+        return;
+      }
+      console.log("I'm building a forecast just for you!")
+      
+      let weather = {
+        //temperatureK : data.main.temp.toFixed(1),
+        location : data.name,
+        timestamp : new Date().getTime(),
+        
+        todayDate : "Today",
+        //todayHigh : parseInt(data.query.results.channel.item.forecast[0].high),
+        //todayLow : parseInt(data.query.results.channel.item.forecast[0].low),
+        //todayCondition : getSimpleCondition(parseInt(data.query.results.channel.item.forecast[0].code)),
+        //todayDescription : data.query.results.channel.item.forecast[0].text,
+        
+        
       };
       // Send the weather data to the device
       if(success) success(weather);
@@ -296,9 +342,9 @@ function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, unit, s
 
       let weather = {
         //temperatureK : (temp + 273.15).toFixed(1),
-        temperature : temp,
-        temperatureC : temp,
-        temperatureF : (temp*9/5 + 32),
+        temperature : Math.round(temp),
+        //temperatureC : temp,
+        //temperatureF : (temp*9/5 + 32),
         location : "",
         description : data.currently.summary,
         isDay : data.currently.icon.indexOf("-day") > 0,
@@ -332,6 +378,11 @@ function prv_queryDarkskyWeather(apiKey, feelsLike, latitude, longitude, unit, s
 };
 
 function prv_queryYahooWeather(latitude, longitude, unit, success, error) {
+  var consumerKey = "dj0yJmk9MFlqVlJjYWE1SkZrJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWU3";
+  var consumerSecret = "219d56a47bebe4d4732f1e023c9f2175238ccfd8";
+  //var locationToQuery = '\'(' + latitude+','+longitude+')\'
+  var url = 'https://weather-ydn-yql.media.yahoo.com/forecastrss?w=location'
+  
   var url = 'https://query.yahooapis.com/v1/public/yql?q=select astronomy, location.city, item from weather.forecast where woeid in ' + '(select woeid from geo.places(1) where text=\'(' + latitude+','+longitude+')\') and u=\''+ unit +'\'&format=json';
   
   console.log("Yahoo: " + url)

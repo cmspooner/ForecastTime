@@ -45,8 +45,8 @@ const getCustomFile = function() {
 
 export default class Weather {
   constructor() {
-    this._apiKey = '';
-    this._provider = 'yahoo';
+    this._apiKey = '30e538c070a8907d0ea7545a7fc75fdc';
+    this._provider = 'owm';
     this._feelsLike = true;
     //this._weather = undefined;
     this._maximumAge = 0;
