@@ -15,7 +15,6 @@ function mySettings(props) {
           settingsKey="dateFormat"
           options={[
             {name: strings["Wed, Jan 31"]},
-            {name: strings["Wednesday Jan 31"]},
             {name: strings["Wednesday 31"]},
             {name: strings["Jan 31, 2018"]},
             {name: "1/31/2018"},
@@ -264,6 +263,18 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.11.4 beta: Refetch forecast if description 1 is undefinted...also don't show forecast if undefined
+        </Text>
+        <Text>
+          6.11.3 beta: Fixed 12/24 weather timestamp error...no really this time.......I hope...Paul?
+        </Text>
+        <Text>
+          6.11.2 beta: Fixed 12/24 weather timestamp error...and anouther stab at fixing the date issue...I wish I didn't have to wait 24 hours between tests.
+        </Text>
+        <Text>
+          6.11.1 beta: Tiny fixes...still fragile; but double check file writing and fixed cal low color on versa
+        </Text>
         <Text>
           6.11 beta: 3 Day is Back!...and maybe date fixed??
         </Text>

@@ -58,14 +58,14 @@ export function zeroPad(i) {
   return i;
 }
 
-export function toMonth(month, len = "short") {
+export function numToMonth(month, len = "short") {
   if (len == "long"){
     month += 12;
   }
   return months()[month];
 }
 
-export function toDay(day, len = "short") {
+export function numToDay(day, len = "short") {
   day = day%7;
   if (len == "long"){
     day += 7;
@@ -142,10 +142,10 @@ export function isInRange(value, low, high){
   return value >= low && value < high;
 }
 
-export function dateParse(fmt, today, loc){
+export function dateParse(fmt, loc){
   let strings = allStrings.getStrings(loc, "date");
   //console.log("Doing Date: "+ today)
-  today = new Date();
+  let today = new Date();
   
   let dayAdd = "";
   if (loc == "zh")
@@ -175,27 +175,25 @@ export function dateParse(fmt, today, loc){
   switch (fmt){
     case 0:
       //console.log(strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd);
-      return strings[toDay(today.getDay(), "short")] + ", " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
+      return strings[numToDay(today.getDay(), "short")] + ", " + strings[numToMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
       break;
     case 1:
-      return strings[toDay(today.getDay(), "long")] + " " + strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd;
-    case 2:
-      return strings[toDay(today.getDay(), "long")] + " " + spaceAdd + today.getDate() + dayAdd;
-    case 3: 
-      return strings[toMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
-    case 4:
+      return strings[numToDay(today.getDay(), "long")] + " " + spaceAdd + today.getDate() + dayAdd;
+    case 2: 
+      return strings[numToMonth(today.getMonth())] + spaceAdd + today.getDate() + dayAdd + "," + spaceAdd + (today.getYear()+1900) + yearAdd;
+    case 3:
       return today.getMonth()+1 + "/" + today.getDate() + "/" + (today.getYear()+1900);
+    case 4:
+      return strings[numToDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
     case 5:
-      return strings[toDay(today.getDay(), "short")] + commaAdd + " " + today.getDate() + ofAdd + " " + strings[toMonth(today.getMonth())];
+      return today.getDate() + dotAdd + ofAdd + " " + strings[numToMonth(today.getMonth())] + " " + (today.getYear()+1900);
     case 6:
-      return today.getDate() + dotAdd + ofAdd + " " + strings[toMonth(today.getMonth())] + " " + (today.getYear()+1900);
-    case 7:
       return today.getDate() + "/" + (today.getMonth()+1) + "/" + (today.getYear()+1900);
-    case 8:
+    case 7:
       return today.getYear()+1900 + "." + zeroPad((today.getMonth()+1)) + "." + zeroPad(today.getDate());
-    case 9:
+    case 8:
       return today.getDate() + ". " + (today.getMonth()+1) + ". " + (today.getYear()+1900);
-    case 10:
+    case 9:
       return zeroPad(today.getDate()) + "." + zeroPad(today.getMonth()+1) + "." + (today.getYear()+1900);
     default:
       console.log("failed switch")

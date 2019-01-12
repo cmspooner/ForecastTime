@@ -108,7 +108,7 @@ export default class Weather {
   }
   
   fetch() {
-    console.log("I'm a fetch'n some weather! "+this._provider + " " + this._oldProvider);
+    console.log("I'm a fetch'n some weather using "+this._provider + ", was using " + this._oldProvider);
     if(this._weather !== undefined && this._weather.timestamp !== undefined && (Math.round((new Date().getTime() - this._weather.timestamp)/100000) < Math.round(this._maximumAge/100000)) && this._oldProvider == this._provider) {
       // return previous weather if the maximum age is not reached
       console.log("Nevermind...I already have it");

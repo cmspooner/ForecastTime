@@ -402,7 +402,7 @@ export function getStrings(lang, type){
             "Sleet"                   : "Sleet",
             "Dust"                    : "Dust",
             "Foggy"                   : "Foggy",
-            "aze"                    : "Haze",
+            "haze"                     : "Haze",
             "mist"                    : "Mist",
             "fog"                     : "Fog",
             "Smoky"                   : "Smoky",     
@@ -436,6 +436,7 @@ export function getStrings(lang, type){
             "rain"                    : "Rain",
             "light rain"              : "Light Rain",
             "light intensity shower rain" : "Light Rain",
+            "heavy intensity rain"    : "Heavy Rain",
             "moderate rain"           : "Rain",
             "Rain"                    : "Rain",
             "Mostly Sunny"            : "Sunny"
