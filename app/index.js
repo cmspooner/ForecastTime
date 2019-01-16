@@ -395,7 +395,9 @@ function updateClock(caller) {
     settings.dateFormat = 0;
   }
   
-  dateLabel.text = util.dateParse(settings.dateFormat, myLocale)
+  //dateLabel.text = util.dateParse(settings.dateFormat, myLocale);
+  dateLabel.text = util.dateParse(settings.dateFormat, myLocale);// + " "+secs;
+
   
 
   if (!settings.timeFormat){
