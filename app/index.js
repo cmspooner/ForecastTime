@@ -20,6 +20,7 @@ import { units } from "user-settings";
 import { locale } from "user-settings";
 import { vibration } from "haptics"
 import { battery } from "power";
+import { charger } from "power";
 import { memory } from "system";
 console.log("JS memory: " + memory.js.used + "/" + memory.js.total);
 
@@ -361,9 +362,7 @@ function updateClock(caller) {
   // Clock view
   let clockLabel = document.getElementById("clockLabel");
   let dateLabel = document.getElementById("dateLabel");
-  
-  let dateLabel = "Start!"
-  
+    
 
   today = new Date();
   time = util.hourAndMinToTime(today.getHours(), today.getMinutes());
@@ -756,10 +755,10 @@ function setBattery(){
   //let batterychargeLevel = 12
   
   wasBatteryAlert = isBatteryAlert;
-  if ((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) {
+  if (((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) || charger.connected) {
     //console.log("battery Alert on");
     isBatteryAlert = true;
-  } else if (!(battery.chargeLevel <= 16 || battery.charging)){
+  } else if (!((battery.chargeLevel <= 16 || battery.charging) || charger.connected)){
     //console.log("battery Alert off");
     isBatteryAlert = false;
   }
@@ -1245,14 +1244,14 @@ weather.onsuccess = (data) =>{
     weather.setProvider("owmf"); 
     fetchWeather();
   } else if (weather._provider == "owmf"){
-    if (data.todayDescription != undefined) {
+    //if (data.todayDescription != undefined) {
       forecastData = data;
       console.log("Got Forecast Data!");
       weather.setProvider("owm"); 
-    } else {
-      console.log("!!!!!NOT SO FAST!!!!!!")
-      fetchWeather();
-    }
+    //} else {
+    //  console.log("!!!!!NOT SO FAST!!!!!!")
+    //  fetchWeather();
+    //}
   }
 }
 

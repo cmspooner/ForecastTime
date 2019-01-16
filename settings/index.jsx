@@ -264,6 +264,18 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          6.12.1 beta: Turn off aggressive re-fetch of forecast; might take 2 updates to get forecast now; we'll see
+        </Text>
+        <Text>
+          6.12 beta: The date is fixed!...now back to the weather
+        </Text>
+        <Text>
+          6.11.5.1 beta: Fixed update interval....oops
+        </Text>
+        <Text>
+          6.11.5 beta: Fixed error in one date format
+        </Text>
+        <Text>
           6.11.4 beta: Refetch forecast if description 1 is undefinted...also don't show forecast if undefined
         </Text>
         <Text>
