@@ -357,6 +357,7 @@ function drawError(error){
 
 // Update the <text> element with the current time
 function updateClock(caller) {
+  weather.setProvider("owm");
   //console.log("TICK from " + caller);
 
   // Clock view
@@ -931,11 +932,12 @@ function setDataAge(){
         timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
       }
     }
-    
-    if (settings.showDataAge)
-      weatherLocationLabel.text = `${util.shortenText(weatherData.location)} (${timeStamp})`;
-    else
-      weatherLocationLabel.text = `${util.shortenText(weatherData.location)}`;
+    if (weatherData.location != undefined){
+      if (settings.showDataAge)
+        weatherLocationLabel.text = `${util.shortenText(weatherData.location)} (${timeStamp})`;
+      else
+        weatherLocationLabel.text = `${util.shortenText(weatherData.location)}`;
+    }
   }
 }
 
@@ -1078,7 +1080,7 @@ function loadWeather(){
 }
 
 function loadForecast(){
-  console.log("Loading Weather");
+  console.log("Loading Forecast");
   
   const FORECAST_FILE = "forecast.cbor";
   const SETTINGS_TYPE = "cbor";
@@ -1123,18 +1125,20 @@ function fetchWeather(caller){
     caller = "auto called"
   console.log(caller)
   console.log("Doing Fetch");
-  if (settings.fetchToggle){
+  if (settings.fetchToggle && weather._provider == "owm"){
     let weatherLocationLabel = document.getElementById("weatherLocationLabel");
     let timeStamp = new Date();
     let strings = allStrings.getStrings(myLocale, "clockData");
 
     timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
     console.log(strings["Fetching at "] + timeStamp);
-    if ((preferences.clockDisplay == "12h" && !settings.twentyFour) && settings.timeFormat!=1){
-      timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
+    
+    if (preferences.clockDisplay == "12h" && !settings.twentyFour && settings.timeFormat != 1){
+      //timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
     } else {
-      timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
+      //timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
     }
+    
     weatherLocationLabel.text = strings["Fetching at "] + timeStamp;
   }
   isFetching = true;
@@ -1218,7 +1222,7 @@ weather.setFeelsLike(false);
 weather.setUnit(userUnits);
 
 let weatherData = loadWeather();
-let forecastData = null//loadForecast();
+let forecastData = loadForecast();
 
 applySettings();
 
@@ -1244,14 +1248,9 @@ weather.onsuccess = (data) =>{
     weather.setProvider("owmf"); 
     fetchWeather();
   } else if (weather._provider == "owmf"){
-    //if (data.todayDescription != undefined) {
-      forecastData = data;
-      console.log("Got Forecast Data!");
-      weather.setProvider("owm"); 
-    //} else {
-    //  console.log("!!!!!NOT SO FAST!!!!!!")
-    //  fetchWeather();
-    //}
+    forecastData = data;
+    console.log("Got Forecast Data!");
+    weather.setProvider("owm"); 
   }
 }
 

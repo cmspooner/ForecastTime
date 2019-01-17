@@ -264,6 +264,15 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          6.12.4 beta: Turning off timestamp 24 hour check cause it's broken; but lets see what it fixes
+        </Text>
+        <Text>
+          6.12.3 beta: Just more tweaks....
+        </Text>
+        <Text>
+          6.12.2 beta: Small cleanups based on developer bridge work; it is soo damn flakey...I'll try again another night.
+        </Text>
+        <Text>
           6.12.1 beta: Turn off aggressive re-fetch of forecast; might take 2 updates to get forecast now; we'll see
         </Text>
         <Text>
