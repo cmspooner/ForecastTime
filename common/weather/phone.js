@@ -169,6 +169,7 @@ function prv_queryOWMWeather(apiKey, latitude, longitude, unit, success, error) 
       }
       let weather = {
         //temperatureK : data.main.temp.toFixed(1),
+        provider : "owm",
         temperature : Math.round(data.main.temp),
         location : data.name,
         description : data.weather[0].description,
@@ -211,6 +212,7 @@ function prv_queryOWMWeatherForecast(apiKey, latitude, longitude, unit, success,
       
       let weather = {
         //temperatureK : data.main.temp.toFixed(1),
+        provider : "owmf",
         location : data.name,
         timestamp : new Date().getTime(),
         

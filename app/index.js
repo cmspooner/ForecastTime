@@ -147,7 +147,7 @@ messaging.peerSocket.onmessage = evt => {
     }
   }
   if (evt.data.key === "fetchToggle" && evt.data.newValue) {
-    settings.fetchToggle = JSON.parse(evt.data.newValue);
+    settings.fetchToggle = false;//JSON.parse(evt.data.newValue);
   }  
   if (evt.data.key === "colorToggle" && evt.data.newValue) {
     settings.colorToggle = JSON.parse(evt.data.newValue);
@@ -317,7 +317,7 @@ function drawError(error){
        error = "Companion Failure"
   if (JSON.stringify(error) == "{}")
        error = "Unknown"
-  if (!weatherData){
+  if (!weatherData || !weatherData.description){
     weatherImage.href = "";
     
     tempAndConditionLabel.text = strings["Updating..."];
@@ -357,7 +357,6 @@ function drawError(error){
 
 // Update the <text> element with the current time
 function updateClock(caller) {
-  weather.setProvider("owm");
   //console.log("TICK from " + caller);
 
   // Clock view
@@ -1125,7 +1124,8 @@ function fetchWeather(caller){
     caller = "auto called"
   console.log(caller)
   console.log("Doing Fetch");
-  if (settings.fetchToggle && weather._provider == "owm"){
+  settings.fetchToggle = false;
+  if (settings.fetchToggle){
     let weatherLocationLabel = document.getElementById("weatherLocationLabel");
     let timeStamp = new Date();
     let strings = allStrings.getStrings(myLocale, "clockData");
@@ -1166,6 +1166,8 @@ background.onclick = function(evt) {
       forecastView.style.display = "inline";//test
       console.log("forecast Loaded");
     } else {
+      weather.setProvider("owmf"); 
+      fetchWeather();
       show = "clock";
       statsView.style.display = "none";
       //updateClock();
@@ -1234,20 +1236,20 @@ fetchWeather();
 setBattery();
 
 
-if (weatherData == null || !weatherData){
+if (weatherData == null || !weatherData || !weatherData.description){
   drawWeatherUpdatingMsg();
 } else {
   drawWeather(weatherData);
 }
 
 weather.onsuccess = (data) =>{
-  if (weather._provider == "owm"){
+  if (data.provider == "owm"){
     weatherData = data;
     console.log("Got Weather Data!");
     drawWeather(data);
     weather.setProvider("owmf"); 
     fetchWeather();
-  } else if (weather._provider == "owmf"){
+  } else if (data.provider == "owmf"){
     forecastData = data;
     console.log("Got Forecast Data!");
     weather.setProvider("owm"); 

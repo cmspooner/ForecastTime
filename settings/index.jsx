@@ -223,10 +223,6 @@ function mySettings(props) {
            label={strings["update time"]}
          />
         <Toggle
-           settingsKey="fetchToggle"
-           label={strings["fetched time"] }
-         />
-        <Toggle
            settingsKey="colorToggle"
            label={strings["high low color"] }
          />
@@ -263,6 +259,12 @@ function mySettings(props) {
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.13 beta: Bad Spooner...don't make checks on private variables! Removed naughty checks and fixed provider check in a more appropriate way. removed fetch toggle since it doesn't play nicely with my forecast call.
+        </Text>
+        <Text>
+          6.12.5 beta: More fixes on weather loading and whatnot
+        </Text>
         <Text>
           6.12.4 beta: Turning off timestamp 24 hour check cause it's broken; but lets see what it fixes
         </Text>
