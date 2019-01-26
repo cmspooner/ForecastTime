@@ -308,11 +308,11 @@ function drawError(error){
   
   let strings = allStrings.getStrings(myLocale, "weather");
   
-  weather.setMaximumAge(30 * 1000); 
+  weather.setMaximumAge(90 * 1000); 
   openedWeatherRequest = false;
   if (weatherInterval != null)
     clearInterval(weatherInterval);
-  weatherInterval = setInterval(fetchWeather,30 * 1000);
+  weatherInterval = setInterval(fetchWeather, 90 * 1000);
   if (error == "No connection with the companion")
        error = "Companion Failure"
   if (JSON.stringify(error) == "{}")
@@ -754,6 +754,7 @@ function setBattery(){
   
   //let batterychargeLevel = 12
   
+  
   wasBatteryAlert = isBatteryAlert;
   if (((battery.chargeLevel <= 16 || battery.charging) && !isBatteryAlert) || charger.connected) {
     //console.log("battery Alert on");
@@ -1116,7 +1117,7 @@ function saveWeather() {
   const FORECAST_FILE = "forecast.cbor";
   
   fs.writeFileSync(FORECAST_FILE, forecastData, SETTINGS_TYPE);
-  console.log("Wrote Weather and Forecst");
+  console.log("Wrote Weather and Forecast");
 }
 
 function fetchWeather(caller){
@@ -1125,25 +1126,9 @@ function fetchWeather(caller){
   console.log(caller)
   console.log("Doing Fetch");
   settings.fetchToggle = false;
-  if (settings.fetchToggle){
-    let weatherLocationLabel = document.getElementById("weatherLocationLabel");
-    let timeStamp = new Date();
-    let strings = allStrings.getStrings(myLocale, "clockData");
 
-    timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
-    console.log(strings["Fetching at "] + timeStamp);
-    
-    if (preferences.clockDisplay == "12h" && !settings.twentyFour && settings.timeFormat != 1){
-      //timeStamp = util.hourAndMinToTime(timeStamp.getHours(), timeStamp.getMinutes());
-    } else {
-      //timeStamp = util.zeroPad(timeStamp.getHours()) + ":" + util.zeroPad(timeStamp.getMinutes());
-    }
-    
-    weatherLocationLabel.text = strings["Fetching at "] + timeStamp;
-  }
   isFetching = true;
   weather.fetch();
-  
 }
 
 //------------------Event Handleing--------------------
@@ -1258,5 +1243,9 @@ weather.onsuccess = (data) =>{
 
 //setInterval(updateClockData, 1*1000);
 setInterval(setBattery, 60*1000);
+
+setInterval(function() {
+  weather.setProvider("owm");
+}, 5 * 60 * 1000);
 
 console.log("JS memory: " + memory.js.used + "/" + memory.js.total);

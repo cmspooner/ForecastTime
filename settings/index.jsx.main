@@ -1,4 +1,4 @@
-import * as allStrings from "strings.js";
+import * as allStrings from "./strings.js";
 import { settingsStorage } from "settings";
 
 
@@ -15,6 +15,7 @@ function mySettings(props) {
           settingsKey="dateFormat"
           options={[
             {name: strings["Wed, Jan 31"]},
+            {name: strings["Wednesday 31"]},
             {name: strings["Jan 31, 2018"]},
             {name: "1/31/2018"},
             {name: strings["Wed 31 Jan"]},
@@ -28,7 +29,10 @@ function mySettings(props) {
         <Toggle
            settingsKey="batteryToggle"
            label={strings["Battery Bar"]}
-           onChange={value => props.settingsStorage.setItem('unit', value.toString())}
+         />
+        <Toggle
+           settingsKey="24hToggle"
+           label={strings["Force 24 Hour Time"]}
          />
         <Select
           label={strings["Time Format"]}
@@ -100,11 +104,18 @@ function mySettings(props) {
           options={[
             {name:strings["None"]},
             {name:strings["Rainbow"]},
-            {name:strings["Glass"]},
-            {name:strings["Glass Rainbow"]},
             {name:strings["Wood 1"]},
             {name:strings["Wood 2"]},
-            {name:strings["Wood 3"]},
+            {name:strings["Candy Cane 1"]},
+            {name:strings["Candy Cane 2"]},
+          ]}
+         />
+        <Select
+          label={strings["Effect"]}
+          settingsKey="seperatorEffect"
+          options={[
+            {name:strings["None"]},
+            {name:strings["Glass"]},
           ]}
          />
       </Section>
@@ -185,7 +196,6 @@ function mySettings(props) {
           label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
-            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -199,7 +209,6 @@ function mySettings(props) {
           label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
-            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -214,8 +223,8 @@ function mySettings(props) {
            label={strings["update time"]}
          />
         <Toggle
-           settingsKey="fetchToggle"
-           label={strings["fetched time"] }
+           settingsKey="colorToggle"
+           label={strings["high low color"] }
          />
         <Text align="left">
           {strings["nerds and debugging"]}
@@ -249,8 +258,10 @@ function mySettings(props) {
         </Link>
       </Section>
       <Section
-        
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.0: Now using OpenWeatherMap! Lots of new changes and updates!
+        </Text>
         <Text>
           5.1: Re-engineered heartrate reading to use onChange
         </Text>

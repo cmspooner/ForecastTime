@@ -260,6 +260,15 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          6.15.0 beta: Made errors less agressive about re-fetching weather. Resetting the provider to main weather every five minutes.
+        </Text>
+        <Text>
+          6.14.0 beta: Translations Fixed; unless we have major issue this is the release version.
+        </Text>
+        <Text>
+          6.13.1 beta: Fixed heavy snow.
+        </Text>
+        <Text>
           6.13 beta: Bad Spooner...don't make checks on private variables! Removed naughty checks and fixed provider check in a more appropriate way. removed fetch toggle since it doesn't play nicely with my forecast call.
         </Text>
         <Text>
