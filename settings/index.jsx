@@ -256,9 +256,25 @@ function mySettings(props) {
             icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Paypal.png?raw=true"
           />
         </Link>
+        <Link source="https://openweathermap.org">
+          <TextImageRow
+            label="OpenWeatherMap"
+            sublabel="https://openweathermap.org"
+            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/OpenWeatherMap.png?raw=true"
+          />
+        </Link>
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.15.3 beta: OpenWeatherMap link added to Settings
+        </Text>
+        <Text>
+          6.15.2 beta: Wait a bit to fetch forecast after weather
+        </Text>
+        <Text>
+          6.15.1 beta: Force "Town and Country Mobile Village" to "Interlochen"
+        </Text>
         <Text>
           6.15.0 beta: Made errors less agressive about re-fetching weather. Resetting the provider to main weather every five minutes.
         </Text>
