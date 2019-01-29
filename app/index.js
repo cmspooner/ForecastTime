@@ -1232,8 +1232,11 @@ weather.onsuccess = (data) =>{
     weatherData = data;
     console.log("Got Weather Data!");
     drawWeather(data);
-    weather.setProvider("owmf"); 
-    fetchWeather();
+    setTimeout(function() {
+      weather.setProvider("owmf"); 
+      fetchWeather();
+    }, 75*1000)
+    
   } else if (data.provider == "owmf"){
     forecastData = data;
     console.log("Got Forecast Data!");
