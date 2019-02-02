@@ -644,8 +644,15 @@ function updateForecastData(){
     let day = new Date().getDay()
     let strings = allStrings.getStrings(myLocale, "weather");
 
-    
-    todayDateLabel.text  = strings["Today"].toUpperCase();
+    let todayDate = new Date(forecastData.todayDate*1000).getDay();
+    console.log("--Forecast Date: " + todayDate);
+    if (todayDate == day) {
+      console.log("---Today!")
+      todayDateLabel.text  = strings["Today"].toUpperCase();
+    } else {
+      console.log(util.numToDay(todayDate, "long"))
+      todayDateLabel.text  = strings[util.numToDay(todayDate, "long")];
+    }
     todayDateLabel.style.fill = settings.color;
     todayWeatherImage.href = util.getForecastIcon(forecastData.todayCondition, 
                                                   forecastData.tomorrowDescription,
@@ -679,7 +686,13 @@ function updateForecastData(){
     todayLowLabel.text = strings["Low"] + ": " + forecastData.todayLow + "°"
     todayLowValLabel.text = ""
     
-    tomorrowDateLabel.text = strings[util.numToDay(day+1, "long")].toUpperCase();
+    let tomorrowDate = new Date(forecastData.tomorrowDate*1000).getDay();
+    if (tomorrowDate == day) {
+      tomorrowDateLabel.text  = strings["Today"].toUpperCase();
+    } else {
+      console.log(">>TOM: " + util.numToDay(todayDate, "long").toUpperCase());
+      tomorrowDateLabel.text  = strings[util.numToDay(tomorrowDate, "long")].toUpperCase();
+    }
     tomorrowDateLabel.style.fill = settings.color;
     tomorrowWeatherImage.href = util.getForecastIcon(forecastData.tomorrowCondition, 
                                                      forecastData.tomorrowDescription,
@@ -693,7 +706,13 @@ function updateForecastData(){
     tomorrowLowLabel.text = strings["Low"] + ": " + forecastData.tomorrowLow + "°"
     tomorrowLowValLabel.text = ""
     
-    day3DateLabel.text = strings[util.numToDay(day+2, "long")].toUpperCase();
+    
+    let day3Date = new Date(forecastData.day3Date*1000).getDay();
+    if (day3Date == day) {
+      day3DateLabel.text  = strings["Today"].toUpperCase();
+    } else {
+      day3DateLabel.text  = strings[util.numToDay(day3Date, "long")].toUpperCase();
+    }   
     day3DateLabel.style.fill = settings.color;
     day3WeatherImage.href = util.getForecastIcon(forecastData.day3Condition, 
                                                  forecastData.day3Description,
@@ -1232,10 +1251,10 @@ weather.onsuccess = (data) =>{
     weatherData = data;
     console.log("Got Weather Data!");
     drawWeather(data);
-    setTimeout(function() {
+   // setTimeout(function() {
       weather.setProvider("owmf"); 
       fetchWeather();
-    }, 75*1000)
+    //}, *1000)
     
   } else if (data.provider == "owmf"){
     forecastData = data;

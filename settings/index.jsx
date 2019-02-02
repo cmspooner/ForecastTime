@@ -196,6 +196,7 @@ function mySettings(props) {
           label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
+            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -209,6 +210,7 @@ function mySettings(props) {
           label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
+            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -226,9 +228,6 @@ function mySettings(props) {
            settingsKey="colorToggle"
            label={strings["high low color"] }
          />
-        <Text align="left">
-          {strings["nerds and debugging"]}
-         </Text>
       </Section>
       <Section
         title={<Text bold align="center">Contact Me</Text>}>
@@ -239,33 +238,39 @@ function mySettings(props) {
           <TextImageRow
             label={strings["Email"]}
             sublabel="cmspooner@gmail.com"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Email.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Email.png?raw=true"
           />
         </Link>
         <Link source="https://github.com/cmspooner">
           <TextImageRow
             label="Github"
             sublabel="https://github.com/cmspooner"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Github.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Github.png?raw=true"
           />
         </Link>
         <Link source="https://paypal.me/CMSpooner">
           <TextImageRow
             label="PayPal"
             sublabel="cmspooner@gmail.com"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Paypal.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Paypal.png?raw=true"
           />
         </Link>
         <Link source="https://openweathermap.org">
           <TextImageRow
             label="OpenWeatherMap"
-            sublabel="https://openweathermap.org"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/OpenWeatherMap.png?raw=true"
+            sublabel="Weather data provided by OpenWeatherMap.org"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/OpenWeatherMap.png?raw=true"
           />
         </Link>
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.16.1 beta: Removed forecast delay
+        </Text>
+        <Text>
+          6.16 beta: Re-added 5 minute option since I'm now FOSS approved! Also forecast now looks at current date
+        </Text>
         <Text>
           6.15.3 beta: OpenWeatherMap link added to Settings
         </Text>
@@ -287,16 +292,7 @@ function mySettings(props) {
         <Text>
           6.13 beta: Bad Spooner...don't make checks on private variables! Removed naughty checks and fixed provider check in a more appropriate way. removed fetch toggle since it doesn't play nicely with my forecast call.
         </Text>
-        <Text>
-          6.12.5 beta: More fixes on weather loading and whatnot
-        </Text>
-        <Text>
-          6.12.4 beta: Turning off timestamp 24 hour check cause it's broken; but lets see what it fixes
-        </Text>
-        <Text>
-          6.12.3 beta: Just more tweaks....
-        </Text>
-        <Text>
+        <Text> 
           6.12.2 beta: Small cleanups based on developer bridge work; it is soo damn flakey...I'll try again another night.
         </Text>
         <Text>
