@@ -7,8 +7,8 @@ import { locale } from "user-settings";
 //clear storage before setting
 //settingsStorage.clear()
 
-let myLocale = "es";
-let myLocale = "zh";
+//let myLocale = "es";
+//let myLocale = "zh";
 let myLocale = locale.language.substring(0,2);
 //let myLocale = "en"
 settingsStorage.setItem('locale', myLocale)

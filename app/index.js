@@ -542,6 +542,8 @@ function updateStatsData(){
       let activeGoalLabel = document.getElementById("activeGoalLabel");
       let calsGoalLabel = document.getElementById("calsGoalLabel");
       
+      console.log(todayActivity.adjusted.activeZoneMinutes.total);
+      
       stepStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.steps, goals.steps, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       stepStatsLabel.text = strings["Steps"] + ":";
@@ -566,12 +568,12 @@ function updateStatsData(){
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       floorsGoalLabel.text = `${todayActivity.adjusted.elevationGain ? todayActivity.adjusted.elevationGain : 0} / ${goals.elevationGain}`;
       
-      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeZoneMinutes.total, goals.activeZoneMinutes.total, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       activeStatsLabel.text = strings["Active"] + ":";
-      activeGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+      activeGoalLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeZoneMinutes.total, goals.activeZoneMinutes.total, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
-      activeGoalLabel.text = `${todayActivity.adjusted.activeMinutes ? todayActivity.adjusted.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
+      activeGoalLabel.text = `${todayActivity.adjusted.activeZoneMinutes.total ? todayActivity.adjusted.activeZoneMinutes.total.toLocaleString() : 0} / ${goals.activeZoneMinutes.total}`;
  
       calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
@@ -599,9 +601,11 @@ function updateStatsData(){
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
       floorsStatsLabel.text = `${strings["Floors"]}: ${todayActivity.adjusted.elevationGain ? todayActivity.adjusted.elevationGain : 0} / ${goals.elevationGain}`;
 
-      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeMinutes, goals.activeMinutes, 
+      activeStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.activeZoneMinutes.total, goals.activeZoneMinutes.total, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
-      activeStatsLabel.text = `${strings["Active"]}: ${todayActivity.adjusted.activeMinutes ? todayActivity.adjusted.activeMinutes.toLocaleString() : 0} / ${goals.activeMinutes}`;
+      activeStatsLabel.text = `${strings["Active"]}: ${todayActivity.adjusted.activeZoneMinutes.total ? todayActivity.adjusted.activeZoneMinutes.total.toLocaleString() : 0} / ${goals.activeZoneMinutes.total}`;
+      
+      
 
       calsStatsLabel.style.fill = util.goalToColor(todayActivity.adjusted.calories, goals.calories, 
                                            settings.lowColor, settings.medColor, settings.highColor, settings.comColor);
@@ -651,7 +655,7 @@ function updateForecastData(){
       todayDateLabel.text  = strings["Today"].toUpperCase();
     } else {
       console.log(util.numToDay(todayDate, "long"))
-      todayDateLabel.text  = strings[util.numToDay(todayDate, "long")];
+      todayDateLabel.text  = strings[util.numToDay(todayDate, "long")].toUpperCase();
     }
     todayDateLabel.style.fill = settings.color;
     todayWeatherImage.href = util.getForecastIcon(forecastData.todayCondition, 
@@ -1150,7 +1154,7 @@ function fetchWeather(caller){
   weather.fetch();
 }
 
-//------------------Event Handleing--------------------
+//------------------Event Handling--------------------
 
 background.onclick = function(evt) {
   console.log("Click");
@@ -1251,10 +1255,10 @@ weather.onsuccess = (data) =>{
     weatherData = data;
     console.log("Got Weather Data!");
     drawWeather(data);
-   // setTimeout(function() {
+    setTimeout(function() {
       weather.setProvider("owmf"); 
       fetchWeather();
-    //}, *1000)
+    }, 75*1000)
     
   } else if (data.provider == "owmf"){
     forecastData = data;

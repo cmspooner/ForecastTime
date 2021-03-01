@@ -266,6 +266,33 @@ function mySettings(props) {
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
         <Text>
+          7.2.2 beta: moar fix active color
+        </Text>
+        <Text>
+          7.2.1 beta: fix active color
+        </Text>
+         <Text>
+          7.2 beta: Change from activeMinutes to activeZoneMinutes.total
+        </Text>
+         <Text>
+          7.1 beta: Fix battery setting
+        </Text>
+        <Text>
+          7.0.1 beta: Fix rain and snow
+        </Text>
+        <Text>
+          7.0 beta: Added support for Versa Lite and Versa 2
+        </Text>
+        <Text>
+          6.16.4 beta: Re-added forecast delay
+        </Text>
+        <Text>
+          6.16.3 beta: Forced "Detroit Park" to "Tuscumbia"
+        </Text>
+        <Text>
+          6.16.2 beta: Fixed yeterday day to uppercase between forecast update
+        </Text>
+        <Text>
           6.16.1 beta: Removed forecast delay
         </Text>
         <Text>

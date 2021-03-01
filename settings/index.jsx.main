@@ -196,6 +196,7 @@ function mySettings(props) {
           label={strings["Weather Update Interval"]}
           settingsKey="updateInterval"
           options={[
+            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -209,6 +210,7 @@ function mySettings(props) {
           label={strings["Location Update Interval"]}
           settingsKey="locationUpdateInterval"
           options={[
+            {name:strings["5 minutes"], value:5},
             {name:strings["15 minutes"], value:15},
             {name:strings["30 minutes"], value:30},
             {name:strings["1 hour"], value:60},
@@ -226,9 +228,6 @@ function mySettings(props) {
            settingsKey="colorToggle"
            label={strings["high low color"] }
          />
-        <Text align="left">
-          {strings["nerds and debugging"]}
-         </Text>
       </Section>
       <Section
         title={<Text bold align="center">Contact Me</Text>}>
@@ -239,26 +238,36 @@ function mySettings(props) {
           <TextImageRow
             label={strings["Email"]}
             sublabel="cmspooner@gmail.com"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Email.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Email.png?raw=true"
           />
         </Link>
         <Link source="https://github.com/cmspooner">
           <TextImageRow
             label="Github"
             sublabel="https://github.com/cmspooner"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Github.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Github.png?raw=true"
           />
         </Link>
         <Link source="https://paypal.me/CMSpooner">
           <TextImageRow
             label="PayPal"
             sublabel="cmspooner@gmail.com"
-            icon="https://github.com/cmspooner/Kearsarge-Time-for-Fitbit-Ionic/blob/master/resources/icons/settings/Paypal.png?raw=true"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/Paypal.png?raw=true"
+          />
+        </Link>
+        <Link source="https://openweathermap.org">
+          <TextImageRow
+            label="OpenWeatherMap"
+            sublabel="Weather data provided by OpenWeatherMap.org"
+            icon="https://github.com/cmspooner/ForecastTime/blob/master/resources/icons/settings/OpenWeatherMap.png?raw=true"
           />
         </Link>
       </Section>
       <Section
         title={<Text bold align="center">{strings["Build Version"]}</Text>}>
+        <Text>
+          6.1: Clean up and better recognition of openweathermap use.
+        </Text>
         <Text>
           6.0: Now using OpenWeatherMap! Lots of new changes and updates!
         </Text>

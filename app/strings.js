@@ -477,9 +477,11 @@ export function getStrings(lang, type){
             "very heavy rain"	      : "Heavy Rain",
             "moderate rain"           : "Rain",
             "Rain"                    : "Rain",
+            "rain and snow"           : "Rain & Snow",
             "Mostly Sunny"            : "Sunny",
             
-            "Town and Country Mobile Village" : "Interlochen"
+            "Town and Country Mobile Village" : "Interlochen",
+            "Detroit Park"            : "Tuscumbia"
             
           }
         case "directions":
